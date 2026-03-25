@@ -1,0 +1,1578 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>المحاسبة - الليكتشر الأول</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0e1a;
+    --surface: #111827;
+    --card: #1a2236;
+    --card2: #1e2a40;
+    --green: #10d98a;
+    --green-dim: #10d98a22;
+    --blue: #3b8eea;
+    --blue-dim: #3b8eea22;
+    --yellow: #f5c842;
+    --yellow-dim: #f5c84222;
+    --red: #f05252;
+    --red-dim: #f0525222;
+    --purple: #a78bfa;
+    --purple-dim: #a78bfa22;
+    --orange: #fb923c;
+    --orange-dim: #fb923c22;
+    --text: #e8eaf2;
+    --text-dim: #8a93b0;
+    --border: #1f2d47;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Cairo', 'Tajawal', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* HERO */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+    padding: 40px 20px;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 40%, #1a2a5e44 0%, transparent 70%),
+                radial-gradient(ellipse 60% 40% at 80% 80%, #10d98a11 0%, transparent 60%),
+                radial-gradient(ellipse 50% 50% at 20% 20%, #3b8eea11 0%, transparent 60%);
+  }
+
+  .grid-bg {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(59,142,234,0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(59,142,234,0.06) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--green-dim);
+    border: 1px solid var(--green);
+    border-radius: 50px;
+    padding: 6px 18px;
+    font-size: 13px;
+    color: var(--green);
+    margin-bottom: 24px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    animation: fadeIn 0.8s ease;
+  }
+
+  .hero h1 {
+    font-size: clamp(2.5rem, 7vw, 5rem);
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 16px;
+    animation: slideUp 0.8s ease 0.1s both;
+  }
+
+  .hero h1 span {
+    background: linear-gradient(135deg, var(--green), var(--blue));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .hero p {
+    font-size: 1.2rem;
+    color: var(--text-dim);
+    max-width: 600px;
+    margin-bottom: 40px;
+    line-height: 1.8;
+    animation: slideUp 0.8s ease 0.2s both;
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+    justify-content: center;
+    animation: slideUp 0.8s ease 0.3s both;
+  }
+
+  .stat {
+    text-align: center;
+  }
+
+  .stat-num {
+    font-size: 2rem;
+    font-weight: 900;
+    color: var(--green);
+  }
+
+  .stat-label {
+    font-size: 0.85rem;
+    color: var(--text-dim);
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-dim);
+    font-size: 13px;
+    animation: bounce 2s infinite;
+  }
+
+  .scroll-hint svg { opacity: 0.5; }
+
+  /* NAV */
+  .top-nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(10,14,26,0.95);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 20px;
+  }
+
+  .nav-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding: 12px 0;
+  }
+
+  .nav-inner::-webkit-scrollbar { display: none; }
+
+  .nav-btn {
+    flex-shrink: 0;
+    padding: 8px 16px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text-dim);
+    font-family: 'Cairo', sans-serif;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+
+  .nav-btn:hover, .nav-btn.active {
+    background: var(--green-dim);
+    border-color: var(--green);
+    color: var(--green);
+  }
+
+  /* MAIN CONTENT */
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 60px 20px;
+  }
+
+  /* SECTION HEADER */
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 40px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    flex-shrink: 0;
+  }
+
+  .section-header h2 {
+    font-size: 1.8rem;
+    font-weight: 800;
+  }
+
+  .section-header p {
+    color: var(--text-dim);
+    font-size: 0.9rem;
+    margin-top: 4px;
+  }
+
+  .section-num {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  /* CARDS GRID */
+  .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+  .grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+
+  /* CARD */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+  }
+
+  .card-icon {
+    font-size: 28px;
+    margin-bottom: 12px;
+  }
+
+  .card h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+
+  .card p, .card li {
+    font-size: 0.9rem;
+    color: var(--text-dim);
+    line-height: 1.8;
+  }
+
+  .card ul { list-style: none; padding: 0; }
+  .card li { padding: 4px 0; }
+  .card li::before { content: "← "; color: var(--green); font-size: 0.8rem; }
+
+  /* COLOR VARIANTS */
+  .green-card { border-color: var(--green); background: linear-gradient(135deg, var(--green-dim), var(--card)); }
+  .blue-card { border-color: var(--blue); background: linear-gradient(135deg, var(--blue-dim), var(--card)); }
+  .yellow-card { border-color: var(--yellow); background: linear-gradient(135deg, var(--yellow-dim), var(--card)); }
+  .red-card { border-color: var(--red); background: linear-gradient(135deg, var(--red-dim), var(--card)); }
+  .purple-card { border-color: var(--purple); background: linear-gradient(135deg, var(--purple-dim), var(--card)); }
+  .orange-card { border-color: var(--orange); background: linear-gradient(135deg, var(--orange-dim), var(--card)); }
+
+  .tag {
+    display: inline-block;
+    padding: 3px 12px;
+    border-radius: 50px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    margin-bottom: 12px;
+  }
+
+  .tag-green { background: var(--green-dim); color: var(--green); border: 1px solid var(--green); }
+  .tag-blue { background: var(--blue-dim); color: var(--blue); border: 1px solid var(--blue); }
+  .tag-yellow { background: var(--yellow-dim); color: var(--yellow); border: 1px solid var(--yellow); }
+  .tag-red { background: var(--red-dim); color: var(--red); border: 1px solid var(--red); }
+  .tag-purple { background: var(--purple-dim); color: var(--purple); border: 1px solid var(--purple); }
+  .tag-orange { background: var(--orange-dim); color: var(--orange); border: 1px solid var(--orange); }
+
+  /* FORMULA BOX */
+  .formula {
+    background: var(--bg);
+    border: 2px solid var(--green);
+    border-radius: 12px;
+    padding: 16px 20px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--green);
+    text-align: center;
+    margin: 16px 0;
+    letter-spacing: 0.5px;
+  }
+
+  /* STEPS */
+  .steps { display: flex; flex-direction: column; gap: 0; }
+
+  .step {
+    display: flex;
+    gap: 20px;
+    position: relative;
+  }
+
+  .step:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    right: 19px;
+    top: 50px;
+    width: 2px;
+    height: calc(100% - 20px);
+    background: var(--border);
+  }
+
+  .step-num {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 0.9rem;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  .step-body {
+    padding: 10px 0 30px;
+    flex: 1;
+  }
+
+  .step-body h4 {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+
+  .step-body p {
+    color: var(--text-dim);
+    font-size: 0.88rem;
+    line-height: 1.7;
+  }
+
+  /* BIG EQUATION */
+  .big-eq {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin: 30px 0;
+  }
+
+  .eq-part {
+    background: var(--card);
+    border: 2px solid var(--border);
+    border-radius: 16px;
+    padding: 20px 28px;
+    text-align: center;
+    min-width: 160px;
+  }
+
+  .eq-part.highlighted {
+    border-color: var(--blue);
+    background: var(--blue-dim);
+  }
+
+  .eq-part .label { font-size: 0.8rem; color: var(--text-dim); margin-bottom: 4px; }
+  .eq-part .val { font-size: 1.5rem; font-weight: 900; }
+  .eq-op { font-size: 2rem; font-weight: 900; color: var(--text-dim); }
+
+  /* COMPARISON TABLE */
+  .compare-table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .compare-table th {
+    padding: 14px 20px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-align: right;
+  }
+
+  .compare-table td {
+    padding: 12px 20px;
+    font-size: 0.88rem;
+    border-top: 1px solid var(--border);
+    color: var(--text-dim);
+  }
+
+  .compare-table tr:hover td { background: var(--card2); }
+
+  .compare-table thead tr { background: var(--card2); }
+
+  /* HIGHLIGHT BOX */
+  .highlight-box {
+    border-radius: 16px;
+    padding: 24px;
+    margin: 24px 0;
+    border: 1px solid;
+  }
+
+  .highlight-box h4 {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+
+  .highlight-box p, .highlight-box li {
+    font-size: 0.9rem;
+    line-height: 1.8;
+  }
+
+  .highlight-box ul { list-style: none; padding: 0; }
+  .highlight-box li::before { content: "✦ "; font-size: 0.7rem; }
+
+  /* VISUAL DIAGRAM */
+  .diagram-flow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin: 30px 0;
+  }
+
+  .flow-box {
+    padding: 14px 20px;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-align: center;
+    min-width: 120px;
+  }
+
+  .flow-arrow {
+    font-size: 1.4rem;
+    color: var(--text-dim);
+  }
+
+  /* USERS MAP */
+  .users-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-top: 20px;
+  }
+
+  .user-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px;
+    transition: transform 0.2s;
+  }
+
+  .user-card:hover { transform: translateY(-3px); }
+
+  .user-card .emoji { font-size: 2rem; margin-bottom: 10px; }
+  .user-card h4 { font-size: 0.95rem; font-weight: 700; margin-bottom: 8px; }
+  .user-card p { font-size: 0.82rem; color: var(--text-dim); line-height: 1.7; }
+
+  /* FIELDS TABLE */
+  .fields-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+  }
+
+  .field-item {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    transition: transform 0.2s;
+  }
+
+  .field-item:hover { transform: translateY(-2px); }
+
+  .field-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-top: 6px;
+    flex-shrink: 0;
+  }
+
+  .field-item h4 { font-size: 0.95rem; font-weight: 700; margin-bottom: 5px; }
+  .field-item p { font-size: 0.83rem; color: var(--text-dim); line-height: 1.7; }
+
+  /* LEGAL FORMS */
+  .legal-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+  }
+
+  .legal-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+    text-align: center;
+    transition: transform 0.2s;
+  }
+
+  .legal-card:hover { transform: translateY(-4px); }
+
+  .legal-card .big-emoji { font-size: 3rem; margin-bottom: 14px; }
+  .legal-card h3 { font-size: 1.1rem; font-weight: 800; margin-bottom: 12px; }
+  .legal-card ul { list-style: none; text-align: right; }
+  .legal-card li { font-size: 0.87rem; color: var(--text-dim); padding: 5px 0; border-bottom: 1px solid var(--border); }
+  .legal-card li:last-child { border-bottom: none; }
+  .legal-card li::before { content: "• "; }
+
+  /* BALANCE SHEET VISUAL */
+  .bs-visual {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    margin: 24px 0;
+  }
+
+  .bs-side { padding: 24px; }
+  .bs-side h4 { font-size: 0.9rem; font-weight: 700; margin-bottom: 14px; letter-spacing: 1px; text-transform: uppercase; }
+  .bs-item { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 0.87rem; }
+  .bs-item:last-child { border-bottom: none; }
+  .bs-total { display: flex; justify-content: space-between; padding: 10px 0; margin-top: 10px; border-top: 2px solid; font-weight: 700; }
+
+  .bs-assets { background: rgba(16,217,138,0.06); }
+  .bs-liab { background: rgba(59,142,234,0.06); }
+
+  /* INCOME STMT */
+  .is-visual {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    margin: 20px 0;
+  }
+
+  .is-header {
+    padding: 18px 24px;
+    background: var(--card2);
+    font-weight: 700;
+    font-size: 1rem;
+    text-align: center;
+  }
+
+  .is-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 24px;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.88rem;
+  }
+
+  .is-row.total {
+    font-weight: 700;
+    font-size: 1rem;
+    padding: 16px 24px;
+    border-bottom: none;
+  }
+
+  /* GOLDEN SUMMARY */
+  .golden-summary {
+    background: linear-gradient(135deg, #1a2a1a, #1a2236);
+    border: 2px solid var(--green);
+    border-radius: 20px;
+    padding: 40px;
+    text-align: center;
+    margin: 40px 0;
+  }
+
+  .golden-summary h3 {
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: var(--green);
+    margin-bottom: 24px;
+  }
+
+  .summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+    margin-top: 20px;
+  }
+
+  .summary-item {
+    background: rgba(0,0,0,0.3);
+    border: 1px solid var(--green);
+    border-radius: 12px;
+    padding: 16px;
+  }
+
+  .summary-item .si-icon { font-size: 1.5rem; margin-bottom: 8px; }
+  .summary-item p { font-size: 0.85rem; color: var(--text-dim); }
+  .summary-item strong { color: var(--green); font-size: 0.95rem; }
+
+  /* DIVIDER */
+  .section-divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border), transparent);
+    margin: 60px 0;
+  }
+
+  /* SECTION WRAPPER */
+  section { margin-bottom: 80px; }
+
+  /* ANIMATIONS */
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes bounce { 0%, 100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(8px); } }
+
+  /* RESPONSIVE */
+  @media (max-width: 600px) {
+    .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+    .bs-visual { grid-template-columns: 1fr; }
+    .big-eq { gap: 10px; }
+    .eq-part { min-width: 120px; padding: 14px 18px; }
+    .hero h1 { font-size: 2rem; }
+    .section-header h2 { font-size: 1.4rem; }
+    .golden-summary { padding: 24px 16px; }
+  }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+  /* ACCORDION */
+  .accordion { border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 12px; }
+  .accordion-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    cursor: pointer;
+    background: var(--card);
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: background 0.2s;
+  }
+  .accordion-header:hover { background: var(--card2); }
+  .accordion-arrow { transition: transform 0.3s; font-size: 1.2rem; color: var(--text-dim); }
+  .accordion.open .accordion-arrow { transform: rotate(180deg); }
+  .accordion-body { max-height: 0; overflow: hidden; transition: max-height 0.35s ease; }
+  .accordion.open .accordion-body { max-height: 600px; }
+  .accordion-content { padding: 16px 20px 20px; background: var(--card); border-top: 1px solid var(--border); }
+  .accordion-content p, .accordion-content li { font-size: 0.88rem; color: var(--text-dim); line-height: 1.8; }
+  .accordion-content ul { list-style: none; padding: 0; }
+  .accordion-content li::before { content: "◆ "; color: var(--green); font-size: 0.7rem; }
+
+  /* PILL LIST */
+  .pill-list { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+  .pill { padding: 5px 14px; border-radius: 50px; font-size: 0.82rem; font-weight: 600; }
+
+  /* progress bar */
+  .progress-wrap { margin: 8px 0; }
+  .progress-label { display: flex; justify-content: space-between; font-size: 0.82rem; margin-bottom: 5px; }
+  .progress-bar { height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; }
+  .progress-fill { height: 100%; border-radius: 3px; transition: width 1s ease; }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="grid-bg"></div>
+  <div style="position:relative;z-index:1;">
+    <div class="hero-badge">📚 الليكتشر الأول</div>
+    <h1>مبادئ <span>المحاسبة</span></h1>
+    <p>كل حاجة في الليكتشر الأول — من تعريف المحاسبة لحد القوائم المالية والمجالات والأشكال القانونية</p>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-num">7</div><div class="stat-label">موضوع رئيسي</div></div>
+      <div class="stat"><div class="stat-num">4</div><div class="stat-label">قوائم مالية</div></div>
+      <div class="stat"><div class="stat-num">10</div><div class="stat-label">مجال محاسبي</div></div>
+      <div class="stat"><div class="stat-num">9</div><div class="stat-label">فئة مستخدمين</div></div>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <span>اسكرول للأسفل</span>
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav class="top-nav">
+  <div class="nav-inner">
+    <button class="nav-btn active" onclick="scrollTo('def')">تعريف المحاسبة</button>
+    <button class="nav-btn" onclick="scrollTo('reports')">التقارير</button>
+    <button class="nav-btn" onclick="scrollTo('users')">المستخدمون</button>
+    <button class="nav-btn" onclick="scrollTo('objectives')">الأهداف</button>
+    <button class="nav-btn" onclick="scrollTo('statements')">القوائم المالية</button>
+    <button class="nav-btn" onclick="scrollTo('fields')">مجالات المحاسبة</button>
+    <button class="nav-btn" onclick="scrollTo('legal')">الأشكال القانونية</button>
+    <button class="nav-btn" onclick="scrollTo('summary')">الخلاصة</button>
+  </div>
+</nav>
+
+<div class="container">
+
+  <!-- ===== 1. DEFINITION ===== -->
+  <section id="def">
+    <div class="section-header">
+      <div class="section-icon" style="background:var(--green-dim);border:1px solid var(--green);">📖</div>
+      <div>
+        <div class="section-num" style="color:var(--green);">الجزء الأول</div>
+        <h2>تعريف المحاسبة</h2>
+        <p>المحاسبة = نظام + عملية — كل واحدة بتشرح جانب مختلف</p>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <!-- AS SYSTEM -->
+      <div class="card green-card">
+        <div class="tag tag-green">كـ System — نظام</div>
+        <h3>🔧 المحاسبة كنظام</h3>
+        <div class="highlight-box" style="background:rgba(16,217,138,0.05);border-color:var(--green);">
+          <p style="font-size:0.95rem;line-height:2;color:var(--text);">
+            نظام بيوفر <strong style="color:var(--green);">معلومات رقمية (Quantitative)</strong> ذات <strong style="color:var(--green);">طبيعة مالية (Financial)</strong> عن وحدة اقتصادية لمساعدة متخذي القرار
+          </p>
+        </div>
+        <div class="formula">الهدف النهائي = Decision Making 🎯</div>
+        <div style="margin-top:16px;">
+          <div class="accordion">
+            <div class="accordion-header" onclick="toggleAcc(this)">
+              <span>🟢 Quantitative Information</span>
+              <span class="accordion-arrow">⌄</span>
+            </div>
+            <div class="accordion-body">
+              <div class="accordion-content">
+                <p><strong>المحاسبة = لغة الأرقام</strong></p>
+                <ul style="margin-top:10px;">
+                  <li>✔️ مبيعات = 10,000 جنيه</li>
+                  <li>✔️ مصاريف = 6,000 جنيه</li>
+                  <li>❌ مكان الشركة</li>
+                  <li>❌ كفاءة الموظفين</li>
+                  <li>❌ تغيير الإدارة</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="accordion">
+            <div class="accordion-header" onclick="toggleAcc(this)">
+              <span>🟡 Financial Nature</span>
+              <span class="accordion-arrow">⌄</span>
+            </div>
+            <div class="accordion-body">
+              <div class="accordion-content">
+                <p><strong>لازم الحاجة تتحول لفلوس 💰</strong></p>
+                <ul style="margin-top:10px;">
+                  <li>✔️ اشتريت لاب بـ 20,000</li>
+                  <li>✔️ مبيعات = 50,000</li>
+                  <li>❌ موظف شاطر (مش بيتحسب بفلوس بسهولة)</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="accordion">
+            <div class="accordion-header" onclick="toggleAcc(this)">
+              <span>🔴 Decision Making</span>
+              <span class="accordion-arrow">⌄</span>
+            </div>
+            <div class="accordion-body">
+              <div class="accordion-content">
+                <p><strong>الهدف النهائي والأساسي للمحاسبة</strong></p>
+                <ul style="margin-top:10px;">
+                  <li>أستثمر في الشركة دي ولا لأ؟</li>
+                  <li>أوسع المشروع؟</li>
+                  <li>أعطي قرض للشركة؟</li>
+                  <li>نزود الإنتاج ولا نقلله؟</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- AS PROCESS -->
+      <div class="card blue-card">
+        <div class="tag tag-blue">كـ Process — عملية</div>
+        <h3>🔄 المحاسبة كعملية</h3>
+        <p style="color:var(--text-dim);font-size:0.87rem;margin-bottom:20px;">تحديد، تسجيل، تلخيص، وإعداد تقارير عن المعلومات الاقتصادية</p>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num" style="background:var(--green-dim);color:var(--green);border:2px solid var(--green);">1</div>
+            <div class="step-body">
+              <h4 style="color:var(--green);">Identifying — التحديد</h4>
+              <p>تحليل العمليات لتحديد المعلومات المالية وغير المالية<br><span style="color:var(--green);font-size:0.8rem;">مثال: بيع ✔️ | تغيير موظف ❌</span></p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="background:var(--blue-dim);color:var(--blue);border:2px solid var(--blue);">2</div>
+            <div class="step-body">
+              <h4 style="color:var(--blue);">Recording — التسجيل</h4>
+              <p>تسجيل العمليات المالية في دفتر اليومية (Journal)<br><span style="color:var(--blue);font-size:0.8rem;">= Journalizing</span></p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="background:var(--yellow-dim);color:var(--yellow);border:2px solid var(--yellow);">3</div>
+            <div class="step-body">
+              <h4 style="color:var(--yellow);">Summarizing — التلخيص</h4>
+              <p>نقل وتصنيف إلى دفتر الأستاذ (Ledger) وميزان المراجعة (Trial Balance)</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="background:var(--red-dim);color:var(--red);border:2px solid var(--red);">4</div>
+            <div class="step-body">
+              <h4 style="color:var(--red);">Reporting — التقارير</h4>
+              <p>إعداد القوائم المالية العامة (General-Purpose Financial Statements)</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FLOW DIAGRAM -->
+    <div style="margin-top:30px;padding:24px;background:var(--card);border:1px solid var(--border);border-radius:16px;text-align:center;">
+      <h4 style="margin-bottom:20px;color:var(--text-dim);font-size:0.9rem;">🔁 تسلسل عملية المحاسبة</h4>
+      <div class="diagram-flow">
+        <div class="flow-box" style="background:var(--green-dim);border:1px solid var(--green);color:var(--green);">🔍 Identifying<br><small style="color:var(--text-dim);">تحديد العمليات</small></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-box" style="background:var(--blue-dim);border:1px solid var(--blue);color:var(--blue);">📝 Recording<br><small style="color:var(--text-dim);">التسجيل في Journal</small></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-box" style="background:var(--yellow-dim);border:1px solid var(--yellow);color:var(--yellow);">📊 Summarizing<br><small style="color:var(--text-dim);">Ledger + Trial Balance</small></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-box" style="background:var(--red-dim);border:1px solid var(--red);color:var(--red);">📋 Reporting<br><small style="color:var(--text-dim);">القوائم المالية</small></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ===== 2. REPORTS ===== -->
+  <section id="reports">
+    <div class="section-header">
+      <div class="section-icon" style="background:var(--blue-dim);border:1px solid var(--blue);">📊</div>
+      <div>
+        <div class="section-num" style="color:var(--blue);">الجزء الثاني</div>
+        <h2>التقارير المحاسبية</h2>
+        <p>نوعين رئيسيين — داخلية للإدارة وخارجية لكل الناس</p>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <!-- INTERNAL -->
+      <div class="card green-card">
+        <div class="tag tag-green">Internal Reports — داخلية</div>
+        <h3>🏢 تقارير داخلية</h3>
+        <p style="margin-bottom:16px;">بتتعمل للناس اللي <strong style="color:var(--green);">جوه</strong> الشركة</p>
+        <div class="pill-list" style="margin-bottom:16px;">
+          <span class="pill" style="background:var(--green-dim);color:var(--green);">الإدارة</span>
+          <span class="pill" style="background:var(--green-dim);color:var(--green);">الموظفين</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:10px;margin-top:16px;">
+          <div style="background:var(--bg);padding:14px;border-radius:10px;border:1px solid var(--border);">
+            <div style="font-weight:700;font-size:0.9rem;margin-bottom:5px;">1️⃣ Budgets — الموازنات</div>
+            <p style="font-size:0.83rem;color:var(--text-dim);">خطة مستقبلية بالأرقام — متوقع نصرف X ونكسب Y</p>
+          </div>
+          <div style="background:var(--bg);padding:14px;border-radius:10px;border:1px solid var(--border);">
+            <div style="font-weight:700;font-size:0.9rem;margin-bottom:5px;">2️⃣ Cost Statements — تقارير التكاليف</div>
+            <p style="font-size:0.83rem;color:var(--text-dim);">بتحسب تكلفة المنتج أو الخدمة</p>
+          </div>
+          <div style="background:var(--bg);padding:14px;border-radius:10px;border:1px solid var(--border);">
+            <div style="font-weight:700;font-size:0.9rem;margin-bottom:5px;">3️⃣ Performance Evaluation Reports</div>
+            <p style="font-size:0.83rem;color:var(--text-dim);">تقييم الأداء — الموظف أو القسم حقق التارجت ولا لأ</p>
+          </div>
+          <div style="background:var(--bg);padding:14px;border-radius:10px;border:1px solid var(--border);">
+            <div style="font-weight:700;font-size:0.9rem;margin-bottom:5px;">4️⃣ Responsibility Accounting Reports</div>
+            <p style="font-size:0.83rem;color:var(--text-dim);">كل مدير مسؤول عن مركزه — مدير الإنتاج مسؤول عن التكاليف</p>
+          </div>
+        </div>
+        <div class="highlight-box" style="background:var(--green-dim);border-color:var(--green);margin-top:16px;">
+          <h4 style="color:var(--green);">🔑 خصائص التقارير الداخلية</h4>
+          <ul>
+            <li>معلومات تفصيلية جداً</li>
+            <li>مالية وغير مالية</li>
+            <li>تاريخية + مستقبلية (estimated)</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- EXTERNAL -->
+      <div class="card blue-card">
+        <div class="tag tag-blue">External Reports — خارجية</div>
+        <h3>🌍 تقارير خارجية</h3>
+        <p style="margin-bottom:6px;">اسمها: <strong style="color:var(--blue);">General Purpose Financial Statements</strong></p>
+        <p style="font-size:0.85rem;color:var(--text-dim);margin-bottom:16px;">بتتقدم لأي حد بره الشركة — للداخل والخارج لكن أساساً للخارج</p>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div style="background:rgba(16,217,138,0.08);padding:14px;border-radius:10px;border:1px solid var(--green);">
+            <div style="font-weight:700;font-size:0.9rem;margin-bottom:5px;color:var(--green);">1️⃣ Statement of Financial Position</div>
+            <p style="font-size:0.83rem;color:var(--text-dim);">لتحديد وحساب أصول والتزامات وحقوق الملكية</p>
+          </div>
+          <div style="background:rgba(59,142,234,0.08);padding:14px;border-radius:10px;border:1px solid var(--blue);">
+            <div style="font-weight:700;font-size:0.9rem;margin-bottom:5px;color:var(--blue);">2️⃣ Income Statement</div>
+            <p style="font-size:0.83rem;color:var(--text-dim);">لقياس وحساب نتيجة نشاط الشركة — ربح أو خسارة</p>
+          </div>
+          <div style="background:rgba(245,200,66,0.08);padding:14px;border-radius:10px;border:1px solid var(--yellow);">
+            <div style="font-weight:700;font-size:0.9rem;margin-bottom:5px;color:var(--yellow);">3️⃣ Statement of Owner's Equity</div>
+            <p style="font-size:0.83rem;color:var(--text-dim);">لقياس وحساب حقوق أصحاب الشركة</p>
+          </div>
+          <div style="background:rgba(240,82,82,0.08);padding:14px;border-radius:10px;border:1px solid var(--red);">
+            <div style="font-weight:700;font-size:0.9rem;margin-bottom:5px;color:var(--red);">4️⃣ Statement of Cash Flow</div>
+            <p style="font-size:0.83rem;color:var(--text-dim);">لتحديد وحساب التدفقات النقدية (Cash In & Cash Out)</p>
+          </div>
+        </div>
+        <div class="highlight-box" style="background:var(--blue-dim);border-color:var(--blue);margin-top:16px;">
+          <h4 style="color:var(--blue);">🔑 خصائص التقارير الخارجية</h4>
+          <ul>
+            <li>معلومات إجمالية</li>
+            <li>مالية فقط</li>
+            <li>تاريخية فقط (حصلت فعلاً)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- COMPARISON TABLE -->
+    <div style="margin-top:30px;background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
+      <div style="padding:16px 20px;background:var(--card2);font-weight:700;">📊 مقارنة: Internal vs External</div>
+      <div style="overflow-x:auto;">
+        <table class="compare-table" style="min-width:500px;">
+          <thead>
+            <tr>
+              <th>النقطة</th>
+              <th style="color:var(--green);">Internal</th>
+              <th style="color:var(--blue);">External</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>المستخدم</td><td style="color:var(--green);">جوه الشركة</td><td style="color:var(--blue);">بره الشركة</td></tr>
+            <tr><td>نوع البيانات</td><td style="color:var(--green);">تفصيلية</td><td style="color:var(--blue);">إجمالية</td></tr>
+            <tr><td>نوعها</td><td style="color:var(--green);">مالية + غير مالية</td><td style="color:var(--blue);">مالية فقط</td></tr>
+            <tr><td>الزمن</td><td style="color:var(--green);">ماضي + مستقبل</td><td style="color:var(--blue);">ماضي فقط</td></tr>
+            <tr><td>الهدف</td><td style="color:var(--green);">إدارة وتشغيل</td><td style="color:var(--blue);">تقييم واستثمار</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ===== 3. USERS ===== -->
+  <section id="users">
+    <div class="section-header">
+      <div class="section-icon" style="background:var(--yellow-dim);border:1px solid var(--yellow);">👥</div>
+      <div>
+        <div class="section-num" style="color:var(--yellow);">الجزء الثالث</div>
+        <h2>مستخدمو المحاسبة</h2>
+        <p>داخليون وخارجيون — كل فئة بتحتاج معلومات مختلفة</p>
+      </div>
+    </div>
+
+    <div class="grid-2" style="margin-bottom:30px;">
+      <!-- INTERNAL USERS -->
+      <div class="card green-card">
+        <div class="tag tag-green">Internal Users — داخليون</div>
+        <h3>🏠 المستخدمون الداخليون</h3>
+        <div class="pill-list" style="margin-bottom:16px;">
+          <span class="pill" style="background:var(--green-dim);color:var(--green);">الإدارة</span>
+          <span class="pill" style="background:var(--green-dim);color:var(--green);">عمال الشركة</span>
+        </div>
+        <p style="font-size:0.87rem;color:var(--text-dim);margin-bottom:16px;">محتاجين معلومات تفصيلية ومالية وغير مالية وتاريخية ومستقبلية لمساعدتهم في:</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+          <div style="background:var(--bg);padding:12px;border-radius:10px;text-align:center;border:1px solid var(--border);">
+            <div style="font-size:1.3rem;margin-bottom:5px;">📅</div>
+            <div style="font-size:0.83rem;font-weight:700;">Planning</div>
+            <div style="font-size:0.75rem;color:var(--text-dim);">التخطيط</div>
+          </div>
+          <div style="background:var(--bg);padding:12px;border-radius:10px;text-align:center;border:1px solid var(--border);">
+            <div style="font-size:1.3rem;margin-bottom:5px;">🔗</div>
+            <div style="font-size:0.83rem;font-weight:700;">Coordinating</div>
+            <div style="font-size:0.75rem;color:var(--text-dim);">التنسيق</div>
+          </div>
+          <div style="background:var(--bg);padding:12px;border-radius:10px;text-align:center;border:1px solid var(--border);">
+            <div style="font-size:1.3rem;margin-bottom:5px;">🎯</div>
+            <div style="font-size:0.83rem;font-weight:700;">Directing</div>
+            <div style="font-size:0.75rem;color:var(--text-dim);">التوجيه</div>
+          </div>
+          <div style="background:var(--bg);padding:12px;border-radius:10px;text-align:center;border:1px solid var(--border);">
+            <div style="font-size:1.3rem;margin-bottom:5px;">🔍</div>
+            <div style="font-size:0.83rem;font-weight:700;">Controlling</div>
+            <div style="font-size:0.75rem;color:var(--text-dim);">الرقابة</div>
+          </div>
+        </div>
+        <p style="font-size:0.8rem;color:var(--text-dim);margin-top:14px;">+ اتخاذ إجراءات تصحيحية عند الحاجة</p>
+      </div>
+
+      <!-- EXTERNAL USERS -->
+      <div class="card blue-card">
+        <div class="tag tag-blue">External Users — خارجيون</div>
+        <h3>🌍 المستخدمون الخارجيون</h3>
+        <p style="font-size:0.87rem;color:var(--text-dim);margin-bottom:16px;">محتاجين معلومات إجمالية وتاريخية ومالية لمعرفة:</p>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div style="background:var(--bg);padding:14px;border-radius:10px;border:1px solid var(--border);display:flex;gap:12px;align-items:center;">
+            <span style="font-size:1.3rem;">💰</span>
+            <div>
+              <div style="font-weight:700;font-size:0.9rem;">Profitability — الربحية</div>
+              <div style="font-size:0.8rem;color:var(--text-dim);">الشركة بتكسب ولا لأ؟</div>
+            </div>
+          </div>
+          <div style="background:var(--bg);padding:14px;border-radius:10px;border:1px solid var(--border);display:flex;gap:12px;align-items:center;">
+            <span style="font-size:1.3rem;">📦</span>
+            <div>
+              <div style="font-weight:700;font-size:0.9rem;">Resources & Uses</div>
+              <div style="font-size:0.8rem;color:var(--text-dim);">الفلوس جاية منين وبتتصرف فين؟</div>
+            </div>
+          </div>
+        </div>
+        <p style="margin-top:14px;font-size:0.87rem;color:var(--text);font-weight:600;">ويقيّموا:</p>
+        <ul style="list-style:none;margin-top:10px;display:flex;flex-direction:column;gap:8px;">
+          <li style="background:var(--bg);padding:10px 14px;border-radius:8px;font-size:0.83rem;color:var(--text-dim);border:1px solid var(--border);">✔️ الوضع المالي للشركة (Financial Position)</li>
+          <li style="background:var(--bg);padding:10px 14px;border-radius:8px;font-size:0.83rem;color:var(--text-dim);border:1px solid var(--border);">✔️ قدرتها على النمو والاستمرار في العمل</li>
+          <li style="background:var(--bg);padding:10px 14px;border-radius:8px;font-size:0.83rem;color:var(--text-dim);border:1px solid var(--border);">✔️ قدرتها على سداد ديونها</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- EXTERNAL USERS DETAILED -->
+    <h3 style="margin-bottom:20px;font-size:1.1rem;">🔍 المستخدمون الخارجيون بالتفصيل</h3>
+    <div class="users-grid">
+      <div class="user-card" style="border-color:var(--green);">
+        <div class="emoji">📈</div>
+        <h4 style="color:var(--green);">Investors — المستثمرون</h4>
+        <p><strong>حاليون:</strong> معاهم استثمار يقرروا يكملوا ولا يطلعوا<br><strong>محتملون:</strong> بيقارنوا بين الفرص — فين أحسن استثمار؟<br>محتاجين: التدفقات النقدية + درجة المخاطرة</p>
+      </div>
+      <div class="user-card" style="border-color:var(--blue);">
+        <div class="emoji">🏦</div>
+        <h4 style="color:var(--blue);">Creditors & Banks</h4>
+        <p>بيدوا قروض للشركة — محتاجين يعرفوا الوضع المالي وقدرتها على سداد الديون والقروض</p>
+      </div>
+      <div class="user-card" style="border-color:var(--yellow);">
+        <div class="emoji">🚚</div>
+        <h4 style="color:var(--yellow);">Suppliers — الموردون</h4>
+        <p>بيبيعوا للشركة بالآجل — محتاجين يتأكدوا إن الشركة مش هتفلس وهتدفع التزاماتها</p>
+      </div>
+      <div class="user-card" style="border-color:var(--orange);">
+        <div class="emoji">🛒</div>
+        <h4 style="color:var(--orange);">Customers — العملاء</h4>
+        <p>محتاجين يتأكدوا إن الشركة هتفضل شغالة وتوفر الخدمات والصيانة وقطع الغيار</p>
+      </div>
+      <div class="user-card" style="border-color:var(--purple);">
+        <div class="emoji">👷</div>
+        <h4 style="color:var(--purple);">Workers & Unions</h4>
+        <p>محتاجين يعرفوا نصيبهم من الأرباح، يفاوضوا على المرتبات، ويقيّموا وضع التوظيف</p>
+      </div>
+      <div class="user-card" style="border-color:var(--red);">
+        <div class="emoji">⚔️</div>
+        <h4 style="color:var(--red);">Competitors — المنافسون</h4>
+        <p>محتاجين يقيّموا وضعهم التنافسي وإمكانية النمو والتوسع مقارنةً بالشركة</p>
+      </div>
+      <div class="user-card" style="border-color:var(--green);grid-column:span 1;">
+        <div class="emoji">🏛️</div>
+        <h4 style="color:var(--green);">Governmental Agencies</h4>
+        <p><strong>مصلحة الضرائب</strong> | وزارة التخطيط | وزارة الصناعة | هيئة البورصة<br>لتحسين أداء الوحدات الحكومية وتقييم المساهمة في الدخل القومي</p>
+      </div>
+      <div class="user-card" style="border-color:var(--blue);">
+        <div class="emoji">📊</div>
+        <h4 style="color:var(--blue);">Financial Analysts & Public</h4>
+        <p><strong>المحللون:</strong> تقييم أداء الشركات وتقديم استشارات وأبحاث أكاديمية<br><strong>الجمهور:</strong> معرفة الخدمات والمنتجات في منطقتهم</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ===== 4. OBJECTIVES ===== -->
+  <section id="objectives">
+    <div class="section-header">
+      <div class="section-icon" style="background:var(--red-dim);border:1px solid var(--red);">🎯</div>
+      <div>
+        <div class="section-num" style="color:var(--red);">الجزء الرابع</div>
+        <h2>أهداف المحاسبة</h2>
+        <p>4 أهداف — 4 قوائم — 4 أسئلة جوهرية</p>
+      </div>
+    </div>
+
+    <div class="grid-4" style="margin-bottom:30px;">
+      <div class="card green-card" style="text-align:center;">
+        <div style="font-size:2.5rem;margin-bottom:12px;">💰</div>
+        <div class="tag tag-green" style="margin:0 auto 12px;">الهدف الأول</div>
+        <h3 style="font-size:1rem;">Profit or Loss</h3>
+        <p style="font-size:0.83rem;margin:8px 0;">تحديد الربح أو الخسارة</p>
+        <div style="background:var(--bg);padding:8px;border-radius:8px;font-size:0.8rem;color:var(--green);font-weight:700;margin-top:10px;">📋 Income Statement</div>
+      </div>
+      <div class="card blue-card" style="text-align:center;">
+        <div style="font-size:2.5rem;margin-bottom:12px;">🏗️</div>
+        <div class="tag tag-blue" style="margin:0 auto 12px;">الهدف الثاني</div>
+        <h3 style="font-size:1rem;">Assets & Liabilities</h3>
+        <p style="font-size:0.83rem;margin:8px 0;">تحديد الأصول والالتزامات</p>
+        <div style="background:var(--bg);padding:8px;border-radius:8px;font-size:0.8rem;color:var(--blue);font-weight:700;margin-top:10px;">📋 Balance Sheet</div>
+      </div>
+      <div class="card yellow-card" style="text-align:center;">
+        <div style="font-size:2.5rem;margin-bottom:12px;">💵</div>
+        <div class="tag tag-yellow" style="margin:0 auto 12px;">الهدف الثالث</div>
+        <h3 style="font-size:1rem;">Cash Flows</h3>
+        <p style="font-size:0.83rem;margin:8px 0;">تحديد التدفقات النقدية</p>
+        <div style="background:var(--bg);padding:8px;border-radius:8px;font-size:0.8rem;color:var(--yellow);font-weight:700;margin-top:10px;">📋 Cash Flow Statement</div>
+      </div>
+      <div class="card red-card" style="text-align:center;">
+        <div style="font-size:2.5rem;margin-bottom:12px;">👤</div>
+        <div class="tag tag-red" style="margin:0 auto 12px;">الهدف الرابع</div>
+        <h3 style="font-size:1rem;">Owner's Rights</h3>
+        <p style="font-size:0.83rem;margin:8px 0;">تحديد حقوق الملاك</p>
+        <div style="background:var(--bg);padding:8px;border-radius:8px;font-size:0.8rem;color:var(--red);font-weight:700;margin-top:10px;">📋 Owner's Equity Statement</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ===== 5. FINANCIAL STATEMENTS ===== -->
+  <section id="statements">
+    <div class="section-header">
+      <div class="section-icon" style="background:var(--purple-dim);border:1px solid var(--purple);">📋</div>
+      <div>
+        <div class="section-num" style="color:var(--purple);">الجزء الخامس</div>
+        <h2>القوائم المالية بالتفصيل</h2>
+        <p>Balance Sheet, Income Statement, وكل ما يتعلق بهم</p>
+      </div>
+    </div>
+
+    <!-- BALANCE SHEET -->
+    <div style="margin-bottom:40px;">
+      <h3 style="margin-bottom:8px;display:flex;align-items:center;gap:10px;font-size:1.2rem;">
+        <span style="color:var(--green);">①</span> Statement of Financial Position — الميزانية
+      </h3>
+      <p style="color:var(--text-dim);font-size:0.88rem;margin-bottom:20px;">تحتوي على 3 حسابات دائمة (Permanent / Real Accounts) تعكس الوضع المالي للشركة</p>
+
+      <div class="bs-visual">
+        <div class="bs-side bs-assets">
+          <h4 style="color:var(--green);">🟢 Assets — الأصول</h4>
+          <p style="font-size:0.78rem;color:var(--text-dim);margin-bottom:14px;">منافع اقتصادية مستقبلية تتحكم فيها الشركة بسبب عمليات ماضية</p>
+          <div style="margin-bottom:10px;font-size:0.8rem;font-weight:700;color:var(--text-dim);">أصول ثابتة (Fixed):</div>
+          <div class="bs-item"><span>Land — أرض</span><span style="color:var(--green);">✦</span></div>
+          <div class="bs-item"><span>Building — مباني</span><span style="color:var(--green);">✦</span></div>
+          <div class="bs-item"><span>Equipment — معدات</span><span style="color:var(--green);">✦</span></div>
+          <div class="bs-item"><span>Furniture — أثاث</span><span style="color:var(--green);">✦</span></div>
+          <div style="margin:10px 0;font-size:0.8rem;font-weight:700;color:var(--text-dim);">أصول متداولة (Current):</div>
+          <div class="bs-item"><span>Cash — نقدية</span><span style="color:var(--green);">✦</span></div>
+          <div class="bs-item"><span>Inventory — مخزون</span><span style="color:var(--green);">✦</span></div>
+          <div class="bs-item"><span>Office Supplies</span><span style="color:var(--green);">✦</span></div>
+          <div class="bs-item"><span>Accounts Receivable — عملاء</span><span style="color:var(--green);">✦</span></div>
+          <div class="bs-item"><span>Notes Receivable — أوراق قبض</span><span style="color:var(--green);">✦</span></div>
+          <div class="bs-item"><span>Prepaid Expenses</span><span style="color:var(--green);">✦</span></div>
+          <div class="bs-item"><span>Accrued Revenues</span><span style="color:var(--green);">✦</span></div>
+          <div class="bs-total" style="border-color:var(--green);color:var(--green);">
+            <span>Total Assets</span><span>= Liab + Equity</span>
+          </div>
+        </div>
+        <div class="bs-side bs-liab">
+          <h4 style="color:var(--red);">🔴 Liabilities + Owner's Equity</h4>
+          <p style="font-size:0.78rem;color:var(--text-dim);margin-bottom:14px;">التزامات مستقبلية تنشأ عن عمليات ماضية</p>
+          <div style="margin-bottom:10px;font-size:0.8rem;font-weight:700;color:var(--text-dim);">Liabilities — الالتزامات:</div>
+          <div class="bs-item"><span>Accounts Payable — موردين</span><span style="color:var(--red);">✦</span></div>
+          <div class="bs-item"><span>Notes Payable — أوراق دفع</span><span style="color:var(--red);">✦</span></div>
+          <div class="bs-item"><span>Expenses Payable</span><span style="color:var(--red);">✦</span></div>
+          <div class="bs-item"><span>Unearned Revenues</span><span style="color:var(--red);">✦</span></div>
+          <div class="bs-item"><span>Loans — قروض</span><span style="color:var(--red);">✦</span></div>
+          <div style="margin:10px 0;font-size:0.8rem;font-weight:700;color:var(--text-dim);">Owner's Equity — حقوق الملكية:</div>
+          <div class="bs-item"><span>Capital — رأس المال</span><span style="color:var(--yellow);">✦</span></div>
+          <div class="bs-item"><span>+ Net Profit</span><span style="color:var(--green);">+</span></div>
+          <div class="bs-item"><span>(-) Drawings — مسحوبات</span><span style="color:var(--red);">-</span></div>
+          <div class="bs-total" style="border-color:var(--blue);color:var(--blue);">
+            <span>Total L + E</span><span>= Total Assets</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="formula" style="font-size:1.3rem;">Assets = Liabilities + Owner's Equity</div>
+
+      <div class="grid-3">
+        <div class="highlight-box" style="background:var(--green-dim);border-color:var(--green);">
+          <h4 style="color:var(--green);">Assets — تعريف</h4>
+          <p>منافع اقتصادية مستقبلية تتحكم فيها الشركة بسبب عمليات حصلت في الماضي</p>
+          <p style="margin-top:8px;font-size:0.8rem;"><em>= حاجة هتجيب فلوس للشركة</em></p>
+        </div>
+        <div class="highlight-box" style="background:var(--red-dim);border-color:var(--red);">
+          <h4 style="color:var(--red);">Liabilities — تعريف</h4>
+          <p>تضحيات اقتصادية مستقبلية ناتجة عن التزامات حالية لتحويل أصول أو تقديم خدمات في المستقبل</p>
+        </div>
+        <div class="highlight-box" style="background:var(--yellow-dim);border-color:var(--yellow);">
+          <h4 style="color:var(--yellow);">Owner's Equity — تعريف</h4>
+          <p>ما تبقى من الأصول بعد خصم جميع الالتزامات</p>
+          <div class="formula" style="font-size:0.9rem;margin-top:10px;border-color:var(--yellow);color:var(--yellow);">Equity = Assets - Liabilities</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- INCOME STATEMENT -->
+    <div style="margin-bottom:40px;">
+      <h3 style="margin-bottom:8px;display:flex;align-items:center;gap:10px;font-size:1.2rem;">
+        <span style="color:var(--blue);">②</span> Income Statement — قائمة الدخل
+      </h3>
+      <p style="color:var(--text-dim);font-size:0.88rem;margin-bottom:20px;">تُعدّ في نهاية كل فترة محاسبية (عادةً سنة) وتظهر نتيجة نشاط الشركة. تحتوي على حسابات مؤقتة (Temporary / Nominal Accounts)</p>
+
+      <div class="grid-2">
+        <div>
+          <div class="is-visual">
+            <div class="is-header">📊 Income Statement — مثال توضيحي</div>
+            <div class="is-row"><span>💹 Sales Revenue</span><span style="color:var(--green);">100,000</span></div>
+            <div class="is-row"><span>💹 Services Revenue</span><span style="color:var(--green);">20,000</span></div>
+            <div class="is-row" style="font-weight:600;"><span>Total Revenues</span><span style="color:var(--green);">120,000</span></div>
+            <div class="is-row" style="background:rgba(240,82,82,0.05);"><span>💸 Salaries Expense</span><span style="color:var(--red);">(30,000)</span></div>
+            <div class="is-row" style="background:rgba(240,82,82,0.05);"><span>💸 Rent Expense</span><span style="color:var(--red);">(20,000)</span></div>
+            <div class="is-row" style="background:rgba(240,82,82,0.05);"><span>💸 Electricity</span><span style="color:var(--red);">(5,000)</span></div>
+            <div class="is-row" style="background:rgba(240,82,82,0.05);"><span>💸 Insurance Exp.</span><span style="color:var(--red);">(5,000)</span></div>
+            <div class="is-row total" style="background:rgba(16,217,138,0.08);border-top:2px solid var(--green);">
+              <span style="color:var(--green);">✨ Net Profit</span>
+              <span style="color:var(--green);">60,000</span>
+            </div>
+          </div>
+          <div class="formula">Profit = Revenues − Expenses</div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:16px;">
+          <div class="card green-card">
+            <div class="tag tag-green">Revenues — الإيرادات</div>
+            <p style="font-size:0.87rem;color:var(--text-dim);">سعر بيع المنتجات أو الخدمات للعملاء — بصرف النظر عن التحصيل من عدمه خلال الفترة</p>
+            <ul style="margin-top:12px;">
+              <li>Sales Revenue — مبيعات</li>
+              <li>Interest Revenue — فوائد</li>
+              <li>Services Revenue — خدمات</li>
+            </ul>
+          </div>
+          <div class="card red-card">
+            <div class="tag tag-red">Expenses — المصاريف</div>
+            <p style="font-size:0.87rem;color:var(--text-dim);">تكلفة استنفاد الموارد والتسهيلات اللازمة لتقديم الخدمة أو بيع المنتج</p>
+            <ul style="margin-top:12px;">
+              <li>Insurance Exp. — تأمين</li>
+              <li>Rent Exp. — إيجار</li>
+              <li>Salaries — مرتبات</li>
+              <li>Electricity</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- PROFIT / LOSS / GAIN / LOSS ITEM -->
+      <div class="grid-4" style="margin-top:20px;">
+        <div class="highlight-box" style="background:var(--green-dim);border-color:var(--green);text-align:center;">
+          <h4 style="color:var(--green);">💚 Profit (Net Income)</h4>
+          <p>Revenues > Expenses<br><strong style="color:var(--green);">= زيادة في Equity</strong><br>نتيجة إيجابية</p>
+        </div>
+        <div class="highlight-box" style="background:var(--red-dim);border-color:var(--red);text-align:center;">
+          <h4 style="color:var(--red);">❤️ Loss — كنتيجة</h4>
+          <p>Revenues &lt; Expenses<br><strong style="color:var(--red);">= نقص في Equity</strong><br>نتيجة سلبية</p>
+        </div>
+        <div class="highlight-box" style="background:var(--red-dim);border-color:var(--red);text-align:center;">
+          <h4 style="color:var(--red);">📌 Losses — كبند</h4>
+          <p>مصروف من أنشطة غير مركزية <strong style="color:var(--red);">بدون مقابل</strong><br>(نقص في Equity)</p>
+        </div>
+        <div class="highlight-box" style="background:var(--green-dim);border-color:var(--green);text-align:center;">
+          <h4 style="color:var(--green);">💚 Gains — مكاسب</h4>
+          <p>تدفق داخل من أنشطة <strong style="color:var(--green);">غير مركزية وغير متكررة</strong><br>(زيادة في Equity)</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ===== 6. FIELDS ===== -->
+  <section id="fields">
+    <div class="section-header">
+      <div class="section-icon" style="background:var(--orange-dim);border:1px solid var(--orange);">🏛️</div>
+      <div>
+        <div class="section-num" style="color:var(--orange);">الجزء السادس</div>
+        <h2>مجالات المحاسبة</h2>
+        <p>10 مجالات مختلفة — كل واحد بيخدم هدف مختلف</p>
+      </div>
+    </div>
+
+    <div class="fields-grid">
+      <div class="field-item">
+        <div class="field-dot" style="background:var(--blue);"></div>
+        <div>
+          <h4>Financial Accounting</h4>
+          <p>تقديم معلومات للمستخدمين الخارجيين من خلال تحليل وتسجيل وتصنيف وتلخيص والإبلاغ عن الأحداث المالية</p>
+        </div>
+      </div>
+      <div class="field-item">
+        <div class="field-dot" style="background:var(--green);"></div>
+        <div>
+          <h4>Managerial Accounting</h4>
+          <p>تقديم معلومات للمستخدمين الداخليين (الإدارة) للمساعدة في التخطيط والرقابة باستخدام الموازنات والمحاسبة عن المسؤولية</p>
+        </div>
+      </div>
+      <div class="field-item">
+        <div class="field-dot" style="background:var(--yellow);"></div>
+        <div>
+          <h4>Cost Accounting</h4>
+          <p>تسجيل وقياس والإبلاغ عن معلومات التكاليف لمساعدة في: تسعير المنتجات + الرقابة على التكاليف<br><em style="color:var(--text-dim);font-size:0.8rem;">Actual vs Predetermined — وتحليل الانحرافات</em></p>
+        </div>
+      </div>
+      <div class="field-item">
+        <div class="field-dot" style="background:var(--purple);"></div>
+        <div>
+          <h4>Budgeting</h4>
+          <p><strong>تخطيط:</strong> ترجمة أهداف الشركة إلى تعبير رقمي<br><strong>رقابة:</strong> مقارنة النتائج الفعلية بالمخططة لتقييم الأداء واتخاذ إجراءات تصحيحية</p>
+        </div>
+      </div>
+      <div class="field-item">
+        <div class="field-dot" style="background:var(--red);"></div>
+        <div>
+          <h4>Governmental Accounting</h4>
+          <p>يتعامل مع الأنشطة الحكومية على كل المستويات — إعداد الميزانية العامة والحسابات الختامية + الرقابة المالية قبل وبعد الصرف</p>
+        </div>
+      </div>
+      <div class="field-item">
+        <div class="field-dot" style="background:var(--orange);"></div>
+        <div>
+          <h4>Tax Accounting</h4>
+          <p>تحديد الدخل الخاضع للضريبة + مقدار الضرائب المستحقة + التخطيط الضريبي لتقليل الضرائب للحد الأدنى واستغلال الإعفاءات</p>
+        </div>
+      </div>
+      <div class="field-item">
+        <div class="field-dot" style="background:var(--blue);"></div>
+        <div>
+          <h4>National Accounting</h4>
+          <p>تقديم معلومات للدولة — محاسبة جميع قطاعات الاقتصاد القومي: قياس الدخل القومي + مساهمة كل قطاع + جداول المدخلات والمخرجات</p>
+        </div>
+      </div>
+      <div class="field-item">
+        <div class="field-dot" style="background:var(--green);"></div>
+        <div>
+          <h4>International Accounting</h4>
+          <p>مشاكل العملات الأجنبية وأسعار الصرف | القوائم للشركات متعددة الجنسيات | ترجمة القوائم الأجنبية | تنسيق المعايير المحلية والدولية</p>
+        </div>
+      </div>
+      <div class="field-item">
+        <div class="field-dot" style="background:var(--purple);"></div>
+        <div>
+          <h4>Auditing — المراجعة</h4>
+          <p>فحص نظام الرقابة الداخلية + مراجعة المستندات والسجلات والقوائم + جمع الأدلة لإبداء رأي مهني في عدالة القوائم المالية</p>
+        </div>
+      </div>
+      <div class="field-item">
+        <div class="field-dot" style="background:var(--red);"></div>
+        <div>
+          <h4>Responsibility Accounting</h4>
+          <p>تقسيم الشركة إلى مراكز مسؤولية — كل مدير مسؤول عن الإيرادات والمصروفات تحت سيطرته وسلطته فقط — تقييم الأداء بالانحرافات</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ===== 7. LEGAL FORMS ===== -->
+  <section id="legal">
+    <div class="section-header">
+      <div class="section-icon" style="background:var(--purple-dim);border:1px solid var(--purple);">⚖️</div>
+      <div>
+        <div class="section-num" style="color:var(--purple);">الجزء السابع</div>
+        <h2>الأشكال القانونية للمنشآت</h2>
+        <p>3 أشكال رئيسية — كل واحد بيه خصائص مختلفة</p>
+      </div>
+    </div>
+
+    <div class="legal-grid">
+      <div class="legal-card" style="border-color:var(--green);">
+        <div class="big-emoji">👤</div>
+        <div class="tag tag-green" style="margin:0 auto 14px;">Proprietorship — المنشأة الفردية</div>
+        <ul>
+          <li>مالك واحد يحصل على الربح أو الخسارة</li>
+          <li>المالك هو مدير المنشأة</li>
+          <li>مسؤولية غير محدودة</li>
+          <li>أبسط أشكال المنشآت</li>
+        </ul>
+      </div>
+      <div class="legal-card" style="border-color:var(--blue);">
+        <div class="big-emoji">👥</div>
+        <div class="tag tag-blue" style="margin:0 auto 14px;">Partnership — شركة الأشخاص</div>
+        <ul>
+          <li>أكثر من مالك (شريك) حتى 20 شريكاً</li>
+          <li>كل شريك غير محدود المسؤولية يُعتبر مديراً</li>
+          <li>مسؤولية غير محدودة للشركاء</li>
+          <li>اتفاقية الشراكة تحدد نصيب كل شريك</li>
+        </ul>
+      </div>
+      <div class="legal-card" style="border-color:var(--purple);">
+        <div class="big-emoji">🏢</div>
+        <div class="tag tag-purple" style="margin:0 auto 14px;">Corporation — شركة المساهمة</div>
+        <ul>
+          <li>عدد غير محدود من المساهمين ورأس مال ضخم</li>
+          <li>مسؤولية محدودة بعدد الأسهم</li>
+          <li>كيان قانوني مستقل عن مالكيه</li>
+          <li>قدرة غير محدودة على جمع الأموال</li>
+          <li>مرونة في انتقال رأس المال</li>
+          <li>استمرارية (Continuity)</li>
+          <li>كيان قانوني منفصل</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- CORPORATION DETAILS -->
+    <div style="margin-top:24px;background:var(--purple-dim);border:1px solid var(--purple);border-radius:16px;padding:24px;">
+      <h4 style="color:var(--purple);margin-bottom:16px;">🏢 خصائص شركة المساهمة (Corporation) — تفصيلاً:</h4>
+      <div class="grid-4">
+        <div style="text-align:center;padding:16px;background:rgba(0,0,0,0.3);border-radius:10px;">
+          <div style="font-size:1.5rem;margin-bottom:8px;">💸</div>
+          <div style="font-size:0.85rem;font-weight:700;color:var(--purple);">قدرة غير محدودة على جمع الأموال</div>
+        </div>
+        <div style="text-align:center;padding:16px;background:rgba(0,0,0,0.3);border-radius:10px;">
+          <div style="font-size:1.5rem;margin-bottom:8px;">🔄</div>
+          <div style="font-size:0.85rem;font-weight:700;color:var(--purple);">مرونة انتقال رأس المال</div>
+        </div>
+        <div style="text-align:center;padding:16px;background:rgba(0,0,0,0.3);border-radius:10px;">
+          <div style="font-size:1.5rem;margin-bottom:8px;">♾️</div>
+          <div style="font-size:0.85rem;font-weight:700;color:var(--purple);">استمرارية (Continuity)</div>
+        </div>
+        <div style="text-align:center;padding:16px;background:rgba(0,0,0,0.3);border-radius:10px;">
+          <div style="font-size:1.5rem;margin-bottom:8px;">⚖️</div>
+          <div style="font-size:0.85rem;font-weight:700;color:var(--purple);">كيان قانوني منفصل</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ===== SUMMARY ===== -->
+  <section id="summary">
+    <div class="golden-summary">
+      <h3>🧠 الخلاصة الذهبية</h3>
+      <p style="color:var(--text-dim);margin-bottom:24px;font-size:0.95rem;">اللي لازم تحفظه وتمشي بيه في الامتحان</p>
+
+      <div class="summary-grid">
+        <div class="summary-item">
+          <div class="si-icon">🔧</div>
+          <strong>Accounting = System + Process</strong>
+          <p>نظام + عملية من 4 خطوات</p>
+        </div>
+        <div class="summary-item">
+          <div class="si-icon">🎯</div>
+          <strong>الهدف = Decision Making</strong>
+          <p>الغرض النهائي والأساسي</p>
+        </div>
+        <div class="summary-item">
+          <div class="si-icon">📊</div>
+          <strong>4 قوائم مالية</strong>
+          <p>Balance Sheet / Income / Cash Flow / Equity</p>
+        </div>
+        <div class="summary-item">
+          <div class="si-icon">👥</div>
+          <strong>مستخدمون داخليون + خارجيون</strong>
+          <p>كل فئة بتحتاج معلومات مختلفة</p>
+        </div>
+        <div class="summary-item">
+          <div class="si-icon">⚖️</div>
+          <strong>Assets = Liabilities + Equity</strong>
+          <p>المعادلة الأساسية للميزانية</p>
+        </div>
+        <div class="summary-item">
+          <div class="si-icon">💰</div>
+          <strong>Profit = Revenue - Expenses</strong>
+          <p>معادلة الربح والخسارة</p>
+        </div>
+        <div class="summary-item">
+          <div class="si-icon">🏛️</div>
+          <strong>10 مجالات محاسبية</strong>
+          <p>من Financial لحد Auditing</p>
+        </div>
+        <div class="summary-item">
+          <div class="si-icon">⚖️</div>
+          <strong>3 أشكال قانونية</strong>
+          <p>Proprietorship / Partnership / Corporation</p>
+        </div>
+      </div>
+
+      <div style="margin-top:30px;padding:20px;background:rgba(0,0,0,0.3);border-radius:12px;border:1px solid var(--green);">
+        <p style="font-size:0.9rem;color:var(--text-dim);margin-bottom:8px;">مثال شامل للامتحان 🔥</p>
+        <div class="big-eq">
+          <div class="eq-part"><div class="label">Revenues</div><div class="val" style="color:var(--green);">100,000</div></div>
+          <div class="eq-op">−</div>
+          <div class="eq-part"><div class="label">Expenses</div><div class="val" style="color:var(--red);">60,000</div></div>
+          <div class="eq-op">=</div>
+          <div class="eq-part highlighted"><div class="label">Profit → يزيد Equity</div><div class="val" style="color:var(--blue);">40,000</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- FOOTER -->
+<div style="border-top:1px solid var(--border);padding:30px 20px;text-align:center;color:var(--text-dim);font-size:0.85rem;">
+  <p>📚 الليكتشر الأول — مبادئ المحاسبة</p>
+  <p style="margin-top:6px;font-size:0.75rem;">كل المحتوى مستخلص من الشرح بدون حذف أي معلومة</p>
+</div>
+
+<script>
+  // ACCORDION
+  function toggleAcc(header) {
+    const acc = header.parentElement;
+    acc.classList.toggle('open');
+  }
+
+  // NAV SCROLL
+  function scrollTo(id) {
+    document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  // ACTIVE NAV
+  const sections = ['def','reports','users','objectives','statements','fields','legal','summary'];
+  const navBtns = document.querySelectorAll('.nav-btn');
+
+  function updateNav() {
+    let current = '';
+    sections.forEach(id => {
+      const el = document.getElementById(id);
+      if (el && el.getBoundingClientRect().top < 150) current = id;
+    });
+    navBtns.forEach((btn, i) => {
+      btn.classList.toggle('active', sections[i] === current);
+    });
+  }
+
+  window.addEventListener('scroll', updateNav);
+
+  // ANIMATE ON SCROLL
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.card, .user-card, .legal-card, .field-item').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+    observer.observe(el);
+  });
+</script>
+
+</body>
+</html>
