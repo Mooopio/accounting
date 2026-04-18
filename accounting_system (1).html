@@ -1,0 +1,1710 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>النظام المحاسبي | Accounting System</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0d14;
+  --surface: #111520;
+  --surface2: #161b2e;
+  --border: #1e2640;
+  --border2: #252d4a;
+  --accent: #3b82f6;
+  --accent2: #60a5fa;
+  --accent-glow: rgba(59,130,246,0.15);
+  --green: #22c55e;
+  --green-dim: rgba(34,197,94,0.12);
+  --red: #ef4444;
+  --red-dim: rgba(239,68,68,0.12);
+  --amber: #f59e0b;
+  --amber-dim: rgba(245,158,11,0.12);
+  --purple: #a855f7;
+  --purple-dim: rgba(168,85,247,0.12);
+  --text: #e2e8f0;
+  --text2: #94a3b8;
+  --text3: #475569;
+  --asset: #3b82f6;
+  --liability: #a855f7;
+  --expense: #ef4444;
+  --revenue: #22c55e;
+  --font: 'Cairo', sans-serif;
+  --mono: 'IBM Plex Mono', monospace;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* BACKGROUND GRID */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(59,130,246,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(59,130,246,0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ─── NAV ─────────────────────────────────────────── */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(10,13,20,0.92);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 2rem;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav-brand {
+  font-size: 1.1rem;
+  font-weight: 900;
+  letter-spacing: -0.5px;
+  color: var(--text);
+}
+.nav-brand span { color: var(--accent2); }
+
+.nav-tabs {
+  display: flex;
+  gap: 2px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 3px;
+}
+
+.nav-tab {
+  padding: 6px 16px;
+  border-radius: 7px;
+  font-family: var(--font);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  color: var(--text2);
+  background: transparent;
+  border: none;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.nav-tab:hover { color: var(--text); background: var(--border); }
+.nav-tab.active { background: var(--accent); color: #fff; box-shadow: 0 0 20px var(--accent-glow); }
+
+/* ─── LAYOUT ──────────────────────────────────────── */
+main {
+  position: relative;
+  z-index: 1;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.page { display: none; }
+.page.active { display: block; }
+
+/* ─── CARDS ───────────────────────────────────────── */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 1.5rem;
+  transition: border-color 0.2s;
+}
+.card:hover { border-color: var(--border2); }
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.card-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.card-title .icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+}
+
+/* ─── DASHBOARD ───────────────────────────────────── */
+.dash-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.stat-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1.25rem;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s, border-color 0.2s;
+}
+.stat-card:hover { transform: translateY(-2px); border-color: var(--border2); }
+
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+}
+.stat-card.asset::before { background: var(--asset); }
+.stat-card.liability::before { background: var(--liability); }
+.stat-card.expense::before { background: var(--expense); }
+.stat-card.revenue::before { background: var(--revenue); }
+
+.stat-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text3);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.5rem;
+}
+
+.stat-value {
+  font-size: 1.8rem;
+  font-weight: 900;
+  font-family: var(--mono);
+  line-height: 1;
+  margin-bottom: 0.4rem;
+}
+.stat-card.asset .stat-value { color: var(--asset); }
+.stat-card.liability .stat-value { color: var(--liability); }
+.stat-card.expense .stat-value { color: var(--expense); }
+.stat-card.revenue .stat-value { color: var(--revenue); }
+
+.stat-sub {
+  font-size: 0.8rem;
+  color: var(--text3);
+}
+
+.dash-lower { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+/* ─── SEARCH & FILTER ─────────────────────────────── */
+.toolbar {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.search-box {
+  flex: 1;
+  min-width: 200px;
+  position: relative;
+}
+
+.search-box input {
+  width: 100%;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 0.6rem 1rem 0.6rem 2.5rem;
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  direction: rtl;
+}
+.search-box input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); }
+.search-box input::placeholder { color: var(--text3); }
+
+.search-icon {
+  position: absolute;
+  left: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text3);
+  font-size: 0.9rem;
+}
+
+.filter-btn {
+  padding: 0.6rem 1rem;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  color: var(--text2);
+  font-family: var(--font);
+  font-size: 0.83rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.filter-btn:hover { border-color: var(--border2); color: var(--text); }
+.filter-btn.active { border-color: var(--accent); color: var(--accent); background: var(--accent-glow); }
+.filter-btn.asset.active { border-color: var(--asset); color: var(--asset); background: rgba(59,130,246,0.1); }
+.filter-btn.liability.active { border-color: var(--liability); color: var(--liability); background: var(--purple-dim); }
+.filter-btn.expense.active { border-color: var(--expense); color: var(--expense); background: var(--red-dim); }
+.filter-btn.revenue.active { border-color: var(--revenue); color: var(--revenue); background: var(--green-dim); }
+
+/* ─── COA TABLE ───────────────────────────────────── */
+.table-wrap {
+  overflow: auto;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+}
+
+thead tr {
+  background: var(--surface2);
+  position: sticky;
+  top: 0;
+}
+
+th {
+  padding: 0.75rem 1rem;
+  text-align: right;
+  font-weight: 700;
+  color: var(--text3);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+
+td {
+  padding: 0.6rem 1rem;
+  border-bottom: 1px solid var(--border);
+  vertical-align: middle;
+}
+
+tr:last-child td { border-bottom: none; }
+
+tr.level-1 td { background: rgba(59,130,246,0.06); font-weight: 700; }
+tr.level-2 td { background: rgba(59,130,246,0.03); font-weight: 600; }
+tr.level-3 td { font-weight: 500; }
+tr.level-4 td { font-weight: 400; color: var(--text2); }
+
+tr:hover td { background: rgba(255,255,255,0.03) !important; }
+
+.code-badge {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  padding: 2px 8px;
+  border-radius: 5px;
+  background: var(--surface2);
+  color: var(--text2);
+  border: 1px solid var(--border);
+  white-space: nowrap;
+}
+
+.type-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+.type-badge.Asset { background: rgba(59,130,246,0.15); color: var(--asset); }
+.type-badge.Equity\/Liability { background: var(--purple-dim); color: var(--purple); }
+.type-badge.Expense { background: var(--red-dim); color: var(--red); }
+.type-badge.Revenue { background: var(--green-dim); color: var(--green); }
+
+.bal-badge {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 5px;
+}
+.bal-badge.Dr { background: rgba(59,130,246,0.12); color: var(--accent2); }
+.bal-badge.Cr { background: var(--green-dim); color: var(--green); }
+
+.level-indent { display: flex; align-items: center; gap: 0.5rem; }
+.level-line {
+  display: inline-block;
+  width: 16px;
+  height: 1px;
+  background: var(--border2);
+  flex-shrink: 0;
+}
+
+/* ─── JOURNAL ENTRIES ─────────────────────────────── */
+.je-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+.form-group.full { grid-column: 1 / -1; }
+
+label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text3);
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+input, select, textarea {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 0.6rem 1rem;
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  direction: rtl;
+}
+input:focus, select:focus, textarea:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-glow);
+}
+select option { background: var(--surface2); }
+
+.je-lines { margin-bottom: 1rem; }
+
+.je-line {
+  display: grid;
+  grid-template-columns: 160px 1fr 1fr 1fr auto;
+  gap: 0.5rem;
+  align-items: center;
+  padding: 0.5rem;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  margin-bottom: 0.5rem;
+  animation: slideIn 0.2s ease;
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.je-line input, .je-line select {
+  background: var(--bg);
+  border-radius: 7px;
+  padding: 0.45rem 0.75rem;
+  font-size: 0.85rem;
+}
+
+.je-line .account-name-display {
+  font-size: 0.82rem;
+  color: var(--text2);
+  padding: 0.45rem 0.75rem;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  min-height: 36px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.je-line .account-name-display.found { color: var(--text); }
+.je-line .account-name-display.not-found { color: var(--red); font-style: italic; }
+
+.remove-line {
+  width: 30px;
+  height: 30px;
+  border-radius: 7px;
+  background: var(--red-dim);
+  border: 1px solid rgba(239,68,68,0.2);
+  color: var(--red);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+.remove-line:hover { background: var(--red); color: #fff; }
+
+.je-actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.btn {
+  padding: 0.6rem 1.2rem;
+  border-radius: 10px;
+  font-family: var(--font);
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.btn-primary { background: var(--accent); color: #fff; }
+.btn-primary:hover { background: var(--accent2); box-shadow: 0 4px 20px var(--accent-glow); }
+.btn-secondary { background: var(--surface2); border: 1px solid var(--border); color: var(--text2); }
+.btn-secondary:hover { border-color: var(--border2); color: var(--text); }
+.btn-success { background: rgba(34,197,94,0.15); border: 1px solid rgba(34,197,94,0.3); color: var(--green); }
+.btn-success:hover { background: rgba(34,197,94,0.25); }
+.btn-danger { background: var(--red-dim); border: 1px solid rgba(239,68,68,0.2); color: var(--red); }
+.btn-danger:hover { background: var(--red); color: #fff; }
+
+.balance-check {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+.balance-check.balanced { background: var(--green-dim); border: 1px solid rgba(34,197,94,0.2); color: var(--green); }
+.balance-check.unbalanced { background: var(--red-dim); border: 1px solid rgba(239,68,68,0.2); color: var(--red); }
+
+.balance-nums {
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  margin-right: auto;
+  color: var(--text2);
+}
+.balance-nums span { color: var(--text); font-weight: 700; }
+
+/* Saved entries */
+.saved-entries { margin-top: 1.5rem; }
+.entry-group {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  margin-bottom: 0.75rem;
+  overflow: hidden;
+}
+.entry-group-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+.entry-no {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  background: var(--accent-glow);
+  border: 1px solid rgba(59,130,246,0.3);
+  color: var(--accent2);
+  border-radius: 5px;
+}
+.entry-date {
+  font-size: 0.82rem;
+  color: var(--text2);
+  font-family: var(--mono);
+}
+.entry-desc { font-size: 0.85rem; color: var(--text); flex: 1; }
+.entry-delete {
+  width: 26px; height: 26px;
+  border-radius: 6px;
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text3);
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+  font-size: 0.85rem;
+}
+.entry-delete:hover { background: var(--red-dim); border-color: rgba(239,68,68,0.3); color: var(--red); }
+
+/* ─── TRIAL BALANCE ───────────────────────────────── */
+.tb-summary {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+.tb-stat {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1rem;
+  text-align: center;
+}
+.tb-stat-label { font-size: 0.75rem; color: var(--text3); font-weight: 600; text-transform: uppercase; margin-bottom: 0.4rem; }
+.tb-stat-val { font-size: 1.2rem; font-weight: 900; font-family: var(--mono); }
+
+.tb-balance-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  margin-bottom: 1.5rem;
+  font-weight: 700;
+}
+.tb-balance-banner.ok { background: var(--green-dim); border: 1px solid rgba(34,197,94,0.25); color: var(--green); }
+.tb-balance-banner.fail { background: var(--red-dim); border: 1px solid rgba(239,68,68,0.25); color: var(--red); }
+
+/* ─── FINANCIAL STATEMENTS ────────────────────────── */
+.fs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+
+.fs-section-title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 0.75rem;
+}
+.fs-section-title.revenue { color: var(--green); border-color: rgba(34,197,94,0.2); }
+.fs-section-title.expense { color: var(--red); border-color: rgba(239,68,68,0.2); }
+.fs-section-title.asset { color: var(--asset); border-color: rgba(59,130,246,0.2); }
+.fs-section-title.liability { color: var(--purple); border-color: rgba(168,85,247,0.2); }
+
+.fs-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.35rem 0;
+  font-size: 0.88rem;
+  border-bottom: 1px dashed rgba(255,255,255,0.04);
+}
+.fs-row:last-child { border-bottom: none; }
+.fs-row.indent1 { padding-right: 1rem; }
+.fs-row.indent2 { padding-right: 2rem; }
+.fs-row.indent3 { padding-right: 3rem; }
+.fs-row .label { color: var(--text2); }
+.fs-row .value { font-family: var(--mono); font-weight: 700; font-size: 0.88rem; }
+.fs-row.total { border-top: 1px solid var(--border); margin-top: 0.5rem; padding-top: 0.5rem; font-weight: 700; }
+.fs-row.total .label { color: var(--text); }
+.fs-row.grand-total {
+  background: var(--surface2);
+  border-radius: 8px;
+  padding: 0.5rem 0.75rem;
+  margin-top: 0.75rem;
+  font-weight: 900;
+  font-size: 0.95rem;
+  border: 1px solid var(--border2);
+}
+.fs-row.grand-total .label { color: var(--text); }
+
+.net-profit-box {
+  background: var(--green-dim);
+  border: 1px solid rgba(34,197,94,0.25);
+  border-radius: 12px;
+  padding: 1rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+}
+.net-profit-box.loss { background: var(--red-dim); border-color: rgba(239,68,68,0.25); }
+.net-profit-box .label { font-weight: 700; font-size: 0.95rem; }
+.net-profit-box .value { font-family: var(--mono); font-size: 1.4rem; font-weight: 900; }
+.net-profit-box.profit .label, .net-profit-box.profit .value { color: var(--green); }
+.net-profit-box.loss .label, .net-profit-box.loss .value { color: var(--red); }
+
+.balance-check-box {
+  background: var(--green-dim);
+  border: 1px solid rgba(34,197,94,0.25);
+  border-radius: 10px;
+  padding: 0.75rem 1rem;
+  text-align: center;
+  font-weight: 700;
+  color: var(--green);
+  margin-top: 1rem;
+  font-size: 0.9rem;
+}
+.balance-check-box.fail { background: var(--red-dim); border-color: rgba(239,68,68,0.25); color: var(--red); }
+
+/* ─── TOAST ───────────────────────────────────────── */
+#toast {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 12px;
+  padding: 0.75rem 1.5rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  z-index: 9999;
+  transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+}
+#toast.show { transform: translateX(-50%) translateY(0); }
+#toast.success { border-color: rgba(34,197,94,0.4); color: var(--green); }
+#toast.error { border-color: rgba(239,68,68,0.4); color: var(--red); }
+
+/* ─── EMPTY STATE ─────────────────────────────────── */
+.empty-state {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--text3);
+}
+.empty-state .emoji { font-size: 2.5rem; margin-bottom: 0.75rem; }
+.empty-state p { font-size: 0.9rem; }
+
+/* ─── SCROLLBAR ───────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text3); }
+
+/* ─── SECTION HEADER ──────────────────────────────── */
+.section-header {
+  margin-bottom: 1.5rem;
+}
+.section-header h2 {
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: var(--text);
+  margin-bottom: 0.25rem;
+}
+.section-header p { font-size: 0.88rem; color: var(--text3); }
+
+.badge-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  color: var(--text2);
+  font-size: 0.75rem;
+  font-weight: 700;
+  font-family: var(--mono);
+  padding: 2px 8px;
+  border-radius: 20px;
+  margin-right: 0.5rem;
+}
+
+/* amounts */
+.amount-dr { color: var(--accent2); font-family: var(--mono); font-weight: 600; }
+.amount-cr { color: var(--green); font-family: var(--mono); font-weight: 600; }
+.amount-zero { color: var(--text3); font-family: var(--mono); }
+
+/* TB row styling */
+tr.tb-l1 td { background: rgba(255,255,255,0.04); font-weight: 800; font-size: 0.92rem; }
+tr.tb-l2 td { background: rgba(255,255,255,0.02); font-weight: 700; }
+tr.tb-l3 td { font-weight: 600; }
+tr.tb-l4 td { color: var(--text2); }
+tr.tb-grand td { background: rgba(59,130,246,0.08); font-weight: 800; border-top: 2px solid var(--accent); }
+
+.toggle-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text3);
+  font-size: 0.7rem;
+  padding: 2px 4px;
+  transition: color 0.2s;
+}
+.toggle-btn:hover { color: var(--text); }
+
+@media (max-width: 900px) {
+  .dash-grid { grid-template-columns: 1fr 1fr; }
+  .dash-lower { grid-template-columns: 1fr; }
+  .fs-grid { grid-template-columns: 1fr; }
+  .tb-summary { grid-template-columns: 1fr 1fr; }
+  nav { padding: 0 1rem; }
+  .nav-brand { display: none; }
+  main { padding: 1rem; }
+  .je-line { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">نظام <span>محاسبي</span></div>
+  <div class="nav-tabs">
+    <button class="nav-tab active" onclick="showPage('dashboard')">📊 لوحة التحكم</button>
+    <button class="nav-tab" onclick="showPage('coa')">📋 دليل الحسابات</button>
+    <button class="nav-tab" onclick="showPage('journal')">📝 قيود اليومية</button>
+    <button class="nav-tab" onclick="showPage('trial')">⚖️ ميزان المراجعة</button>
+    <button class="nav-tab" onclick="showPage('statements')">📈 القوائم المالية</button>
+  </div>
+</nav>
+
+<main>
+
+<!-- ══════════════════════════════════════════════════
+     PAGE: DASHBOARD
+══════════════════════════════════════════════════ -->
+<div id="page-dashboard" class="page active">
+  <div class="section-header">
+    <h2>لوحة التحكم</h2>
+    <p>نظرة عامة على النظام المحاسبي</p>
+  </div>
+
+  <div class="dash-grid" id="dash-stats"></div>
+
+  <div class="dash-lower">
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">
+          <div class="icon" style="background:rgba(59,130,246,0.1)">📋</div>
+          هيكل الحسابات
+        </div>
+      </div>
+      <div id="dash-structure"></div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">
+          <div class="icon" style="background:rgba(34,197,94,0.1)">📝</div>
+          آخر القيود
+        </div>
+        <button class="btn btn-secondary" onclick="showPage('journal')" style="font-size:0.8rem;padding:4px 10px">عرض الكل</button>
+      </div>
+      <div id="dash-recent-entries"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     PAGE: CHART OF ACCOUNTS
+══════════════════════════════════════════════════ -->
+<div id="page-coa" class="page">
+  <div class="section-header">
+    <h2>دليل الحسابات <span class="badge-count" id="coa-count">483</span></h2>
+    <p>هيكل هرمي رباعي المستويات — 4 حسابات رئيسية</p>
+  </div>
+
+  <div class="toolbar">
+    <div class="search-box">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="coa-search" placeholder="ابحث بالاسم أو الكود..." oninput="filterCOA()">
+    </div>
+    <button class="filter-btn active" data-filter="all" onclick="setCOAFilter('all', this)">الكل</button>
+    <button class="filter-btn asset" data-filter="Asset" onclick="setCOAFilter('Asset', this)">أصول</button>
+    <button class="filter-btn liability" data-filter="Equity/Liability" onclick="setCOAFilter('Equity/Liability', this)">التزامات</button>
+    <button class="filter-btn expense" data-filter="Expense" onclick="setCOAFilter('Expense', this)">مصروفات</button>
+    <button class="filter-btn revenue" data-filter="Revenue" onclick="setCOAFilter('Revenue', this)">إيرادات</button>
+    <button class="filter-btn" data-filter="4" onclick="setCOAFilter('level4', this)">حسابات فرعية فقط</button>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>الكود</th>
+          <th>اسم الحساب</th>
+          <th>المستوى</th>
+          <th>النوع</th>
+          <th>الرصيد الطبيعي</th>
+        </tr>
+      </thead>
+      <tbody id="coa-tbody"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     PAGE: JOURNAL ENTRIES
+══════════════════════════════════════════════════ -->
+<div id="page-journal" class="page">
+  <div class="section-header">
+    <h2>قيود اليومية</h2>
+    <p>سجّل قيودك المحاسبية — اسم الحساب والنوع يظهران تلقائياً من الكود</p>
+  </div>
+
+  <div class="card" style="margin-bottom:1.5rem">
+    <div class="card-header">
+      <div class="card-title">
+        <div class="icon" style="background:rgba(59,130,246,0.1)">✏️</div>
+        قيد جديد <span id="new-entry-no" style="font-family:var(--mono);font-size:0.85rem;color:var(--text3);margin-right:0.5rem"></span>
+      </div>
+    </div>
+
+    <div class="je-form">
+      <div class="form-group">
+        <label>التاريخ</label>
+        <input type="date" id="je-date">
+      </div>
+      <div class="form-group">
+        <label>البيان / الوصف</label>
+        <input type="text" id="je-desc" placeholder="مثال: قبض ايرادات مبيعات...">
+      </div>
+      <div class="form-group">
+        <label>مركز التكلفة (اختياري)</label>
+        <input type="text" id="je-cost-center" placeholder="مركز التكلفة">
+      </div>
+      <div class="form-group">
+        <label>رقم المرجع (اختياري)</label>
+        <input type="text" id="je-ref" placeholder="رقم الفاتورة / المستند">
+      </div>
+    </div>
+
+    <div style="margin-bottom:0.75rem">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.5rem">
+        <label style="font-size:0.8rem;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.4px">سطور القيد</label>
+        <div style="font-size:0.75rem;color:var(--text3)">كود | اسم الحساب (تلقائي) | النوع (تلقائي) | مدين | دائن</div>
+      </div>
+      <div id="je-lines"></div>
+      <button class="btn btn-secondary" onclick="addLine()" style="margin-top:0.5rem;font-size:0.83rem">
+        ＋ إضافة سطر
+      </button>
+    </div>
+
+    <div id="balance-check" class="balance-check unbalanced" style="display:none"></div>
+
+    <div class="je-actions">
+      <button class="btn btn-primary" onclick="saveEntry()">💾 حفظ القيد</button>
+      <button class="btn btn-secondary" onclick="clearEntry()">🗑️ مسح</button>
+    </div>
+  </div>
+
+  <!-- Saved Entries -->
+  <div class="section-header">
+    <h2>القيود المحفوظة <span class="badge-count" id="entries-count">0</span></h2>
+  </div>
+  <div id="saved-entries"></div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     PAGE: TRIAL BALANCE
+══════════════════════════════════════════════════ -->
+<div id="page-trial" class="page">
+  <div class="section-header">
+    <h2>ميزان المراجعة</h2>
+    <p>محسوب تلقائياً من القيود المسجلة — يتحدث فور إضافة أي قيد</p>
+  </div>
+
+  <div class="tb-summary" id="tb-summary"></div>
+  <div id="tb-balance-banner"></div>
+
+  <div class="toolbar">
+    <div class="search-box">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="tb-search" placeholder="ابحث في الميزان..." oninput="filterTB()">
+    </div>
+    <button class="filter-btn active" data-tbfilter="all" onclick="setTBFilter('all',this)">الكل</button>
+    <button class="filter-btn" data-tbfilter="active" onclick="setTBFilter('active',this)">حسابات نشطة فقط</button>
+    <button class="filter-btn asset" data-tbfilter="Asset" onclick="setTBFilter('Asset',this)">أصول</button>
+    <button class="filter-btn liability" data-tbfilter="Equity/Liability" onclick="setTBFilter('Equity/Liability',this)">التزامات</button>
+    <button class="filter-btn expense" data-tbfilter="Expense" onclick="setTBFilter('Expense',this)">مصروفات</button>
+    <button class="filter-btn revenue" data-tbfilter="Revenue" onclick="setTBFilter('Revenue',this)">إيرادات</button>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>الكود</th>
+          <th>اسم الحساب</th>
+          <th>رصيد أول المدة Dr</th>
+          <th>رصيد أول المدة Cr</th>
+          <th>حركة السنة Dr</th>
+          <th>حركة السنة Cr</th>
+          <th>مجموع Dr</th>
+          <th>مجموع Cr</th>
+          <th>رصيد Dr</th>
+          <th>رصيد Cr</th>
+          <th>النوع</th>
+        </tr>
+      </thead>
+      <tbody id="tb-tbody"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     PAGE: FINANCIAL STATEMENTS
+══════════════════════════════════════════════════ -->
+<div id="page-statements" class="page">
+  <div class="section-header">
+    <h2>القوائم المالية</h2>
+    <p>قائمة الدخل والميزانية العمومية — محسوبة تلقائياً</p>
+  </div>
+
+  <div class="fs-grid">
+    <!-- Income Statement -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">
+          <div class="icon" style="background:rgba(34,197,94,0.1)">📈</div>
+          قائمة الدخل
+        </div>
+      </div>
+      <div id="income-statement"></div>
+    </div>
+
+    <!-- Balance Sheet -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">
+          <div class="icon" style="background:rgba(168,85,247,0.1)">🏦</div>
+          الميزانية العمومية
+        </div>
+      </div>
+      <div id="balance-sheet"></div>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<div id="toast"></div>
+
+<!-- ══════════════════════════════════════════════════
+     JAVASCRIPT
+══════════════════════════════════════════════════ -->
+<script>
+// ─── DATA ─────────────────────────────────────────
+const ACCOUNTS_DATA = [{"code":"1","name":"الأصول","level":1,"type":"Asset","normal_bal":"Dr"},{"code":"101","name":"الأصول الثابتة","level":2,"type":"Asset","normal_bal":"Dr"},{"code":"101001","name":"الأصول الثابتة - ثلاجات التبريد","level":3,"type":"Asset","normal_bal":"Dr"},{"code":"101001001","name":"الأصول الثابتة - ثلاجة التبريد  -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"101001002","name":"الأصول الثابتة - ثلاجة التبريد  -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"101001003","name":"الأصول الثابتة - ثلاجة التبريد  -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"101001004","name":"الأصول الثابتة - ثلاجة التبريد  -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"101001005","name":"الأصول الثابتة - ثلاجة التبريد  -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"101001006","name":"الأصول الثابتة - ثلاجة التبريد  -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"101001007","name":"الأصول الثابتة - ثلاجة التبريد  -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"101001008","name":"الأصول الثابتة - ثلاجة التبريد  -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"101001009","name":"الأصول الثابتة - ثلاجة التبريد  -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"101001010","name":"الأصول الثابتة - ثلاجة التبريد  -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"101002","name":"الأصول الثابتة - كباسات التبريد","level":3,"type":"Asset","normal_bal":"Dr"},{"code":"101002001","name":"الأصول الثابتة - كباتسات تبريد -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"101002002","name":"الأصول الثابتة - كباتسات تبريد -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"101002003","name":"الأصول الثابتة - كباتسات تبريد -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"101002004","name":"الأصول الثابتة - كباتسات تبريد -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"101002005","name":"الأصول الثابتة - كباتسات تبريد -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"101002006","name":"الأصول الثابتة - كباتسات تبريد -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"101002007","name":"الأصول الثابتة - كباتسات تبريد -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"101002008","name":"الأصول الثابتة - كباتسات تبريد -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"101002009","name":"الأصول الثابتة - كباتسات تبريد -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"101002010","name":"الأصول الثابتة - كباتسات تبريد -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"101003","name":"الأصول الثابتة - كمبيوتر و طابعات و برامج","level":3,"type":"Asset","normal_bal":"Dr"},{"code":"101003001","name":"الأصول الثابتة - كمبيوتر  وطابعات - Lap top","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"101003002","name":"الأصول الثابتة - كمبيوتر  وطابعات - Disk top","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"101003003","name":"الأصول الثابتة - كمبيوتر  وطابعات -  طابعات","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"101003004","name":"الأصول الثابتة - كمبيوتر  وطابعات - ماكينة تصوير","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"101003005","name":"الأصول الثابتة - كمبيوتر  وطابعات -  تابلت","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"101003006","name":"الأصول الثابتة - كمبيوتر  وطابعات -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"101003007","name":"الأصول الثابتة - كمبيوتر  وطابعات -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"101003008","name":"الأصول الثابتة - كمبيوتر  وطابعات -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"101003009","name":"الأصول الثابتة - كمبيوتر  وطابعات -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"101003010","name":"الأصول الثابتة - كمبيوتر  وطابعات -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"101004","name":"الأصول الثابتة - ماكينات التعبئة و التغليف","level":3,"type":"Asset","normal_bal":"Dr"},{"code":"101004001","name":"الأصول الثابتة - ماكينات التعبئة و التغليف -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"101004002","name":"الأصول الثابتة - ماكينات التعبئة و التغليف -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"101004003","name":"الأصول الثابتة - ماكينات التعبئة و التغليف -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"101004004","name":"الأصول الثابتة - ماكينات التعبئة و التغليف -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"101004005","name":"الأصول الثابتة - ماكينات التعبئة و التغليف -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"101004006","name":"الأصول الثابتة - ماكينات التعبئة و التغليف -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"101004007","name":"الأصول الثابتة - ماكينات التعبئة و التغليف -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"101004008","name":"الأصول الثابتة - ماكينات التعبئة و التغليف -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"101004009","name":"الأصول الثابتة - ماكينات التعبئة و التغليف -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"101004010","name":"الأصول الثابتة - ماكينات التعبئة و التغليف -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"101005","name":"الأصول الثابتة -  الميزان الالكترونى","level":3,"type":"Asset","normal_bal":"Dr"},{"code":"101005001","name":"الأصول الثابتة - الميزان الالكترونى -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"101005002","name":"الأصول الثابتة - الميزان الالكترونى -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"101005003","name":"الأصول الثابتة - الميزان الالكترونى -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"101005004","name":"الأصول الثابتة - الميزان الالكترونى -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"101005005","name":"الأصول الثابتة - الميزان الالكترونى -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"101005006","name":"الأصول الثابتة - الميزان الالكترونى -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"101005007","name":"الأصول الثابتة - الميزان الالكترونى -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"101005008","name":"الأصول الثابتة - الميزان الالكترونى -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"101005009","name":"الأصول الثابتة - الميزان الالكترونى -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"101005010","name":"الأصول الثابتة - الميزان الالكترونى -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"102","name":"البنوك و النقدية","level":2,"type":"Asset","normal_bal":"Dr"},{"code":"102001","name":"حسابات البنوك","level":3,"type":"Asset","normal_bal":"Dr"},{"code":"102001001","name":"حساب بنك - CIB - بالجنية المصرى","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"102001002","name":"حساب بنك - CIB - بالدولار","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"102001003","name":"حساب بنك -  CPS - CIB","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"102001004","name":"حساب نقدية بالصندوق","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"102001005","name":"حساب بنك -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"102001006","name":"حساب بنك -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"102001007","name":"حساب بنك -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"102001008","name":"حساب بنك -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"102001009","name":"حساب بنك -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"102001010","name":"حساب بنك -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"102002","name":"حسابات النقدية","level":3,"type":"Asset","normal_bal":"Dr"},{"code":"102002001","name":"نقدية بالخزينة - الرئيسية -  بالجنية المصرى","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"102002002","name":"نقدية بالخزينة - الرئيسية - بالدولار","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"102002003","name":"نقدية بالخزينة - الرئيسية -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"102002004","name":"نقدية بالخزينة - الرئيسية -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"102002005","name":"نقدية بالخزينة - الرئيسية -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"102002006","name":"نقدية بالخزينة - الرئيسية -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"102002007","name":"نقدية بالخزينة - الرئيسية -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"102002008","name":"نقدية بالخزينة - الرئيسية -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"102002009","name":"نقدية بالخزينة - الرئيسية -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"102002010","name":"نقدية بالخزينة - الرئيسية -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"102003","name":"العهد المؤقتة","level":3,"type":"Asset","normal_bal":"Dr"},{"code":"102003001","name":"العهد المؤقتة -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"102003002","name":"العهد المؤقتة -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"102003003","name":"العهد المؤقتة -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"102003004","name":"العهد المؤقتة -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"102003005","name":"العهد المؤقتة -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"102003006","name":"العهد المؤقتة -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"102003007","name":"العهد المؤقتة -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"102003008","name":"العهد المؤقتة -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"102003009","name":"العهد المؤقتة -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"102003010","name":"العهد المؤقتة -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"103","name":"العملاء","level":2,"type":"Asset","normal_bal":"Dr"},{"code":"103001","name":"عملاء - محليين","level":3,"type":"Asset","normal_bal":"Dr"},{"code":"103001001","name":"عملاء - محليين -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"103001002","name":"عملاء - محليين -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"103001003","name":"عملاء - محليين -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"103001004","name":"عملاء - محليين -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"103001005","name":"عملاء - محليين -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"103001006","name":"عملاء - محليين -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"103001007","name":"عملاء - محليين -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"103001008","name":"عملاء - محليين -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"103001009","name":"عملاء - محليين -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"103001010","name":"عملاء - محليين -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"103002","name":"عملاء - جملة","level":3,"type":"Asset","normal_bal":"Dr"},{"code":"103002001","name":"عملاء - جملة -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"103002002","name":"عملاء - جملة -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"103002003","name":"عملاء - جملة -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"103002004","name":"عملاء - جملة -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"103002005","name":"عملاء - جملة -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"103002006","name":"عملاء - جملة -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"103002007","name":"عملاء - جملة -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"103002008","name":"عملاء - جملة -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"103002009","name":"عملاء - جملة -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"103002010","name":"عملاء - جملة -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"103003","name":"عملاء - تصدير","level":3,"type":"Asset","normal_bal":"Dr"},{"code":"103003001","name":"عملاء - تصدير -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"103003002","name":"عملاء - تصدير -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"103003003","name":"عملاء - تصدير -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"103003004","name":"عملاء - تصدير -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"103003005","name":"عملاء - تصدير -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"103003006","name":"عملاء - تصدير -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"103003007","name":"عملاء - تصدير -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"103003008","name":"عملاء - تصدير -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"103003009","name":"عملاء - تصدير -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"103003010","name":"عملاء - تصدير -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"104","name":"مدينون متنوعون","level":2,"type":"Asset","normal_bal":"Dr"},{"code":"104001","name":"الإيرادات المستحقة","level":3,"type":"Asset","normal_bal":"Dr"},{"code":"104001001","name":"الإيرادات المستحقة -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"104001002","name":"الإيرادات المستحقة -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"104001003","name":"الإيرادات المستحقة -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"104001004","name":"الإيرادات المستحقة -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"104001005","name":"الإيرادات المستحقة -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"104001006","name":"الإيرادات المستحقة -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"104001007","name":"الإيرادات المستحقة -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"104001008","name":"الإيرادات المستحقة -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"104001009","name":"الإيرادات المستحقة -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"104001010","name":"الإيرادات المستحقة -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"104002","name":"المصروفات المقدمة","level":3,"type":"Asset","normal_bal":"Dr"},{"code":"104002001","name":"مصروفات مقدمة  -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"104002002","name":"مصروفات مقدمة  -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"104002003","name":"مصروفات مقدمة  -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"104002004","name":"مصروفات مقدمة  -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"104002005","name":"مصروفات مقدمة  -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"104002006","name":"مصروفات مقدمة  -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"104002007","name":"مصروفات مقدمة  -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"104002008","name":"مصروفات مقدمة  -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"104002009","name":"مصروفات مقدمة  -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"104002010","name":"مصروفات مقدمة  -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"104003","name":"تأمينات لدى الغير","level":3,"type":"Asset","normal_bal":"Dr"},{"code":"104003001","name":"تأمينات لدى الغير -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"104003002","name":"تأمينات لدى الغير -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"104003003","name":"تأمينات لدى الغير -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"104003004","name":"تأمينات لدى الغير -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"104003005","name":"تأمينات لدى الغير -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"104003006","name":"تأمينات لدى الغير -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"104003007","name":"تأمينات لدى الغير -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"104003008","name":"تأمينات لدى الغير -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"104003009","name":"تأمينات لدى الغير -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"104003010","name":"تأمينات لدى الغير -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"104004","name":"ضرائب مدينة","level":3,"type":"Asset","normal_bal":"Dr"},{"code":"104004001","name":"ضرائب مدينة - خصم من المنبع","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"104004002","name":"ضرائب مدينة -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"104004003","name":"ضرائب مدينة -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"104004004","name":"ضرائب مدينة -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"104004005","name":"ضرائب مدينة -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"104004006","name":"ضرائب مدينة -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"104004007","name":"ضرائب مدينة -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"104004008","name":"ضرائب مدينة -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"104004009","name":"ضرائب مدينة -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"104004010","name":"ضرائب مدينة -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"104005","name":"أرصدة مدينة أخرى","level":3,"type":"Asset","normal_bal":"Dr"},{"code":"104005001","name":"أرصدة مدينة أخرى - سلف عاملين","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"104005002","name":"أرصدة مدينة أخرى -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"104005003","name":"أرصدة مدينة أخرى -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"104005004","name":"أرصدة مدينة أخرى -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"104005005","name":"أرصدة مدينة أخرى -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"104005006","name":"أرصدة مدينة أخرى -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"104005007","name":"أرصدة مدينة أخرى -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"104005008","name":"أرصدة مدينة أخرى -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"104005009","name":"أرصدة مدينة أخرى -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"104005010","name":"أرصدة مدينة أخرى -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"105","name":"المخزون","level":2,"type":"Asset","normal_bal":"Dr"},{"code":"105001","name":"مخزن - الثلاجة رقم 1","level":3,"type":"Asset","normal_bal":"Dr"},{"code":"105001001","name":"مخزون - ثلاجة رقم 1 - تمور خام","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"105001002","name":"مخزون - ثلاجة رقم 1 - تمور تحت التشغيل","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"105001003","name":"مخزون - ثلاجة رقم 1 - تمور جاهزة للبيع","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"105001004","name":"مخزون - ثلاجة رقم 1 -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"105001005","name":"مخزون - ثلاجة رقم 1 -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"105001006","name":"مخزون - ثلاجة رقم 1 -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"105001007","name":"مخزون - ثلاجة رقم 1 -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"105001008","name":"مخزون - ثلاجة رقم 1 -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"105001009","name":"مخزون - ثلاجة رقم 1 -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"105001010","name":"مخزون - ثلاجة رقم 1 -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"105002","name":"مخزن - الثلاجة رقم 2","level":3,"type":"Asset","normal_bal":"Dr"},{"code":"105002001","name":"مخزون - ثلاجة رقم 2 - تمور خام","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"105002002","name":"مخزون - ثلاجة رقم 2 - تمور تحت التشغيل","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"105002003","name":"مخزون - ثلاجة رقم 2 - تمور جاهزة للبيع","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"105002004","name":"مخزون - ثلاجة رقم 2 -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"105002005","name":"مخزون - ثلاجة رقم 2 -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"105002006","name":"مخزون - ثلاجة رقم 2 -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"105002007","name":"مخزون - ثلاجة رقم 2 -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"105002008","name":"مخزون - ثلاجة رقم 2 -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"105002009","name":"مخزون - ثلاجة رقم 2 -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"105002010","name":"مخزون - ثلاجة رقم 2 -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"105003","name":"مخزن - الثلاجة رقم 3","level":3,"type":"Asset","normal_bal":"Dr"},{"code":"105003001","name":"مخزون - ثلاجة رقم 3 - تمور خام","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"105003002","name":"مخزون - ثلاجة رقم 3 - تمور تحت التشغيل","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"105003003","name":"مخزون - ثلاجة رقم 3 - تمور جاهزة للبيع","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"105003004","name":"مخزون - ثلاجة رقم 3 -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"105003005","name":"مخزون - ثلاجة رقم 3 -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"105003006","name":"مخزون - ثلاجة رقم 3 -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"105003007","name":"مخزون - ثلاجة رقم 3 -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"105003008","name":"مخزون - ثلاجة رقم 3 -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"105003009","name":"مخزون - ثلاجة رقم 3 -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"105003010","name":"مخزون - ثلاجة رقم 3 -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"105004","name":"مخزن - مواد التعبئة و التغليف","level":3,"type":"Asset","normal_bal":"Dr"},{"code":"105004001","name":"مواد التعبئة و التغليف - كرتون","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"105004002","name":"مواد التعبئة و التغليف -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"105004003","name":"مواد التعبئة و التغليف -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"105004004","name":"مواد التعبئة و التغليف -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"105004005","name":"مواد التعبئة و التغليف -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"105004006","name":"مواد التعبئة و التغليف -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"105004007","name":"مواد التعبئة و التغليف -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"105004008","name":"مواد التعبئة و التغليف -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"105004009","name":"مواد التعبئة و التغليف -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"105004010","name":"مواد التعبئة و التغليف -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"105005","name":"مخزن - مواد ومهمات","level":3,"type":"Asset","normal_bal":"Dr"},{"code":"105005001","name":"مواد و مهمات -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"105005002","name":"مواد و مهمات -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"105005003","name":"مواد و مهمات -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"105005004","name":"مواد و مهمات -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"105005005","name":"مواد و مهمات -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"105005006","name":"مواد و مهمات -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"105005007","name":"مواد و مهمات -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"105005008","name":"مواد و مهمات -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"105005009","name":"مواد و مهمات -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"105005010","name":"مواد و مهمات -","level":4,"type":"Asset","normal_bal":"Dr"},{"code":"2","name":"الإلتزامات و حقوق الملكية","level":1,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"201","name":"حسابات رأس المال","level":2,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"201001","name":"رأس المال المدفوع","level":3,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"201001001","name":"رأس المال - راس المال المدفوع","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"201001002","name":"رأس المال -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"201001003","name":"رأس المال -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"201001004","name":"رأس المال -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"201001005","name":"رأس المال -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"201001006","name":"رأس المال -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"201001007","name":"رأس المال -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"201001008","name":"رأس المال -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"201001009","name":"رأس المال -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"201001010","name":"رأس المال -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"201002","name":"زيادة رأس المال","level":3,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"201002001","name":"زيادة رأس المال -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"201002002","name":"زيادة رأس المال -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"201002003","name":"زيادة رأس المال -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"201002004","name":"زيادة رأس المال -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"201002005","name":"زيادة رأس المال -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"201002006","name":"زيادة رأس المال -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"201002007","name":"زيادة رأس المال -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"201002008","name":"زيادة رأس المال -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"201002009","name":"زيادة رأس المال -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"201002010","name":"زيادة رأس المال -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"201003","name":"الارباح و الخسائر","level":3,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"201003001","name":"الارباح و الخسائر - أرباح وخسائر العام","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"201003002","name":"الارباح و الخسائر - سنوات سابقة","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"201003003","name":"الارباح و الخسائر - تقييم حسابات جارية بالعملة الاجنبية","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"201003004","name":"الارباح و الخسائر -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"201003005","name":"الارباح و الخسائر -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"201003006","name":"الارباح و الخسائر -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"201003007","name":"الارباح و الخسائر -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"201003008","name":"الارباح و الخسائر -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"201003009","name":"الارباح و الخسائر -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"201003010","name":"الارباح و الخسائر -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"202","name":"التزامات غير متداولة","level":2,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"202001","name":"التزامات الايجار","level":3,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"202001001","name":"الايجار -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"202001002","name":"الايجار -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"202001003","name":"الايجار -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"202001004","name":"الايجار -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"202001005","name":"الايجار -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"202001006","name":"الايجار -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"202001007","name":"الايجار -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"202001008","name":"الايجار -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"202001009","name":"الايجار -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"202001010","name":"الايجار -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"202002","name":"قروض طويلة الاجل","level":3,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"202002001","name":"قروض طويلة الاجل -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"202002002","name":"قروض طويلة الاجل -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"202002003","name":"قروض طويلة الاجل -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"202002004","name":"قروض طويلة الاجل -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"202002005","name":"قروض طويلة الاجل -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"202002006","name":"قروض طويلة الاجل -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"202002007","name":"قروض طويلة الاجل -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"202002008","name":"قروض طويلة الاجل -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"202002009","name":"قروض طويلة الاجل -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"202002010","name":"قروض طويلة الاجل -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"203","name":"التزامات متداولة","level":2,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"203001","name":"الموردين","level":3,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"203001001","name":"الموردين -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"203001002","name":"الموردين -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"203001003","name":"الموردين -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"203001004","name":"الموردين -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"203001005","name":"الموردين -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"203001006","name":"الموردين -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"203001007","name":"الموردين -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"203001008","name":"الموردين -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"203001009","name":"الموردين -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"203001010","name":"الموردين -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"203002","name":"المخصصات","level":3,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"203002001","name":"مخصصات -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"203002002","name":"مخصصات -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"203002003","name":"مخصصات -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"203002004","name":"مخصصات -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"203002005","name":"مخصصات -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"203002006","name":"مخصصات -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"203002007","name":"مخصصات -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"203002008","name":"مخصصات -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"203002009","name":"مخصصات -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"203002010","name":"مخصصات -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"203003","name":"حساب جارى الشركاء","level":3,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"203003001","name":"حساب جارى الشركاء-","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"203003002","name":"حساب جارى الشركاء-","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"203003003","name":"حساب جارى الشركاء-","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"203003004","name":"حساب جارى الشركاء-","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"203003005","name":"حساب جارى الشركاء-","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"203003006","name":"حساب جارى الشركاء-","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"203003007","name":"حساب جارى الشركاء-","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"203003008","name":"حساب جارى الشركاء-","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"203003009","name":"حساب جارى الشركاء-","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"203003010","name":"حساب جارى الشركاء-","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"203004","name":"ضرائب دائنة","level":3,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"203004001","name":"ضرائب دائنة - ضرائب القيمة المضافة","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"203004002","name":"ضرائب دائنة - ضرائب كسب العمل","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"203004003","name":"ضرائب دائنة - ضرائب الارباح التجارية و الصناعية 1%","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"203004004","name":"ضرائب دائنة - ضرائب الارباح التجارية و الصناعية 3%","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"203004005","name":"ضرائب دائنة - ضرائب الارباح التجارية و الصناعية 5%","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"203004006","name":"ضرائب دائنة -  ضرائب الدخل ( مصلحة الضرائب العامة )","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"203004007","name":"ضرائب دائنة -  المساهمة التكافلية - تأمين صحى","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"203004008","name":"ضرائب دائنة - ضريبة توزيعات أرباح","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"203004009","name":"ضرائب دائنة -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"203004010","name":"ضرائب دائنة -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"203005","name":"المصروفات المستحقة","level":3,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"203005001","name":"المصروفات المستحقة - صافى المرتبات المستحقة","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"203005002","name":"المصروفات المستحقة - إيجارات مستحقة","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"203005003","name":"المصروفات المستحقة - مصروفات مستحقة","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"203005004","name":"المصروفات المستحقة -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"203005005","name":"المصروفات المستحقة -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"203005006","name":"المصروفات المستحقة -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"203005007","name":"المصروفات المستحقة -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"203005008","name":"المصروفات المستحقة -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"203005009","name":"المصروفات المستحقة -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"203005010","name":"المصروفات المستحقة -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"203006","name":"أرصدة دائنة اخرى - متنوعة","level":3,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"203006001","name":"أرصدة دائنة اخرى - حصة الشركة فى أرصدة دائنة اخرى","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"203006002","name":"أرصدة دائنة اخرى - حصة العامل فى أرصدة دائنة اخرى","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"203006003","name":"أرصدة دائنة اخرى - الهيئة القومية للتأمينات الاجتماعية","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"203006004","name":"أرصدة دائنة اخرى - صندوق الشهداء","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"203006005","name":"أرصدة دائنة اخرى - ضرائب مؤجلة","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"203006006","name":"أرصدة دائنة اخرى - مساهمة تكافلية افراد - اعانة كرونا","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"203006007","name":"أرصدة دائنة اخرى -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"203006008","name":"أرصدة دائنة اخرى -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"203006009","name":"أرصدة دائنة اخرى -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"203006010","name":"أرصدة دائنة اخرى -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"203007","name":"مجمع الإهلاك","level":3,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"203007001","name":"مجمع الإهلاك - الاصول الثابتة -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"203007002","name":"مجمع الإهلاك - الاصول الثابتة -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"203007003","name":"مجمع الإهلاك - الاصول الثابتة -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"203007004","name":"مجمع الإهلاك - الاصول الثابتة -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"203007005","name":"مجمع الإهلاك - الاصول الثابتة -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"203007006","name":"مجمع الإهلاك - الاصول الثابتة -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"203007007","name":"مجمع الإهلاك - الاصول الثابتة -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"203007008","name":"مجمع الإهلاك - الاصول الثابتة -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"203007009","name":"مجمع الإهلاك - الاصول الثابتة -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"203007010","name":"مجمع الإهلاك - الاصول الثابتة -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"203007011","name":"مجمع الإهلاك - الاصول الثابتة -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"203007012","name":"مجمع الإهلاك - الاصول الثابتة -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"203007013","name":"مجمع الإهلاك - الاصول الثابتة -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"203007014","name":"مجمع الإهلاك - الاصول الثابتة -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"203007015","name":"مجمع الإهلاك - الاصول الثابتة -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"203007016","name":"مجمع الإهلاك - الاصول الثابتة -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"203007017","name":"مجمع الإهلاك - الاصول الثابتة -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"203007018","name":"مجمع الإهلاك - الاصول الثابتة -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"203007019","name":"مجمع الإهلاك - الاصول الثابتة -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"203007020","name":"مجمع الإهلاك - الاصول الثابتة -","level":4,"type":"Equity/Liability","normal_bal":"Cr"},{"code":"3","name":"المصروفات","level":1,"type":"Expense","normal_bal":"Dr"},{"code":"301","name":"مصروفات العمليات و التشغيل","level":2,"type":"Expense","normal_bal":"Dr"},{"code":"301001","name":"مصروفات التشغيل","level":3,"type":"Expense","normal_bal":"Dr"},{"code":"301001001","name":"مصروفات التشغيل -  تكلفة مبيعات  - تمور خام","level":4,"type":"Expense","normal_bal":"Dr"},{"code":"301001002","name":"مصروفات التشغيل - تكلفة البضاعة - جاهزة للبيع","level":4,"type":"Expense","normal_bal":"Dr"},{"code":"301001003","name":"مصروفات التشغيل - تحميل و تنزيل","level":4,"type":"Expense","normal_bal":"Dr"},{"code":"301001004","name":"مصروفات التشغيل -  تبخير التمور","level":4,"type":"Expense","normal_bal":"Dr"},{"code":"301001005","name":"مصروفات التشغيل -  نقل و نولون","level":4,"type":"Expense","normal_bal":"Dr"},{"code":"301001006","name":"مصروفات التشغيل - إعاشة عمال","level":4,"type":"Expense","normal_bal":"Dr"},{"code":"301001007","name":"مصروفات التشغيل -  أجور و مرتبات","level":4,"type":"Expense","normal_bal":"Dr"},{"code":"301001008","name":"مصروفات التشغيل - تأمينات اجتماعية","level":4,"type":"Expense","normal_bal":"Dr"},{"code":"301001009","name":"مصروفات التشغيل -","level":4,"type":"Expense","normal_bal":"Dr"},{"code":"301001010","name":"مصروفات التشغيل -","level":4,"type":"Expense","normal_bal":"Dr"},{"code":"301001011","name":"مصروفات التشغيل -","level":4,"type":"Expense","normal_bal":"Dr"},{"code":"301001012","name":"مصروفات التشغيل -","level":4,"type":"Expense","normal_bal":"Dr"},{"code":"301001013","name":"مصروفات التشغيل -","level":4,"type":"Expense","normal_bal":"Dr"},{"code":"301001014","name":"مصروفات التشغيل -","level":4,"type":"Expense","normal_bal":"Dr"},{"code":"301001015","name":"مصروفات التشغيل -","level":4,"type":"Expense","normal_bal":"Dr"},{"code":"301001016","name":"مصروفات التشغيل -","level":4,"type":"Expense","normal_bal":"Dr"},{"code":"301001017","name":"مصروفات التشغيل -","level":4,"type":"Expense","normal_bal":"Dr"},{"code":"301001018","name":"مصروفات التشغيل -","level":4,"type":"Expense","normal_bal":"Dr"},{"code":"301001019","name":"مصروفات التشغيل -","level":4,"type":"Expense","normal_bal":"Dr"},{"code":"301001020","name":"مصروفات التشغيل -","level":4,"type":"Expense","normal_bal":"Dr"},{"code":"302","name":"مصروفات الإدارة العامة","level":2,"type":"Expense","normal_bal":"Dr"},{"code":"302001","name":"مصروفات عمومية و إدارية - وتسويقية","level":3,"type":"Expense","normal_bal":"Dr"},{"code":"302001001","name":"مصروفات  عمومية - أجور و مرتبات","level":4,"type":"Expense","normal_bal":"Dr"},{"code":"302001002","name":"مصروفات عمومية - إيجار المقر","level":4,"type":"Expense","normal_bal":"Dr"},{"code":"302001003","name":"مصروفات عمومية - اتصالات و انترنت","level":4,"type":"Expense","normal_bal":"Dr"},{"code":"302001004","name":"مصروفات عمومية - ادوات مكتبية وتصوير و أحبار","level":4,"type":"Expense","normal_bal":"Dr"},{"code":"302001005","name":"مصروفات عمومية - مصاريف كمبيوتر ، وبرامج","level":4,"type":"Expense","normal_bal":"Dr"},{"code":"302001006","name":"مصروفات عمومية - بوفية و ضيافة","level":4,"type":"Expense","normal_bal":"Dr"},{"code":"302001007","name":"مصروفات عمومية - مصاريف سيارات","level":4,"type":"Expense","normal_bal":"Dr"},{"code":"302001008","name":"مصروفات عمومية - كهرباء","level":4,"type":"Expense","normal_bal":"Dr"},{"code":"302001009","name":"مصروفات عمومية - مستلزمات طبية","level":4,"type":"Expense","normal_bal":"Dr"},{"code":"302001010","name":"مصروفات عمومية - أتعاب محاماه","level":4,"type":"Expense","normal_bal":"Dr"},{"code":"302001011","name":"مصروفات عمومية - مصروفات وعمولات بنكية","level":4,"type":"Expense","normal_bal":"Dr"},{"code":"302001012","name":"مصروفات عمومية -","level":4,"type":"Expense","normal_bal":"Dr"},{"code":"302001013","name":"مصروفات عمومية - تأمينات اجتماعية","level":4,"type":"Expense","normal_bal":"Dr"},{"code":"302001014","name":"مصروفات عمومية - مراقبين حسابات","level":4,"type":"Expense","normal_bal":"Dr"},{"code":"302001015","name":"مصروفات عمومية - انتقالات","level":4,"type":"Expense","normal_bal":"Dr"},{"code":"302001016","name":"مصروفات عمومية - إكراميات","level":4,"type":"Expense","normal_bal":"Dr"},{"code":"302001017","name":"مصروفات عمومية - مصاريف إدارية متنوعة","level":4,"type":"Expense","normal_bal":"Dr"},{"code":"302001018","name":"مصروفات عمومية - دعاية و إعلان","level":4,"type":"Expense","normal_bal":"Dr"},{"code":"302001019","name":"مصروفات عمومية - مصروف اهلاك الاصول الثابتة","level":4,"type":"Expense","normal_bal":"Dr"},{"code":"302001020","name":"مصروفات عمومية - رسوم - دمغات - غرامات","level":4,"type":"Expense","normal_bal":"Dr"},{"code":"302001021","name":"مصروفات عمومية - رسوم طريق","level":4,"type":"Expense","normal_bal":"Dr"},{"code":"302001022","name":"مصروفات عمومية - مصروفات بريدية","level":4,"type":"Expense","normal_bal":"Dr"},{"code":"302001023","name":"مصروفات عمومية -","level":4,"type":"Expense","normal_bal":"Dr"},{"code":"302001024","name":"مصروفات عمومية - استشارات و خدمات تأمينية","level":4,"type":"Expense","normal_bal":"Dr"},{"code":"302001025","name":"مصروفات عمومية -  حوافز و مكافأت","level":4,"type":"Expense","normal_bal":"Dr"},{"code":"302001026","name":"مصروفات عمومية -  مصروفات سفر","level":4,"type":"Expense","normal_bal":"Dr"},{"code":"302001027","name":"مصروفات عمومية - مصاريف صيانة و نظافة","level":4,"type":"Expense","normal_bal":"Dr"},{"code":"302001028","name":"مصروفات عمومية - مساهمة تكافلية - تأمين صحى","level":4,"type":"Expense","normal_bal":"Dr"},{"code":"302001029","name":"مصروفات عمومية -","level":4,"type":"Expense","normal_bal":"Dr"},{"code":"302001030","name":"مصروفات عمومية -","level":4,"type":"Expense","normal_bal":"Dr"},{"code":"302001031","name":"مصروفات عمومية -","level":4,"type":"Expense","normal_bal":"Dr"},{"code":"302001032","name":"مصروفات عمومية -","level":4,"type":"Expense","normal_bal":"Dr"},{"code":"302001033","name":"مصروفات عمومية -","level":4,"type":"Expense","normal_bal":"Dr"},{"code":"302001034","name":"مصروفات عمومية -","level":4,"type":"Expense","normal_bal":"Dr"},{"code":"302001035","name":"مصروفات عمومية -","level":4,"type":"Expense","normal_bal":"Dr"},{"code":"302001036","name":"مصروفات عمومية -","level":4,"type":"Expense","normal_bal":"Dr"},{"code":"302001037","name":"مصروفات عمومية -","level":4,"type":"Expense","normal_bal":"Dr"},{"code":"302001038","name":"مصروفات عمومية -","level":4,"type":"Expense","normal_bal":"Dr"},{"code":"302001039","name":"مصروفات عمومية -","level":4,"type":"Expense","normal_bal":"Dr"},{"code":"302001040","name":"مصروفات عمومية -","level":4,"type":"Expense","normal_bal":"Dr"},{"code":"4","name":"الإيرادات","level":1,"type":"Revenue","normal_bal":"Cr"},{"code":"401","name":"إيرادات مباشرة","level":2,"type":"Revenue","normal_bal":"Cr"},{"code":"401001","name":"إيرادات المشاريع","level":3,"type":"Revenue","normal_bal":"Cr"},{"code":"401001001","name":"إيرادات - مبيعات تمور خام","level":4,"type":"Revenue","normal_bal":"Cr"},{"code":"401001002","name":"إيرادات - مبيعات  تمور جاهزة للبيع","level":4,"type":"Revenue","normal_bal":"Cr"},{"code":"401001003","name":"إيرادات -","level":4,"type":"Revenue","normal_bal":"Cr"},{"code":"401001004","name":"إيرادات -","level":4,"type":"Revenue","normal_bal":"Cr"},{"code":"401001005","name":"إيرادات -","level":4,"type":"Revenue","normal_bal":"Cr"},{"code":"401001006","name":"إيرادات -","level":4,"type":"Revenue","normal_bal":"Cr"},{"code":"401001007","name":"إيرادات -","level":4,"type":"Revenue","normal_bal":"Cr"},{"code":"401001008","name":"إيرادات -","level":4,"type":"Revenue","normal_bal":"Cr"},{"code":"401001009","name":"إيرادات -","level":4,"type":"Revenue","normal_bal":"Cr"},{"code":"401001010","name":"إيرادات -","level":4,"type":"Revenue","normal_bal":"Cr"},{"code":"401001011","name":"إيرادات -","level":4,"type":"Revenue","normal_bal":"Cr"},{"code":"401001012","name":"إيرادات -","level":4,"type":"Revenue","normal_bal":"Cr"},{"code":"401001013","name":"إيرادات -","level":4,"type":"Revenue","normal_bal":"Cr"},{"code":"401001014","name":"إيرادات -","level":4,"type":"Revenue","normal_bal":"Cr"},{"code":"401001015","name":"إيرادات -","level":4,"type":"Revenue","normal_bal":"Cr"},{"code":"401001016","name":"إيرادات -","level":4,"type":"Revenue","normal_bal":"Cr"},{"code":"401001017","name":"إيرادات -","level":4,"type":"Revenue","normal_bal":"Cr"},{"code":"401001018","name":"إيرادات -","level":4,"type":"Revenue","normal_bal":"Cr"},{"code":"401001019","name":"إيرادات -","level":4,"type":"Revenue","normal_bal":"Cr"},{"code":"401001020","name":"إيرادات -","level":4,"type":"Revenue","normal_bal":"Cr"},{"code":"402","name":"الإيرادات غير مباشرة","level":2,"type":"Revenue","normal_bal":"Cr"},{"code":"402001","name":"إيرادات غير مباشرة","level":3,"type":"Revenue","normal_bal":"Cr"},{"code":"402001001","name":"إيرادات غير مباشرة - فوائد بنكية","level":4,"type":"Revenue","normal_bal":"Cr"},{"code":"402001002","name":"إيرادات غير مباشرة - خصم مكتسب","level":4,"type":"Revenue","normal_bal":"Cr"},{"code":"402001003","name":"إيرادات غير مباشرة - ارباح وخسائر تقيم عملة","level":4,"type":"Revenue","normal_bal":"Cr"},{"code":"402001004","name":"إيرادات غير مباشرة -  فوائد مكتسبة","level":4,"type":"Revenue","normal_bal":"Cr"},{"code":"402001005","name":"إيرادات غير مباشرة -","level":4,"type":"Revenue","normal_bal":"Cr"},{"code":"402001006","name":"إيرادات غير مباشرة -","level":4,"type":"Revenue","normal_bal":"Cr"},{"code":"402001007","name":"إيرادات غير مباشرة -","level":4,"type":"Revenue","normal_bal":"Cr"},{"code":"402001008","name":"إيرادات غير مباشرة -","level":4,"type":"Revenue","normal_bal":"Cr"},{"code":"402001009","name":"إيرادات غير مباشرة -","level":4,"type":"Revenue","normal_bal":"Cr"},{"code":"402001010","name":"إيرادات غير مباشرة -","level":4,"type":"Revenue","normal_bal":"Cr"}];
+
+// Build lookup map
+const ACCOUNT_MAP = {};
+ACCOUNTS_DATA.forEach(a => { ACCOUNT_MAP[a.code] = a; });
+
+// ─── STATE ─────────────────────────────────────────
+let journalEntries = JSON.parse(localStorage.getItem('je_entries') || '[]');
+let lineCounter = 0;
+let coaFilter = 'all';
+let tbFilter = 'all';
+
+function saveToStorage() {
+  localStorage.setItem('je_entries', JSON.stringify(journalEntries));
+}
+
+// ─── NAVIGATION ────────────────────────────────────
+function showPage(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('page-' + page).classList.add('active');
+  document.querySelectorAll('.nav-tab').forEach(t => {
+    if (t.getAttribute('onclick').includes(page)) t.classList.add('active');
+  });
+  if (page === 'dashboard') renderDashboard();
+  if (page === 'coa') renderCOA();
+  if (page === 'journal') renderJournal();
+  if (page === 'trial') renderTrialBalance();
+  if (page === 'statements') renderStatements();
+}
+
+// ─── UTILS ─────────────────────────────────────────
+function fmt(n) {
+  if (!n && n !== 0) return '-';
+  if (n === 0) return '-';
+  return Number(n).toLocaleString('ar-EG', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+}
+
+function getAccountLedger() {
+  // Returns {code: {dr, cr}} summed from all entries
+  const ledger = {};
+  journalEntries.forEach(entry => {
+    entry.lines.forEach(line => {
+      if (!line.code) return;
+      if (!ledger[line.code]) ledger[line.code] = {dr: 0, cr: 0};
+      ledger[line.code].dr += Number(line.dr) || 0;
+      ledger[line.code].cr += Number(line.cr) || 0;
+    });
+  });
+  return ledger;
+}
+
+function getBalance(code, ledger) {
+  const acc = ACCOUNT_MAP[code];
+  if (!acc) return 0;
+  const dr = ledger[code]?.dr || 0;
+  const cr = ledger[code]?.cr || 0;
+  if (acc.normal_bal === 'Dr') return dr - cr;
+  return cr - dr;
+}
+
+// Compute parent totals from leaf-level (level 4) descendants
+function computeParentTotals(ledger) {
+  // For each non-leaf account, sum movement from all level-4 descendants
+  const result = {};
+  ACCOUNTS_DATA.forEach(acc => {
+    if (acc.level === 4) {
+      result[acc.code] = { dr: ledger[acc.code]?.dr || 0, cr: ledger[acc.code]?.cr || 0 };
+    } else {
+      // Sum all level-4 descendants
+      const prefix = acc.code;
+      let totDr = 0, totCr = 0;
+      ACCOUNTS_DATA.forEach(a => {
+        if (a.level === 4 && a.code.startsWith(prefix)) {
+          totDr += ledger[a.code]?.dr || 0;
+          totCr += ledger[a.code]?.cr || 0;
+        }
+      });
+      result[acc.code] = { dr: totDr, cr: totCr };
+    }
+  });
+  return result;
+}
+
+function toast(msg, type = 'success') {
+  const t = document.getElementById('toast');
+  t.textContent = (type === 'success' ? '✅ ' : '❌ ') + msg;
+  t.className = 'show ' + type;
+  setTimeout(() => t.className = '', 3000);
+}
+
+// ─── DASHBOARD ─────────────────────────────────────
+function renderDashboard() {
+  const ledger = getAccountLedger();
+  const totals = computeParentTotals(ledger);
+
+  // Stats
+  const types = ['Asset','Equity/Liability','Expense','Revenue'];
+  const typeNames = {Asset:'الأصول', 'Equity/Liability':'الالتزامات وحقوق الملكية', Expense:'المصروفات', Revenue:'الإيرادات'};
+  const typeClass = {Asset:'asset','Equity/Liability':'liability',Expense:'expense',Revenue:'revenue'};
+  const typeEmoji = {Asset:'🏛️','Equity/Liability':'⚖️',Expense:'💸',Revenue:'💰'};
+
+  let html = '';
+  types.forEach(type => {
+    const l1 = ACCOUNTS_DATA.filter(a => a.level === 1 && a.type === type);
+    let total = 0;
+    l1.forEach(a => { total += (totals[a.code]?.dr || 0) - (totals[a.code]?.cr || 0); });
+    const abs = Math.abs(total);
+    const count = ACCOUNTS_DATA.filter(a => a.type === type).length;
+    html += `<div class="stat-card ${typeClass[type]}">
+      <div class="stat-label">${typeEmoji[type]} ${typeNames[type]}</div>
+      <div class="stat-value">${abs > 0 ? fmt(abs) : '-'}</div>
+      <div class="stat-sub">${count} حساب</div>
+    </div>`;
+  });
+  document.getElementById('dash-stats').innerHTML = html;
+
+  // Structure
+  const L1 = ACCOUNTS_DATA.filter(a => a.level === 1);
+  let struct = '';
+  L1.forEach(l1 => {
+    const L2 = ACCOUNTS_DATA.filter(a => a.level === 2 && a.code.startsWith(l1.code));
+    const typeC = typeClass[l1.type];
+    struct += `<div style="margin-bottom:0.75rem">
+      <div style="font-weight:700;font-size:0.88rem;color:var(--${typeC === 'liability' ? 'purple' : typeC});margin-bottom:0.35rem;display:flex;align-items:center;gap:0.5rem">
+        <span class="code-badge">${l1.code}</span> ${l1.name}
+        <span style="margin-right:auto;font-size:0.75rem;color:var(--text3);font-family:var(--mono)">${ACCOUNTS_DATA.filter(a=>a.code.startsWith(l1.code)&&a.level===4).length} حساب</span>
+      </div>
+      ${L2.map(l2=>`<div style="padding-right:1rem;font-size:0.82rem;color:var(--text2);margin-bottom:0.2rem;display:flex;align-items:center;gap:0.4rem">
+        <span style="color:var(--text3)">└</span>
+        <span class="code-badge" style="font-size:0.72rem">${l2.code}</span> ${l2.name}
+      </div>`).join('')}
+    </div>`;
+  });
+  document.getElementById('dash-structure').innerHTML = struct;
+
+  // Recent entries
+  const recent = [...journalEntries].reverse().slice(0, 5);
+  if (!recent.length) {
+    document.getElementById('dash-recent-entries').innerHTML = `<div class="empty-state"><div class="emoji">📭</div><p>لا توجد قيود مسجلة بعد</p></div>`;
+  } else {
+    document.getElementById('dash-recent-entries').innerHTML = recent.map(e => `
+      <div style="padding:0.6rem 0;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:0.75rem">
+        <span class="entry-no">#${e.no}</span>
+        <span style="font-size:0.82rem;color:var(--text2)">${e.date || '-'}</span>
+        <span style="font-size:0.85rem;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${e.desc || 'بدون بيان'}</span>
+        <span style="font-family:var(--mono);font-size:0.82rem;color:var(--green)">${fmt(e.lines.reduce((s,l)=>s+(Number(l.dr)||0),0))}</span>
+      </div>`).join('');
+  }
+}
+
+// ─── CHART OF ACCOUNTS ─────────────────────────────
+function renderCOA(filter, search) {
+  const f = filter || coaFilter;
+  const s = (search !== undefined ? search : document.getElementById('coa-search')?.value || '').trim().toLowerCase();
+  let data = ACCOUNTS_DATA;
+
+  if (f === 'level4') data = data.filter(a => a.level === 4);
+  else if (f !== 'all') data = data.filter(a => a.type === f);
+
+  if (s) data = data.filter(a => a.name.includes(s) || a.code.includes(s));
+
+  document.getElementById('coa-count').textContent = data.length;
+
+  const typeColorMap = {
+    'Asset': 'asset',
+    'Equity/Liability': 'Equity\\/Liability',
+    'Expense': 'expense',
+    'Revenue': 'revenue'
+  };
+
+  document.getElementById('coa-tbody').innerHTML = data.map(a => {
+    const indent = Array(a.level - 1).fill('<span class="level-line"></span>').join('');
+    const tc = a.type.replace('/', '\\/');
+    return `<tr class="level-${a.level}">
+      <td><span class="code-badge">${a.code}</span></td>
+      <td><div class="level-indent">${indent}<span>${a.name}</span></div></td>
+      <td style="text-align:center"><span style="font-family:var(--mono);font-size:0.78rem;color:var(--text3)">${a.level}</span></td>
+      <td><span class="type-badge ${a.type}">${
+        a.type === 'Asset' ? 'أصول' :
+        a.type === 'Equity/Liability' ? 'التزامات/حقوق ملكية' :
+        a.type === 'Expense' ? 'مصروفات' : 'إيرادات'
+      }</span></td>
+      <td><span class="bal-badge ${a.normal_bal}">${a.normal_bal}</span></td>
+    </tr>`;
+  }).join('');
+}
+
+function filterCOA() {
+  renderCOA(coaFilter, document.getElementById('coa-search').value);
+}
+
+function setCOAFilter(f, btn) {
+  coaFilter = f;
+  document.querySelectorAll('[data-filter]').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderCOA(f);
+}
+
+// ─── JOURNAL ENTRIES ───────────────────────────────
+let currentLines = [];
+
+function renderJournal() {
+  // Set today's date
+  const today = new Date().toISOString().split('T')[0];
+  if (!document.getElementById('je-date').value) {
+    document.getElementById('je-date').value = today;
+  }
+
+  const nextNo = journalEntries.length + 1;
+  document.getElementById('new-entry-no').textContent = `قيد رقم #${nextNo}`;
+  document.getElementById('entries-count').textContent = journalEntries.length;
+
+  // Render current lines
+  if (currentLines.length === 0) { addLine(); addLine(); }
+  renderLines();
+  renderSavedEntries();
+  updateBalanceCheck();
+}
+
+function renderLines() {
+  document.getElementById('je-lines').innerHTML = currentLines.map((line, i) => `
+    <div class="je-line" id="line-${i}">
+      <input type="text" value="${line.code || ''}" placeholder="كود الحساب" 
+        oninput="updateLineCode(${i}, this.value)" 
+        style="font-family:var(--mono);letter-spacing:1px" maxlength="9">
+      <div class="account-name-display ${line.name ? 'found' : (line.code ? 'not-found' : '')}" id="name-${i}">
+        ${line.name || (line.code ? '⚠ غير موجود' : 'اكتب الكود...')}
+      </div>
+      <div style="font-size:0.75rem;padding:0.45rem 0.75rem;background:var(--bg);border:1px solid var(--border);border-radius:7px;color:${
+        line.type === 'Asset' ? 'var(--asset)' :
+        line.type === 'Equity/Liability' ? 'var(--purple)' :
+        line.type === 'Expense' ? 'var(--red)' :
+        line.type === 'Revenue' ? 'var(--green)' : 'var(--text3)'
+      };font-weight:600">${
+        line.type === 'Asset' ? 'أصول' :
+        line.type === 'Equity/Liability' ? 'التزامات' :
+        line.type === 'Expense' ? 'مصروفات' :
+        line.type === 'Revenue' ? 'إيرادات' : '—'
+      }</div>
+      <input type="number" value="${line.dr || ''}" placeholder="مدين" min="0" step="0.01"
+        oninput="updateLineAmt(${i}, 'dr', this.value)" style="color:var(--accent2)">
+      <input type="number" value="${line.cr || ''}" placeholder="دائن" min="0" step="0.01"
+        oninput="updateLineAmt(${i}, 'cr', this.value)" style="color:var(--green)">
+      <button class="remove-line" onclick="removeLine(${i})">×</button>
+    </div>`).join('');
+}
+
+function updateLineCode(i, val) {
+  val = val.trim();
+  currentLines[i].code = val;
+  const acc = ACCOUNT_MAP[val];
+  if (acc) {
+    currentLines[i].name = acc.name;
+    currentLines[i].type = acc.type;
+  } else {
+    currentLines[i].name = '';
+    currentLines[i].type = '';
+  }
+  // Update name display & type without full re-render
+  const nameEl = document.getElementById('name-' + i);
+  if (nameEl) {
+    if (acc) {
+      nameEl.textContent = acc.name;
+      nameEl.className = 'account-name-display found';
+    } else if (val) {
+      nameEl.textContent = '⚠ غير موجود';
+      nameEl.className = 'account-name-display not-found';
+    } else {
+      nameEl.textContent = 'اكتب الكود...';
+      nameEl.className = 'account-name-display';
+    }
+  }
+  // Re-render to update type color
+  renderLines();
+  updateBalanceCheck();
+}
+
+function updateLineAmt(i, side, val) {
+  if (side === 'dr') {
+    currentLines[i].dr = val;
+    if (val) currentLines[i].cr = '';
+  } else {
+    currentLines[i].cr = val;
+    if (val) currentLines[i].dr = '';
+  }
+  updateBalanceCheck();
+}
+
+function addLine() {
+  currentLines.push({ code: '', name: '', type: '', dr: '', cr: '' });
+  renderLines();
+  updateBalanceCheck();
+}
+
+function removeLine(i) {
+  if (currentLines.length <= 2) { toast('يجب أن يحتوي القيد على سطرين على الأقل', 'error'); return; }
+  currentLines.splice(i, 1);
+  renderLines();
+  updateBalanceCheck();
+}
+
+function updateBalanceCheck() {
+  const totalDr = currentLines.reduce((s, l) => s + (Number(l.dr) || 0), 0);
+  const totalCr = currentLines.reduce((s, l) => s + (Number(l.cr) || 0), 0);
+  const el = document.getElementById('balance-check');
+  if (totalDr === 0 && totalCr === 0) { el.style.display = 'none'; return; }
+  el.style.display = 'flex';
+  const balanced = Math.abs(totalDr - totalCr) < 0.001;
+  el.className = 'balance-check ' + (balanced ? 'balanced' : 'unbalanced');
+  el.innerHTML = `
+    <span>${balanced ? '✅ القيد متوازن' : '⚠️ القيد غير متوازن'}</span>
+    <div class="balance-nums">
+      مدين: <span style="color:var(--accent2)">${fmt(totalDr)}</span> &nbsp;|&nbsp;
+      دائن: <span style="color:var(--green)">${fmt(totalCr)}</span>
+      ${!balanced ? `&nbsp;|&nbsp; الفرق: <span style="color:var(--red)">${fmt(Math.abs(totalDr-totalCr))}</span>` : ''}
+    </div>`;
+}
+
+function saveEntry() {
+  const date = document.getElementById('je-date').value;
+  const desc = document.getElementById('je-desc').value.trim();
+  const costCenter = document.getElementById('je-cost-center').value.trim();
+  const ref = document.getElementById('je-ref').value.trim();
+
+  // Validate lines
+  const activeLines = currentLines.filter(l => l.code || l.dr || l.cr);
+  if (activeLines.length < 2) { toast('يجب إدخال سطرين على الأقل', 'error'); return; }
+
+  for (let l of activeLines) {
+    if (!l.code) { toast('يرجى إدخال كود لكل سطر', 'error'); return; }
+    if (!ACCOUNT_MAP[l.code]) { toast(`كود غير موجود: ${l.code}`, 'error'); return; }
+    if (!l.dr && !l.cr) { toast('يجب إدخال مبلغ مدين أو دائن لكل سطر', 'error'); return; }
+    if (l.dr && l.cr) { toast('لا يمكن إدخال مدين ودائن في نفس السطر', 'error'); return; }
+  }
+
+  const totalDr = activeLines.reduce((s,l) => s+(Number(l.dr)||0), 0);
+  const totalCr = activeLines.reduce((s,l) => s+(Number(l.cr)||0), 0);
+  if (Math.abs(totalDr - totalCr) > 0.001) { toast('القيد غير متوازن — مجموع المدين ≠ مجموع الدائن', 'error'); return; }
+
+  const entry = {
+    no: journalEntries.length + 1,
+    date, desc, costCenter, ref,
+    lines: activeLines.map(l => ({
+      code: l.code,
+      name: ACCOUNT_MAP[l.code]?.name || '',
+      type: ACCOUNT_MAP[l.code]?.type || '',
+      dr: Number(l.dr) || 0,
+      cr: Number(l.cr) || 0
+    }))
+  };
+
+  journalEntries.push(entry);
+  saveToStorage();
+  clearEntry();
+  toast(`تم حفظ القيد رقم #${entry.no} بنجاح`);
+  document.getElementById('entries-count').textContent = journalEntries.length;
+  document.getElementById('new-entry-no').textContent = `قيد رقم #${journalEntries.length + 1}`;
+  renderSavedEntries();
+}
+
+function clearEntry() {
+  currentLines = [];
+  addLine(); addLine();
+  document.getElementById('je-desc').value = '';
+  document.getElementById('je-cost-center').value = '';
+  document.getElementById('je-ref').value = '';
+  document.getElementById('balance-check').style.display = 'none';
+}
+
+function deleteEntry(no) {
+  if (!confirm(`هل تريد حذف القيد رقم #${no}؟`)) return;
+  journalEntries = journalEntries.filter(e => e.no !== no);
+  // Re-number
+  journalEntries.forEach((e, i) => e.no = i + 1);
+  saveToStorage();
+  document.getElementById('entries-count').textContent = journalEntries.length;
+  document.getElementById('new-entry-no').textContent = `قيد رقم #${journalEntries.length + 1}`;
+  renderSavedEntries();
+  toast('تم حذف القيد', 'error');
+}
+
+function renderSavedEntries() {
+  const container = document.getElementById('saved-entries');
+  if (!journalEntries.length) {
+    container.innerHTML = `<div class="empty-state"><div class="emoji">📭</div><p>لا توجد قيود محفوظة بعد — أضف قيدك الأول!</p></div>`;
+    return;
+  }
+  container.innerHTML = [...journalEntries].reverse().map(e => {
+    const totalDr = e.lines.reduce((s,l)=>s+(l.dr||0),0);
+    return `<div class="entry-group">
+      <div class="entry-group-header">
+        <span class="entry-no">#${e.no}</span>
+        <span class="entry-date">${e.date || '-'}</span>
+        <span class="entry-desc">${e.desc || '<span style="color:var(--text3)">بدون بيان</span>'}</span>
+        ${e.costCenter ? `<span style="font-size:0.78rem;color:var(--text3)">${e.costCenter}</span>` : ''}
+        ${e.ref ? `<span class="code-badge">${e.ref}</span>` : ''}
+        <span style="font-family:var(--mono);font-size:0.85rem;color:var(--accent2)">${fmt(totalDr)}</span>
+        <button class="entry-delete" onclick="deleteEntry(${e.no})">🗑</button>
+      </div>
+      <table style="font-size:0.83rem">
+        <thead><tr>
+          <th>الكود</th><th>اسم الحساب</th><th>النوع</th><th>مدين</th><th>دائن</th>
+        </tr></thead>
+        <tbody>
+          ${e.lines.map(l=>`<tr>
+            <td><span class="code-badge">${l.code}</span></td>
+            <td>${l.name}</td>
+            <td><span class="type-badge ${l.type}">${
+              l.type === 'Asset' ? 'أصول' :
+              l.type === 'Equity/Liability' ? 'التزامات' :
+              l.type === 'Expense' ? 'مصروفات' : 'إيرادات'
+            }</span></td>
+            <td>${l.dr ? `<span class="amount-dr">${fmt(l.dr)}</span>` : '<span class="amount-zero">-</span>'}</td>
+            <td>${l.cr ? `<span class="amount-cr">${fmt(l.cr)}</span>` : '<span class="amount-zero">-</span>'}</td>
+          </tr>`).join('')}
+        </tbody>
+      </table>
+    </div>`;
+  }).join('');
+}
+
+// ─── TRIAL BALANCE ─────────────────────────────────
+function renderTrialBalance() {
+  const ledger = getAccountLedger();
+  const totals = computeParentTotals(ledger);
+
+  // Summary
+  let grandDr = 0, grandCr = 0, grandBalDr = 0, grandBalCr = 0;
+  ACCOUNTS_DATA.forEach(a => {
+    if (a.level !== 4) return;
+    const d = ledger[a.code]?.dr || 0;
+    const c = ledger[a.code]?.cr || 0;
+    grandDr += d; grandCr += c;
+    if (a.normal_bal === 'Dr') grandBalDr += (d - c);
+    else grandBalCr += (c - d);
+  });
+
+  document.getElementById('tb-summary').innerHTML = `
+    <div class="tb-stat"><div class="tb-stat-label">مجموع المدين</div><div class="tb-stat-val" style="color:var(--accent2)">${fmt(grandDr)}</div></div>
+    <div class="tb-stat"><div class="tb-stat-label">مجموع الدائن</div><div class="tb-stat-val" style="color:var(--green)">${fmt(grandCr)}</div></div>
+    <div class="tb-stat"><div class="tb-stat-label">رصيد مدين</div><div class="tb-stat-val" style="color:var(--accent2)">${fmt(grandBalDr)}</div></div>
+    <div class="tb-stat"><div class="tb-stat-label">رصيد دائن</div><div class="tb-stat-val" style="color:var(--green)">${fmt(grandBalCr)}</div></div>`;
+
+  const balanced = Math.abs(grandBalDr - grandBalCr) < 0.001;
+  document.getElementById('tb-balance-banner').innerHTML = `
+    <div class="tb-balance-banner ${balanced ? 'ok' : 'fail'}">
+      <span>${balanced ? '✅ ميزان المراجعة متوازن — مجموع الأرصدة المدينة = مجموع الأرصدة الدائنة' : '⚠️ ميزان المراجعة غير متوازن'}</span>
+      <span style="font-family:var(--mono);font-size:0.88rem">${fmt(grandBalDr)} = ${fmt(grandBalCr)}</span>
+    </div>`;
+
+  renderTBTable(ledger, totals);
+}
+
+function renderTBTable(ledger, totals) {
+  const s = document.getElementById('tb-search')?.value?.trim().toLowerCase() || '';
+  let data = ACCOUNTS_DATA;
+
+  if (tbFilter === 'active') data = data.filter(a => {
+    const tot = totals[a.code];
+    return tot && (tot.dr > 0 || tot.cr > 0);
+  });
+  else if (tbFilter !== 'all') data = data.filter(a => a.type === tbFilter);
+
+  if (s) data = data.filter(a => a.name.includes(s) || a.code.includes(s));
+
+  const rows = data.map(a => {
+    const tot = totals[a.code] || {dr:0,cr:0};
+    const movDr = tot.dr, movCr = tot.cr;
+    const totDr = movDr, totCr = movCr;
+    let balDr = '', balCr = '';
+    if (a.normal_bal === 'Dr') {
+      const b = movDr - movCr;
+      if (b > 0) balDr = b; else if (b < 0) balCr = Math.abs(b);
+    } else {
+      const b = movCr - movDr;
+      if (b > 0) balCr = b; else if (b < 0) balDr = Math.abs(b);
+    }
+    const lClass = `tb-l${a.level}`;
+    const indent = Array(a.level-1).fill('<span style="display:inline-block;width:16px"></span>').join('');
+    return `<tr class="${lClass}">
+      <td><span class="code-badge">${a.code}</span></td>
+      <td>${indent}${a.name}</td>
+      <td class="amount-zero">-</td>
+      <td class="amount-zero">-</td>
+      <td>${movDr > 0 ? `<span class="amount-dr">${fmt(movDr)}</span>` : '<span class="amount-zero">-</span>'}</td>
+      <td>${movCr > 0 ? `<span class="amount-cr">${fmt(movCr)}</span>` : '<span class="amount-zero">-</span>'}</td>
+      <td>${totDr > 0 ? `<span class="amount-dr">${fmt(totDr)}</span>` : '<span class="amount-zero">-</span>'}</td>
+      <td>${totCr > 0 ? `<span class="amount-cr">${fmt(totCr)}</span>` : '<span class="amount-zero">-</span>'}</td>
+      <td>${balDr !== '' && balDr > 0 ? `<span class="amount-dr">${fmt(balDr)}</span>` : '<span class="amount-zero">-</span>'}</td>
+      <td>${balCr !== '' && balCr > 0 ? `<span class="amount-cr">${fmt(balCr)}</span>` : '<span class="amount-zero">-</span>'}</td>
+      <td><span class="type-badge ${a.type}">${
+        a.type==='Asset'?'أصول':a.type==='Equity/Liability'?'التزامات':a.type==='Expense'?'مصروفات':'إيرادات'
+      }</span></td>
+    </tr>`;
+  });
+
+  // Grand totals
+  const ledger = getAccountLedger();
+  let gMovDr=0,gMovCr=0,gTotDr=0,gTotCr=0,gBalDr=0,gBalCr=0;
+  ACCOUNTS_DATA.forEach(a=>{
+    if(a.level!==4) return;
+    const d=ledger[a.code]?.dr||0, c=ledger[a.code]?.cr||0;
+    gMovDr+=d; gMovCr+=c; gTotDr+=d; gTotCr+=c;
+    if(a.normal_bal==='Dr'){const b=d-c;if(b>0)gBalDr+=b;else gBalCr+=Math.abs(b);}
+    else{const b=c-d;if(b>0)gBalCr+=b;else gBalDr+=Math.abs(b);}
+  });
+
+  rows.push(`<tr class="tb-grand">
+    <td colspan="2" style="font-weight:800">GRAND TOTALS — مجموع الميزان</td>
+    <td>-</td><td>-</td>
+    <td><span class="amount-dr">${fmt(gMovDr)}</span></td>
+    <td><span class="amount-cr">${fmt(gMovCr)}</span></td>
+    <td><span class="amount-dr">${fmt(gTotDr)}</span></td>
+    <td><span class="amount-cr">${fmt(gTotCr)}</span></td>
+    <td><span class="amount-dr">${fmt(gBalDr)}</span></td>
+    <td><span class="amount-cr">${fmt(gBalCr)}</span></td>
+    <td style="color:${Math.abs(gBalDr-gBalCr)<0.001?'var(--green)':'var(--red)'}">${Math.abs(gBalDr-gBalCr)<0.001?'✅ متوازن':'⚠️ غير متوازن'}</td>
+  </tr>`);
+
+  document.getElementById('tb-tbody').innerHTML = rows.join('');
+}
+
+function filterTB() { 
+  const ledger = getAccountLedger();
+  const totals = computeParentTotals(ledger);
+  renderTBTable(ledger, totals); 
+}
+
+function setTBFilter(f, btn) {
+  tbFilter = f;
+  document.querySelectorAll('[data-tbfilter]').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  filterTB();
+}
+
+// ─── FINANCIAL STATEMENTS ──────────────────────────
+function renderStatements() {
+  const ledger = getAccountLedger();
+  const totals = computeParentTotals(ledger);
+
+  function getBalance4(code) {
+    const acc = ACCOUNT_MAP[code];
+    if (!acc) return 0;
+    const d = ledger[code]?.dr||0, c = ledger[code]?.cr||0;
+    return acc.normal_bal === 'Dr' ? d - c : c - d;
+  }
+
+  function getGroupBalance(prefix) {
+    let total = 0;
+    ACCOUNTS_DATA.forEach(a => {
+      if (a.level===4 && a.code.startsWith(prefix)) total += getBalance4(a.code);
+    });
+    return total;
+  }
+
+  // ── INCOME STATEMENT ────────────────────────────
+  let isHtml = '';
+
+  // Revenues
+  isHtml += `<div class="fs-section-title revenue">الإيرادات — REVENUES</div>`;
+  const rev4 = ACCOUNTS_DATA.filter(a=>a.level===1&&a.type==='Revenue');
+  let totalRev = 0;
+  rev4.forEach(l1 => {
+    const l1bal = getGroupBalance(l1.code);
+    totalRev += l1bal;
+    isHtml += `<div class="fs-row"><span class="label">${l1.name}</span><span class="value" style="color:var(--green)">${fmt(l1bal)}</span></div>`;
+    const l2s = ACCOUNTS_DATA.filter(a=>a.level===2&&a.code.startsWith(l1.code));
+    l2s.forEach(l2 => {
+      const l2bal = getGroupBalance(l2.code);
+      if (l2bal === 0) return;
+      isHtml += `<div class="fs-row indent1"><span class="label">${l2.name}</span><span class="value" style="color:var(--green)">${fmt(l2bal)}</span></div>`;
+      const l3s = ACCOUNTS_DATA.filter(a=>a.level===3&&a.code.startsWith(l2.code));
+      l3s.forEach(l3 => {
+        const l3bal = getGroupBalance(l3.code);
+        if (l3bal === 0) return;
+        isHtml += `<div class="fs-row indent2"><span class="label">${l3.name}</span><span class="value" style="color:var(--green)">${fmt(l3bal)}</span></div>`;
+        ACCOUNTS_DATA.filter(a=>a.level===4&&a.code.startsWith(l3.code)).forEach(l4 => {
+          const b = getBalance4(l4.code);
+          if (b === 0) return;
+          isHtml += `<div class="fs-row indent3"><span class="label" style="font-size:0.82rem">${l4.name} <span class="code-badge" style="font-size:0.7rem">${l4.code}</span></span><span class="value" style="color:var(--green)">${fmt(b)}</span></div>`;
+        });
+      });
+    });
+  });
+  isHtml += `<div class="fs-row total"><span class="label">إجمالي الإيرادات</span><span class="value" style="color:var(--green)">${fmt(totalRev)}</span></div>`;
+
+  // Expenses
+  isHtml += `<div class="fs-section-title expense" style="margin-top:1rem">المصروفات — EXPENSES</div>`;
+  const exp4 = ACCOUNTS_DATA.filter(a=>a.level===1&&a.type==='Expense');
+  let totalExp = 0;
+  exp4.forEach(l1 => {
+    const l1bal = getGroupBalance(l1.code);
+    totalExp += l1bal;
+    isHtml += `<div class="fs-row"><span class="label">${l1.name}</span><span class="value" style="color:var(--red)">${fmt(l1bal)}</span></div>`;
+    const l2s = ACCOUNTS_DATA.filter(a=>a.level===2&&a.code.startsWith(l1.code));
+    l2s.forEach(l2 => {
+      const l2bal = getGroupBalance(l2.code);
+      if (l2bal === 0) return;
+      isHtml += `<div class="fs-row indent1"><span class="label">${l2.name}</span><span class="value" style="color:var(--red)">${fmt(l2bal)}</span></div>`;
+      ACCOUNTS_DATA.filter(a=>a.level===3&&a.code.startsWith(l2.code)).forEach(l3 => {
+        const l3bal = getGroupBalance(l3.code);
+        if (l3bal === 0) return;
+        isHtml += `<div class="fs-row indent2"><span class="label">${l3.name}</span><span class="value" style="color:var(--red)">${fmt(l3bal)}</span></div>`;
+        ACCOUNTS_DATA.filter(a=>a.level===4&&a.code.startsWith(l3.code)).forEach(l4 => {
+          const b = getBalance4(l4.code);
+          if (b === 0) return;
+          isHtml += `<div class="fs-row indent3"><span class="label" style="font-size:0.82rem">${l4.name} <span class="code-badge" style="font-size:0.7rem">${l4.code}</span></span><span class="value" style="color:var(--red)">${fmt(b)}</span></div>`;
+        });
+      });
+    });
+  });
+  isHtml += `<div class="fs-row total"><span class="label">إجمالي المصروفات</span><span class="value" style="color:var(--red)">${fmt(totalExp)}</span></div>`;
+
+  const netProfit = totalRev - totalExp;
+  isHtml += `<div class="net-profit-box ${netProfit >= 0 ? 'profit' : 'loss'}">
+    <span class="label">${netProfit >= 0 ? '📈 صافي الربح' : '📉 صافي الخسارة'}</span>
+    <span class="value">${fmt(Math.abs(netProfit))}</span>
+  </div>`;
+
+  document.getElementById('income-statement').innerHTML = isHtml;
+
+  // ── BALANCE SHEET ────────────────────────────────
+  let bsHtml = '';
+
+  // Assets
+  bsHtml += `<div class="fs-section-title asset">الأصول — ASSETS</div>`;
+  const assetL1 = ACCOUNTS_DATA.filter(a=>a.level===1&&a.type==='Asset');
+  let totalAssets = 0;
+  assetL1.forEach(l1 => {
+    const l1bal = getGroupBalance(l1.code);
+    totalAssets += l1bal;
+    bsHtml += `<div class="fs-row"><span class="label">${l1.name}</span><span class="value" style="color:var(--asset)">${fmt(l1bal)}</span></div>`;
+    ACCOUNTS_DATA.filter(a=>a.level===2&&a.code.startsWith(l1.code)).forEach(l2 => {
+      const l2bal = getGroupBalance(l2.code);
+      if (l2bal === 0) return;
+      bsHtml += `<div class="fs-row indent1"><span class="label">${l2.name}</span><span class="value" style="color:var(--asset)">${fmt(l2bal)}</span></div>`;
+      ACCOUNTS_DATA.filter(a=>a.level===3&&a.code.startsWith(l2.code)).forEach(l3 => {
+        const l3bal = getGroupBalance(l3.code);
+        if (l3bal === 0) return;
+        bsHtml += `<div class="fs-row indent2"><span class="label">${l3.name}</span><span class="value" style="color:var(--asset)">${fmt(l3bal)}</span></div>`;
+        ACCOUNTS_DATA.filter(a=>a.level===4&&a.code.startsWith(l3.code)).forEach(l4 => {
+          const b = getBalance4(l4.code);
+          if (b === 0) return;
+          bsHtml += `<div class="fs-row indent3"><span class="label" style="font-size:0.82rem">${l4.name} <span class="code-badge" style="font-size:0.7rem">${l4.code}</span></span><span class="value" style="color:var(--asset)">${fmt(b)}</span></div>`;
+        });
+      });
+    });
+  });
+  bsHtml += `<div class="fs-row total grand-total"><span class="label">إجمالي الأصول</span><span class="value" style="color:var(--asset)">${fmt(totalAssets)}</span></div>`;
+
+  // Liabilities & Equity
+  bsHtml += `<div class="fs-section-title liability" style="margin-top:1rem">الالتزامات وحقوق الملكية — LIABILITIES & EQUITY</div>`;
+  const liabL1 = ACCOUNTS_DATA.filter(a=>a.level===1&&a.type==='Equity/Liability');
+  let totalLiab = 0;
+  liabL1.forEach(l1 => {
+    const l1bal = getGroupBalance(l1.code);
+    totalLiab += l1bal;
+    bsHtml += `<div class="fs-row"><span class="label">${l1.name}</span><span class="value" style="color:var(--purple)">${fmt(l1bal)}</span></div>`;
+    ACCOUNTS_DATA.filter(a=>a.level===2&&a.code.startsWith(l1.code)).forEach(l2 => {
+      const l2bal = getGroupBalance(l2.code);
+      if (l2bal === 0) return;
+      bsHtml += `<div class="fs-row indent1"><span class="label">${l2.name}</span><span class="value" style="color:var(--purple)">${fmt(l2bal)}</span></div>`;
+      ACCOUNTS_DATA.filter(a=>a.level===3&&a.code.startsWith(l2.code)).forEach(l3 => {
+        const l3bal = getGroupBalance(l3.code);
+        if (l3bal === 0) return;
+        bsHtml += `<div class="fs-row indent2"><span class="label">${l3.name}</span><span class="value" style="color:var(--purple)">${fmt(l3bal)}</span></div>`;
+        ACCOUNTS_DATA.filter(a=>a.level===4&&a.code.startsWith(l3.code)).forEach(l4 => {
+          const b = getBalance4(l4.code);
+          if (b === 0) return;
+          bsHtml += `<div class="fs-row indent3"><span class="label" style="font-size:0.82rem">${l4.name} <span class="code-badge" style="font-size:0.7rem">${l4.code}</span></span><span class="value" style="color:var(--purple)">${fmt(b)}</span></div>`;
+        });
+      });
+    });
+  });
+
+  const totalWithProfit = totalLiab + netProfit;
+  bsHtml += `<div class="fs-row indent1"><span class="label">صافي ربح / (خسارة) الفترة</span><span class="value" style="color:${netProfit>=0?'var(--green)':'var(--red)'}">${fmt(netProfit)}</span></div>`;
+  bsHtml += `<div class="fs-row total grand-total"><span class="label">إجمالي الالتزامات وحقوق الملكية</span><span class="value" style="color:var(--purple)">${fmt(totalWithProfit)}</span></div>`;
+
+  const bsBalanced = Math.abs(totalAssets - totalWithProfit) < 0.01;
+  bsHtml += `<div class="balance-check-box ${bsBalanced ? '' : 'fail'}">
+    ${bsBalanced ? '✅ الميزانية متوازنة — الأصول = الالتزامات + حقوق الملكية + الأرباح' : '⚠️ الميزانية غير متوازنة'}
+    <br><span style="font-family:var(--mono);font-size:0.85rem;margin-top:4px;display:inline-block">${fmt(totalAssets)} = ${fmt(totalWithProfit)}</span>
+  </div>`;
+
+  document.getElementById('balance-sheet').innerHTML = bsHtml;
+}
+
+// ─── INIT ───────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  // Set today's date
+  const today = new Date().toISOString().split('T')[0];
+  document.getElementById('je-date').value = today;
+
+  // Init COA
+  renderCOA();
+
+  // Init dashboard
+  renderDashboard();
+
+  // Init journal lines
+  addLine(); addLine();
+  renderSavedEntries();
+  document.getElementById('entries-count').textContent = journalEntries.length;
+  const nextNo = journalEntries.length + 1;
+  document.getElementById('new-entry-no').textContent = `قيد رقم #${nextNo}`;
+});
+</script>
+</body>
+</html>
