@@ -1,0 +1,1786 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>النظام المحاسبي - Accounting System</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0e1a;
+  --surface: #111827;
+  --surface2: #1a2235;
+  --surface3: #222d42;
+  --border: #2a3a5c;
+  --accent: #3b82f6;
+  --accent2: #10b981;
+  --accent3: #f59e0b;
+  --danger: #ef4444;
+  --text: #e2e8f0;
+  --text2: #94a3b8;
+  --text3: #64748b;
+  --dr-color: #3b82f6;
+  --cr-color: #10b981;
+  --l1-color: #f1f5f9;
+  --l2-color: #93c5fd;
+  --l3-color: #6ee7b7;
+  --l4-color: #94a3b8;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  font-family: 'Cairo', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* SIDEBAR */
+.sidebar {
+  position: fixed;
+  top: 0; right: 0;
+  width: 220px;
+  height: 100vh;
+  background: var(--surface);
+  border-left: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
+  transition: width 0.3s;
+}
+
+.sidebar-logo {
+  padding: 20px 16px;
+  border-bottom: 1px solid var(--border);
+  background: linear-gradient(135deg, #1e3a6e 0%, #0f2044 100%);
+}
+.sidebar-logo h1 {
+  font-size: 14px;
+  font-weight: 900;
+  color: #fff;
+  line-height: 1.4;
+}
+.sidebar-logo span {
+  font-size: 10px;
+  color: var(--accent);
+  font-family: 'IBM Plex Mono', monospace;
+  letter-spacing: 1px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text2);
+  border-right: 3px solid transparent;
+  transition: all 0.2s;
+}
+.nav-item:hover { background: var(--surface2); color: var(--text); }
+.nav-item.active { background: var(--surface2); color: var(--accent); border-right-color: var(--accent); }
+.nav-item .icon { font-size: 16px; width: 20px; text-align: center; }
+
+.nav-section {
+  padding: 8px 16px 4px;
+  font-size: 10px;
+  color: var(--text3);
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-top: 8px;
+}
+
+/* MAIN */
+.main {
+  margin-right: 220px;
+  padding: 24px;
+  min-height: 100vh;
+}
+
+/* TOPBAR */
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+.page-title {
+  font-size: 22px;
+  font-weight: 900;
+  color: var(--text);
+}
+.page-title span { color: var(--accent); }
+
+/* CARDS */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.stat-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 18px;
+  position: relative;
+  overflow: hidden;
+}
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+}
+.stat-card.blue::before { background: var(--accent); }
+.stat-card.green::before { background: var(--accent2); }
+.stat-card.amber::before { background: var(--accent3); }
+.stat-card.red::before { background: var(--danger); }
+
+.stat-label { font-size: 11px; color: var(--text2); font-weight: 600; margin-bottom: 6px; }
+.stat-value { font-size: 24px; font-weight: 900; color: var(--text); }
+.stat-sub { font-size: 11px; color: var(--text3); margin-top: 4px; }
+
+/* PANELS */
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.panel-header {
+  padding: 14px 18px;
+  background: var(--surface2);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.panel-title { font-size: 14px; font-weight: 700; }
+.panel-body { padding: 16px; }
+
+/* TABS */
+.tabs { display: none; }
+.tabs.active { display: block; }
+
+/* TABLE */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+.data-table th {
+  background: var(--surface2);
+  padding: 10px 12px;
+  text-align: right;
+  font-weight: 700;
+  color: var(--text2);
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+.data-table td {
+  padding: 9px 12px;
+  border-bottom: 1px solid rgba(42,58,92,0.5);
+  color: var(--text);
+}
+.data-table tr:hover td { background: rgba(59,130,246,0.05); }
+
+/* ACCOUNT TREE */
+.account-row { cursor: default; }
+.account-row.level-1 td:first-child { font-weight: 900; font-size: 14px; color: var(--l1-color); }
+.account-row.level-2 td:first-child { font-weight: 700; font-size: 13px; color: var(--l2-color); padding-right: 20px; }
+.account-row.level-3 td:first-child { font-weight: 600; font-size: 12px; color: var(--l3-color); padding-right: 36px; }
+.account-row.level-4 td:first-child { font-size: 12px; color: var(--l4-color); padding-right: 52px; }
+
+.account-row.level-1 { background: rgba(59,130,246,0.08); }
+.account-row.level-2 { background: rgba(59,130,246,0.04); }
+
+.code-badge {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  padding: 2px 7px;
+  border-radius: 4px;
+  background: var(--surface3);
+  color: var(--accent);
+}
+
+.type-badge {
+  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: 20px;
+  font-weight: 700;
+}
+.type-asset { background: rgba(59,130,246,0.15); color: #93c5fd; }
+.type-liability { background: rgba(239,68,68,0.15); color: #fca5a5; }
+.type-expense { background: rgba(245,158,11,0.15); color: #fcd34d; }
+.type-revenue { background: rgba(16,185,129,0.15); color: #6ee7b7; }
+
+/* JOURNAL ENTRY FORM */
+.entry-form { display: grid; gap: 16px; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.form-group { display: flex; flex-direction: column; gap: 6px; }
+.form-label { font-size: 11px; font-weight: 700; color: var(--text2); }
+.form-input, .form-select {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 9px 12px;
+  color: var(--text);
+  font-family: 'Cairo', sans-serif;
+  font-size: 13px;
+  outline: none;
+  transition: border-color 0.2s;
+  text-align: right;
+}
+.form-input:focus, .form-select:focus { border-color: var(--accent); }
+.form-select option { background: var(--surface2); }
+
+/* JOURNAL LINES */
+.journal-lines { margin-top: 8px; }
+.journal-line {
+  display: grid;
+  grid-template-columns: 180px 1fr 120px 120px 60px;
+  gap: 8px;
+  margin-bottom: 8px;
+  align-items: center;
+}
+.journal-line .form-input { padding: 7px 10px; font-size: 12px; }
+
+.lines-header {
+  display: grid;
+  grid-template-columns: 180px 1fr 120px 120px 60px;
+  gap: 8px;
+  margin-bottom: 6px;
+  padding: 0 4px;
+}
+.lines-header span { font-size: 10px; font-weight: 700; color: var(--text3); }
+
+.btn {
+  padding: 9px 18px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-family: 'Cairo', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  transition: all 0.2s;
+}
+.btn-primary { background: var(--accent); color: #fff; }
+.btn-primary:hover { background: #2563eb; }
+.btn-success { background: var(--accent2); color: #fff; }
+.btn-success:hover { background: #059669; }
+.btn-ghost { background: var(--surface3); color: var(--text2); }
+.btn-ghost:hover { background: var(--border); color: var(--text); }
+.btn-danger { background: rgba(239,68,68,0.15); color: var(--danger); border: 1px solid rgba(239,68,68,0.3); }
+.btn-danger:hover { background: rgba(239,68,68,0.25); }
+.btn-sm { padding: 5px 10px; font-size: 11px; }
+
+.btn-row { display: flex; gap: 10px; margin-top: 8px; }
+
+/* ALERT */
+.alert {
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  display: none;
+}
+.alert.show { display: block; }
+.alert-success { background: rgba(16,185,129,0.15); color: #6ee7b7; border: 1px solid rgba(16,185,129,0.3); }
+.alert-error { background: rgba(239,68,68,0.15); color: #fca5a5; border: 1px solid rgba(239,68,68,0.3); }
+
+/* BALANCE indicators */
+.balance-indicator {
+  display: flex;
+  gap: 16px;
+  padding: 12px 16px;
+  background: var(--surface2);
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+.bal-item { display: flex; align-items: center; gap: 8px; font-size: 12px; }
+.bal-dot { width: 10px; height: 10px; border-radius: 50%; }
+
+/* SEARCH */
+.search-box {
+  position: relative;
+  margin-bottom: 14px;
+}
+.search-box input {
+  width: 100%;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 9px 12px 9px 36px;
+  color: var(--text);
+  font-family: 'Cairo', sans-serif;
+  font-size: 13px;
+  outline: none;
+}
+.search-box input:focus { border-color: var(--accent); }
+.search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text3);
+  font-size: 14px;
+}
+
+/* TRIAL BALANCE */
+.tb-totals {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.tb-total-box {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 14px;
+  text-align: center;
+}
+.tb-total-label { font-size: 10px; color: var(--text2); font-weight: 700; margin-bottom: 4px; }
+.tb-total-val { font-size: 18px; font-weight: 900; font-family: 'IBM Plex Mono', monospace; }
+.tb-total-val.dr { color: var(--dr-color); }
+.tb-total-val.cr { color: var(--cr-color); }
+.tb-total-val.balanced { color: var(--accent2); }
+.tb-total-val.unbalanced { color: var(--danger); }
+
+/* NUMBER FORMATTING */
+.num { 
+  font-family: 'IBM Plex Mono', monospace; 
+  font-size: 12px; 
+  text-align: left !important;
+  direction: ltr;
+}
+.num.dr-num { color: var(--dr-color); }
+.num.cr-num { color: var(--cr-color); }
+
+/* LOADING */
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  color: var(--text3);
+  font-size: 13px;
+  gap: 10px;
+}
+.spinner {
+  width: 20px; height: 20px;
+  border: 2px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* EMPTY STATE */
+.empty-state {
+  text-align: center;
+  padding: 40px;
+  color: var(--text3);
+}
+.empty-state .empty-icon { font-size: 36px; margin-bottom: 10px; }
+.empty-state p { font-size: 13px; }
+
+/* INCOME STATEMENT & BALANCE SHEET */
+.fs-section {
+  margin-bottom: 20px;
+}
+.fs-section-title {
+  font-size: 13px;
+  font-weight: 900;
+  color: var(--accent);
+  padding: 8px 12px;
+  background: rgba(59,130,246,0.1);
+  border-radius: 6px;
+  margin-bottom: 8px;
+  border-right: 3px solid var(--accent);
+}
+.fs-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 12px;
+  border-bottom: 1px solid rgba(42,58,92,0.4);
+  font-size: 12px;
+}
+.fs-row:hover { background: rgba(59,130,246,0.04); }
+.fs-row.subtotal {
+  font-weight: 700;
+  background: var(--surface2);
+  padding: 8px 12px;
+  border-radius: 6px;
+  margin-top: 4px;
+}
+.fs-row.total {
+  font-weight: 900;
+  font-size: 14px;
+  background: var(--surface3);
+  padding: 10px 12px;
+  border-radius: 6px;
+  margin-top: 8px;
+  border: 1px solid var(--border);
+}
+.fs-row.net-income {
+  font-weight: 900;
+  font-size: 15px;
+  background: linear-gradient(135deg, rgba(16,185,129,0.15), rgba(59,130,246,0.1));
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin-top: 12px;
+  border: 1px solid rgba(16,185,129,0.3);
+}
+.fs-label { color: var(--text2); }
+.fs-value { font-family: 'IBM Plex Mono', monospace; font-weight: 700; }
+.fs-value.positive { color: var(--accent2); }
+.fs-value.negative { color: var(--danger); }
+
+/* FILTER BAR */
+.filter-bar {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+.filter-btn {
+  padding: 5px 14px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: var(--surface2);
+  color: var(--text2);
+  font-size: 11px;
+  font-family: 'Cairo', sans-serif;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.filter-btn.active, .filter-btn:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+/* RESPONSIVE TABLE WRAPPER */
+.table-wrap { overflow-x: auto; }
+
+/* PULSE EFFECT */
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.5} }
+.pulse { animation: pulse 1.5s ease-in-out infinite; }
+
+/* DR/CR toggle */
+.dr-cr-toggle {
+  display: flex;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.dr-cr-toggle button {
+  flex: 1;
+  padding: 6px 10px;
+  border: none;
+  background: var(--surface2);
+  color: var(--text2);
+  font-family: 'Cairo', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.dr-cr-toggle button.active-dr { background: rgba(59,130,246,0.3); color: #93c5fd; }
+.dr-cr-toggle button.active-cr { background: rgba(16,185,129,0.3); color: #6ee7b7; }
+
+/* NOTIFICATION TOAST */
+.toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(80px);
+  background: var(--surface3);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 20px;
+  font-size: 13px;
+  font-weight: 600;
+  z-index: 9999;
+  transition: transform 0.3s ease;
+  white-space: nowrap;
+}
+.toast.show { transform: translateX(-50%) translateY(0); }
+.toast.success { border-color: var(--accent2); color: #6ee7b7; }
+.toast.error { border-color: var(--danger); color: #fca5a5; }
+
+/* ENTRY NUMBER BADGE */
+.entry-num-badge {
+  background: var(--accent);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 900;
+  padding: 2px 8px;
+  border-radius: 20px;
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+/* COLLAPSIBLE ROWS */
+.collapsible-trigger { cursor: pointer; user-select: none; }
+.collapsible-trigger:hover td { background: rgba(59,130,246,0.1); }
+.expand-icon { margin-left: 6px; font-size: 10px; transition: transform 0.2s; display: inline-block; }
+.expanded .expand-icon { transform: rotate(90deg); }
+.hidden-row { display: none; }
+
+/* DASHBOARD GRID */
+.dash-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.account-code-input-wrap { position: relative; }
+.account-suggestion {
+  position: absolute;
+  top: 100%; right: 0; left: 0;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  z-index: 1000;
+  max-height: 200px;
+  overflow-y: auto;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+}
+.suggestion-item {
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.suggestion-item:hover { background: var(--surface2); }
+.suggestion-item .sug-code { font-family: 'IBM Plex Mono', monospace; color: var(--accent); font-size: 11px; }
+.suggestion-item .sug-name { color: var(--text2); }
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+  <div class="sidebar-logo">
+    <h1>النظام المحاسبي</h1>
+    <span>ACCOUNTING SYSTEM v2</span>
+  </div>
+  <div class="nav-section">القوائم</div>
+  <div class="nav-item active" onclick="navigate('dashboard')">
+    <span class="icon">📊</span> لوحة التحكم
+  </div>
+  <div class="nav-section">المحاسبة</div>
+  <div class="nav-item" onclick="navigate('coa')">
+    <span class="icon">📋</span> دليل الحسابات
+  </div>
+  <div class="nav-item" onclick="navigate('journal')">
+    <span class="icon">📝</span> قيود اليومية
+  </div>
+  <div class="nav-section">التقارير</div>
+  <div class="nav-item" onclick="navigate('trial')">
+    <span class="icon">⚖️</span> ميزان المراجعة
+  </div>
+  <div class="nav-item" onclick="navigate('income')">
+    <span class="icon">📈</span> قائمة الدخل
+  </div>
+  <div class="nav-item" onclick="navigate('balance')">
+    <span class="icon">🏦</span> الميزانية العمومية
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="main">
+
+  <!-- DASHBOARD -->
+  <div id="page-dashboard" class="tabs active">
+    <div class="topbar">
+      <div class="page-title">لوحة <span>التحكم</span></div>
+      <div style="font-size:12px;color:var(--text3);">النظام المحاسبي الكامل</div>
+    </div>
+    <div class="cards-grid">
+      <div class="stat-card blue">
+        <div class="stat-label">إجمالي الحسابات</div>
+        <div class="stat-value" id="dash-total-accounts">483</div>
+        <div class="stat-sub">دليل حسابات هرمي 4 مستويات</div>
+      </div>
+      <div class="stat-card green">
+        <div class="stat-label">القيود المسجلة</div>
+        <div class="stat-value" id="dash-total-entries">0</div>
+        <div class="stat-sub">قيود يومية مسجلة</div>
+      </div>
+      <div class="stat-card amber">
+        <div class="stat-label">إجمالي المدين</div>
+        <div class="stat-value" id="dash-total-dr" style="font-size:16px;font-family:'IBM Plex Mono',monospace;">0</div>
+        <div class="stat-sub">مجموع الحركة المدينة</div>
+      </div>
+      <div class="stat-card red">
+        <div class="stat-label">إجمالي الدائن</div>
+        <div class="stat-value" id="dash-total-cr" style="font-size:16px;font-family:'IBM Plex Mono',monospace;">0</div>
+        <div class="stat-sub">مجموع الحركة الدائنة</div>
+      </div>
+    </div>
+
+    <div class="dash-grid">
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-title">⚖️ حالة الميزان</div>
+        </div>
+        <div class="panel-body">
+          <div id="balance-status" style="text-align:center;padding:20px;">
+            <div style="font-size:40px;margin-bottom:8px;">✅</div>
+            <div style="font-size:16px;font-weight:700;color:var(--accent2);">الميزان متوازن</div>
+            <div style="font-size:12px;color:var(--text3);margin-top:4px;">مجموع المدين = مجموع الدائن</div>
+          </div>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-title">📊 توزيع الحسابات</div>
+        </div>
+        <div class="panel-body">
+          <div style="display:flex;flex-direction:column;gap:10px;padding:8px 0;">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <span style="font-size:12px;color:var(--text2);">أصول (Assets)</span>
+              <div style="display:flex;align-items:center;gap:8px;">
+                <div style="width:80px;height:6px;border-radius:3px;background:var(--surface3);">
+                  <div style="width:55%;height:100%;background:var(--accent);border-radius:3px;"></div>
+                </div>
+                <span class="type-badge type-asset">264</span>
+              </div>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <span style="font-size:12px;color:var(--text2);">التزامات وحقوق ملكية</span>
+              <div style="display:flex;align-items:center;gap:8px;">
+                <div style="width:80px;height:6px;border-radius:3px;background:var(--surface3);">
+                  <div style="width:35%;height:100%;background:var(--danger);border-radius:3px;"></div>
+                </div>
+                <span class="type-badge type-liability">165</span>
+              </div>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <span style="font-size:12px;color:var(--text2);">إيرادات (Revenue)</span>
+              <div style="display:flex;align-items:center;gap:8px;">
+                <div style="width:80px;height:6px;border-radius:3px;background:var(--surface3);">
+                  <div style="width:10%;height:100%;background:var(--accent2);border-radius:3px;"></div>
+                </div>
+                <span class="type-badge type-revenue">44</span>
+              </div>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <span style="font-size:12px;color:var(--text2);">مصروفات (Expenses)</span>
+              <div style="display:flex;align-items:center;gap:8px;">
+                <div style="width:80px;height:6px;border-radius:3px;background:var(--surface3);">
+                  <div style="width:20%;height:100%;background:var(--accent3);border-radius:3px;"></div>
+                </div>
+                <span class="type-badge type-expense">110</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel" style="margin-top:16px;">
+      <div class="panel-header">
+        <div class="panel-title">📝 آخر القيود المسجلة</div>
+      </div>
+      <div class="panel-body">
+        <div id="recent-entries">
+          <div class="empty-state">
+            <div class="empty-icon">📋</div>
+            <p>لا توجد قيود مسجلة حتى الآن</p>
+            <p style="margin-top:6px;font-size:11px;">اذهب إلى قيود اليومية لإضافة قيود جديدة</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHART OF ACCOUNTS -->
+  <div id="page-coa" class="tabs">
+    <div class="topbar">
+      <div class="page-title">دليل <span>الحسابات</span></div>
+      <div style="display:flex;gap:8px;">
+        <span class="type-badge type-asset">أصول</span>
+        <span class="type-badge type-liability">التزامات</span>
+        <span class="type-badge type-revenue">إيرادات</span>
+        <span class="type-badge type-expense">مصروفات</span>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="panel-header">
+        <div class="panel-title">Chart of Accounts - دليل الحسابات الهرمي</div>
+        <div style="font-size:11px;color:var(--text3);">4 مستويات | 483 حساب</div>
+      </div>
+      <div class="panel-body">
+        <div class="search-box">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="coa-search" placeholder="ابحث بالكود أو الاسم..." oninput="filterCOA(this.value)" style="padding-right:36px;">
+        </div>
+        <div class="filter-bar">
+          <button class="filter-btn active" onclick="filterByType('ALL',this)">الكل</button>
+          <button class="filter-btn" onclick="filterByType('Asset',this)">أصول</button>
+          <button class="filter-btn" onclick="filterByType('Equity/Liability',this)">التزامات</button>
+          <button class="filter-btn" onclick="filterByType('Revenue',this)">إيرادات</button>
+          <button class="filter-btn" onclick="filterByType('Expense',this)">مصروفات</button>
+        </div>
+        <div class="table-wrap">
+          <table class="data-table" id="coa-table">
+            <thead>
+              <tr>
+                <th>اسم الحساب</th>
+                <th>الكود</th>
+                <th>النوع</th>
+                <th>الرصيد الطبيعي</th>
+                <th>المستوى</th>
+              </tr>
+            </thead>
+            <tbody id="coa-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JOURNAL ENTRIES -->
+  <div id="page-journal" class="tabs">
+    <div class="topbar">
+      <div class="page-title">قيود <span>اليومية</span></div>
+      <button class="btn btn-primary" onclick="newEntry()">+ قيد جديد</button>
+    </div>
+
+    <!-- NEW ENTRY FORM -->
+    <div class="panel" id="entry-form-panel" style="margin-bottom:16px;display:none;">
+      <div class="panel-header">
+        <div class="panel-title">📝 إضافة قيد يومي جديد</div>
+        <button class="btn btn-ghost btn-sm" onclick="cancelEntry()">إلغاء</button>
+      </div>
+      <div class="panel-body">
+        <div id="form-alert" class="alert"></div>
+        <div class="form-row" style="margin-bottom:14px;">
+          <div class="form-group">
+            <label class="form-label">رقم القيد (تلقائي)</label>
+            <input type="text" class="form-input" id="entry-num" readonly style="background:var(--surface3);color:var(--accent);">
+          </div>
+          <div class="form-group">
+            <label class="form-label">التاريخ</label>
+            <input type="date" class="form-input" id="entry-date" value="">
+          </div>
+        </div>
+        <div class="form-group" style="margin-bottom:14px;">
+          <label class="form-label">البيان / الوصف</label>
+          <input type="text" class="form-input" id="entry-desc" placeholder="اكتب وصف القيد...">
+        </div>
+
+        <!-- LINES -->
+        <div style="font-size:12px;font-weight:700;color:var(--text2);margin-bottom:8px;">سطور القيد</div>
+        <div class="lines-header">
+          <span>كود الحساب</span>
+          <span>اسم الحساب</span>
+          <span>مدين (Dr)</span>
+          <span>دائن (Cr)</span>
+          <span></span>
+        </div>
+        <div id="journal-lines-container"></div>
+        
+        <button class="btn btn-ghost btn-sm" onclick="addLine()" style="margin-bottom:12px;">+ إضافة سطر</button>
+
+        <div class="balance-indicator" id="entry-balance-indicator">
+          <div class="bal-item">
+            <div class="bal-dot" style="background:var(--dr-color)"></div>
+            <span style="color:var(--text2)">مجموع المدين:</span>
+            <strong id="line-dr-total" style="color:var(--dr-color);font-family:'IBM Plex Mono',monospace;">0.00</strong>
+          </div>
+          <div class="bal-item">
+            <div class="bal-dot" style="background:var(--cr-color)"></div>
+            <span style="color:var(--text2)">مجموع الدائن:</span>
+            <strong id="line-cr-total" style="color:var(--cr-color);font-family:'IBM Plex Mono',monospace;">0.00</strong>
+          </div>
+          <div class="bal-item" id="bal-status-indicator">
+            <span id="bal-status-text" style="font-weight:700;color:var(--text3);">⏳ في انتظار البيانات</span>
+          </div>
+        </div>
+
+        <div class="btn-row">
+          <button class="btn btn-success" onclick="saveEntry()">💾 حفظ القيد</button>
+          <button class="btn btn-ghost" onclick="cancelEntry()">إلغاء</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ENTRIES LIST -->
+    <div class="panel">
+      <div class="panel-header">
+        <div class="panel-title">سجل القيود اليومية</div>
+        <div id="entries-count" style="font-size:11px;color:var(--text3);">0 قيد</div>
+      </div>
+      <div class="panel-body">
+        <div id="entries-list">
+          <div class="empty-state">
+            <div class="empty-icon">📋</div>
+            <p>لا توجد قيود مسجلة</p>
+            <p style="margin-top:6px;font-size:11px;">اضغط "قيد جديد" لإضافة قيد</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TRIAL BALANCE -->
+  <div id="page-trial" class="tabs">
+    <div class="topbar">
+      <div class="page-title">ميزان <span>المراجعة</span></div>
+      <button class="btn btn-ghost btn-sm" onclick="renderTrialBalance()">🔄 تحديث</button>
+    </div>
+    <div class="tb-totals">
+      <div class="tb-total-box">
+        <div class="tb-total-label">إجمالي المدين</div>
+        <div class="tb-total-val dr" id="tb-dr-total">0.00</div>
+      </div>
+      <div class="tb-total-box">
+        <div class="tb-total-label">إجمالي الدائن</div>
+        <div class="tb-total-val cr" id="tb-cr-total">0.00</div>
+      </div>
+      <div class="tb-total-box">
+        <div class="tb-total-label">حالة الميزان</div>
+        <div class="tb-total-val balanced" id="tb-balance-status">✅ متوازن</div>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="panel-header">
+        <div class="panel-title">Trial Balance - ميزان المراجعة بالأرصدة</div>
+        <div style="font-size:11px;color:var(--text3);">يظهر فقط الحسابات ذات حركة</div>
+      </div>
+      <div class="panel-body">
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>اسم الحساب</th>
+                <th>الكود</th>
+                <th style="text-align:left">رصيد أول المدة (Dr)</th>
+                <th style="text-align:left">رصيد أول المدة (Cr)</th>
+                <th style="text-align:left">حركة المدة (Dr)</th>
+                <th style="text-align:left">حركة المدة (Cr)</th>
+                <th style="text-align:left">مجموع مدين</th>
+                <th style="text-align:left">مجموع دائن</th>
+                <th style="text-align:left">الرصيد مدين</th>
+                <th style="text-align:left">الرصيد دائن</th>
+              </tr>
+            </thead>
+            <tbody id="tb-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- INCOME STATEMENT -->
+  <div id="page-income" class="tabs">
+    <div class="topbar">
+      <div class="page-title">قائمة <span>الدخل</span></div>
+      <div style="font-size:12px;color:var(--text3);">Income Statement</div>
+    </div>
+    <div class="panel">
+      <div class="panel-header">
+        <div class="panel-title">قائمة الدخل - Income Statement</div>
+      </div>
+      <div class="panel-body" id="income-statement-body">
+        <div class="empty-state">
+          <div class="empty-icon">📈</div>
+          <p>لا توجد بيانات حتى الآن</p>
+          <p style="font-size:11px;margin-top:6px;">سجّل قيوداً في اليومية أولاً</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BALANCE SHEET -->
+  <div id="page-balance" class="tabs">
+    <div class="topbar">
+      <div class="page-title">الميزانية <span>العمومية</span></div>
+      <div style="font-size:12px;color:var(--text3);">Balance Sheet</div>
+    </div>
+    <div class="panel">
+      <div class="panel-header">
+        <div class="panel-title">الميزانية العمومية - Balance Sheet</div>
+      </div>
+      <div class="panel-body" id="balance-sheet-body">
+        <div class="empty-state">
+          <div class="empty-icon">🏦</div>
+          <p>لا توجد بيانات حتى الآن</p>
+          <p style="font-size:11px;margin-top:6px;">سجّل قيوداً في اليومية أولاً</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+// =====================================================
+// DATA - CHART OF ACCOUNTS (from Excel file)
+// =====================================================
+const ACCOUNTS_DATA = [
+{"code":"1","name":"الأصول","level":1,"type":"Asset","nb":"Dr"},
+{"code":"101","name":"الأصول الثابتة","level":2,"type":"Asset","nb":"Dr"},
+{"code":"101001","name":"الأصول الثابتة - ثلاجات التبريد","level":3,"type":"Asset","nb":"Dr"},
+{"code":"101001001","name":"أصول ثابتة - ثلاجة التبريد 1","level":4,"type":"Asset","nb":"Dr"},
+{"code":"101001002","name":"أصول ثابتة - ثلاجة التبريد 2","level":4,"type":"Asset","nb":"Dr"},
+{"code":"101001003","name":"أصول ثابتة - ثلاجة التبريد 3","level":4,"type":"Asset","nb":"Dr"},
+{"code":"101002","name":"الأصول الثابتة - كباسات التبريد","level":3,"type":"Asset","nb":"Dr"},
+{"code":"101002001","name":"أصول ثابتة - كباسة تبريد 1","level":4,"type":"Asset","nb":"Dr"},
+{"code":"101002002","name":"أصول ثابتة - كباسة تبريد 2","level":4,"type":"Asset","nb":"Dr"},
+{"code":"101003","name":"الأصول الثابتة - كمبيوتر وطابعات وبرامج","level":3,"type":"Asset","nb":"Dr"},
+{"code":"101003001","name":"كمبيوتر - Laptop","level":4,"type":"Asset","nb":"Dr"},
+{"code":"101003002","name":"كمبيوتر - Desktop","level":4,"type":"Asset","nb":"Dr"},
+{"code":"101003003","name":"طابعات","level":4,"type":"Asset","nb":"Dr"},
+{"code":"101003004","name":"ماكينة تصوير","level":4,"type":"Asset","nb":"Dr"},
+{"code":"101003005","name":"تابلت","level":4,"type":"Asset","nb":"Dr"},
+{"code":"101004","name":"الأصول الثابتة - ماكينات التعبئة والتغليف","level":3,"type":"Asset","nb":"Dr"},
+{"code":"101004001","name":"ماكينة تعبئة وتغليف 1","level":4,"type":"Asset","nb":"Dr"},
+{"code":"101004002","name":"ماكينة تعبئة وتغليف 2","level":4,"type":"Asset","nb":"Dr"},
+{"code":"101005","name":"الأصول الثابتة - الميزان الإلكتروني","level":3,"type":"Asset","nb":"Dr"},
+{"code":"101005001","name":"ميزان إلكتروني 1","level":4,"type":"Asset","nb":"Dr"},
+{"code":"101005002","name":"ميزان إلكتروني 2","level":4,"type":"Asset","nb":"Dr"},
+{"code":"102","name":"البنوك والنقدية","level":2,"type":"Asset","nb":"Dr"},
+{"code":"102001","name":"حسابات البنوك","level":3,"type":"Asset","nb":"Dr"},
+{"code":"102001001","name":"حساب بنك - CIB - بالجنيه المصري","level":4,"type":"Asset","nb":"Dr"},
+{"code":"102001002","name":"حساب بنك - CIB - بالدولار","level":4,"type":"Asset","nb":"Dr"},
+{"code":"102001003","name":"حساب بنك - CPS - CIB","level":4,"type":"Asset","nb":"Dr"},
+{"code":"102001004","name":"حساب نقدية بالصندوق","level":4,"type":"Asset","nb":"Dr"},
+{"code":"102002","name":"حسابات النقدية","level":3,"type":"Asset","nb":"Dr"},
+{"code":"102002001","name":"نقدية بالخزينة - الرئيسية - بالجنيه المصري","level":4,"type":"Asset","nb":"Dr"},
+{"code":"102002002","name":"نقدية بالخزينة - الرئيسية - بالدولار","level":4,"type":"Asset","nb":"Dr"},
+{"code":"102003","name":"العهد المؤقتة","level":3,"type":"Asset","nb":"Dr"},
+{"code":"102003001","name":"العهد المؤقتة 1","level":4,"type":"Asset","nb":"Dr"},
+{"code":"103","name":"العملاء","level":2,"type":"Asset","nb":"Dr"},
+{"code":"103001","name":"عملاء - محليين","level":3,"type":"Asset","nb":"Dr"},
+{"code":"103001001","name":"عميل محلي 1","level":4,"type":"Asset","nb":"Dr"},
+{"code":"103001002","name":"عميل محلي 2","level":4,"type":"Asset","nb":"Dr"},
+{"code":"103001003","name":"عميل محلي 3","level":4,"type":"Asset","nb":"Dr"},
+{"code":"103002","name":"عملاء - جملة","level":3,"type":"Asset","nb":"Dr"},
+{"code":"103002001","name":"عميل جملة 1","level":4,"type":"Asset","nb":"Dr"},
+{"code":"103002002","name":"عميل جملة 2","level":4,"type":"Asset","nb":"Dr"},
+{"code":"103003","name":"عملاء - تصدير","level":3,"type":"Asset","nb":"Dr"},
+{"code":"103003001","name":"عميل تصدير 1","level":4,"type":"Asset","nb":"Dr"},
+{"code":"104","name":"مدينون متنوعون","level":2,"type":"Asset","nb":"Dr"},
+{"code":"104001","name":"الإيرادات المستحقة","level":3,"type":"Asset","nb":"Dr"},
+{"code":"104001001","name":"إيرادات مستحقة 1","level":4,"type":"Asset","nb":"Dr"},
+{"code":"104002","name":"المصروفات المقدمة","level":3,"type":"Asset","nb":"Dr"},
+{"code":"104002001","name":"مصروفات مقدمة 1","level":4,"type":"Asset","nb":"Dr"},
+{"code":"104003","name":"تأمينات لدى الغير","level":3,"type":"Asset","nb":"Dr"},
+{"code":"104003001","name":"تأمينات لدى الغير 1","level":4,"type":"Asset","nb":"Dr"},
+{"code":"104004","name":"ضرائب مدينة","level":3,"type":"Asset","nb":"Dr"},
+{"code":"104004001","name":"ضرائب مدينة - خصم من المنبع","level":4,"type":"Asset","nb":"Dr"},
+{"code":"104005","name":"أرصدة مدينة أخرى","level":3,"type":"Asset","nb":"Dr"},
+{"code":"104005001","name":"أرصدة مدينة - سلف عاملين","level":4,"type":"Asset","nb":"Dr"},
+{"code":"105","name":"المخزون","level":2,"type":"Asset","nb":"Dr"},
+{"code":"105001","name":"مخزن - الثلاجة رقم 1","level":3,"type":"Asset","nb":"Dr"},
+{"code":"105001001","name":"مخزون - ثلاجة 1 - تمور خام","level":4,"type":"Asset","nb":"Dr"},
+{"code":"105001002","name":"مخزون - ثلاجة 1 - تمور تحت التشغيل","level":4,"type":"Asset","nb":"Dr"},
+{"code":"105001003","name":"مخزون - ثلاجة 1 - تمور جاهزة للبيع","level":4,"type":"Asset","nb":"Dr"},
+{"code":"105002","name":"مخزن - الثلاجة رقم 2","level":3,"type":"Asset","nb":"Dr"},
+{"code":"105002001","name":"مخزون - ثلاجة 2 - تمور خام","level":4,"type":"Asset","nb":"Dr"},
+{"code":"105002002","name":"مخزون - ثلاجة 2 - تمور تحت التشغيل","level":4,"type":"Asset","nb":"Dr"},
+{"code":"105002003","name":"مخزون - ثلاجة 2 - تمور جاهزة للبيع","level":4,"type":"Asset","nb":"Dr"},
+{"code":"105003","name":"مخزن - الثلاجة رقم 3","level":3,"type":"Asset","nb":"Dr"},
+{"code":"105003001","name":"مخزون - ثلاجة 3 - تمور خام","level":4,"type":"Asset","nb":"Dr"},
+{"code":"105003002","name":"مخزون - ثلاجة 3 - تمور تحت التشغيل","level":4,"type":"Asset","nb":"Dr"},
+{"code":"105003003","name":"مخزون - ثلاجة 3 - تمور جاهزة للبيع","level":4,"type":"Asset","nb":"Dr"},
+{"code":"105004","name":"مخزن - مواد التعبئة والتغليف","level":3,"type":"Asset","nb":"Dr"},
+{"code":"105004001","name":"مواد التعبئة والتغليف - كرتون","level":4,"type":"Asset","nb":"Dr"},
+{"code":"105005","name":"مخزن - مواد ومهمات","level":3,"type":"Asset","nb":"Dr"},
+{"code":"105005001","name":"مواد ومهمات 1","level":4,"type":"Asset","nb":"Dr"},
+{"code":"2","name":"الالتزامات وحقوق الملكية","level":1,"type":"Equity/Liability","nb":"Cr"},
+{"code":"201","name":"حسابات رأس المال","level":2,"type":"Equity/Liability","nb":"Cr"},
+{"code":"201001","name":"رأس المال المدفوع","level":3,"type":"Equity/Liability","nb":"Cr"},
+{"code":"201001001","name":"رأس المال - المدفوع","level":4,"type":"Equity/Liability","nb":"Cr"},
+{"code":"201002","name":"زيادة رأس المال","level":3,"type":"Equity/Liability","nb":"Cr"},
+{"code":"201002001","name":"زيادة رأس المال 1","level":4,"type":"Equity/Liability","nb":"Cr"},
+{"code":"201003","name":"الأرباح والخسائر","level":3,"type":"Equity/Liability","nb":"Cr"},
+{"code":"201003001","name":"أرباح وخسائر العام","level":4,"type":"Equity/Liability","nb":"Cr"},
+{"code":"201003002","name":"أرباح وخسائر - سنوات سابقة","level":4,"type":"Equity/Liability","nb":"Cr"},
+{"code":"202","name":"التزامات غير متداولة","level":2,"type":"Equity/Liability","nb":"Cr"},
+{"code":"202001","name":"التزامات الإيجار","level":3,"type":"Equity/Liability","nb":"Cr"},
+{"code":"202001001","name":"إيجار 1","level":4,"type":"Equity/Liability","nb":"Cr"},
+{"code":"202002","name":"قروض طويلة الأجل","level":3,"type":"Equity/Liability","nb":"Cr"},
+{"code":"202002001","name":"قرض طويل الأجل 1","level":4,"type":"Equity/Liability","nb":"Cr"},
+{"code":"203","name":"التزامات متداولة","level":2,"type":"Equity/Liability","nb":"Cr"},
+{"code":"203001","name":"الموردون","level":3,"type":"Equity/Liability","nb":"Cr"},
+{"code":"203001001","name":"مورد محلي 1","level":4,"type":"Equity/Liability","nb":"Cr"},
+{"code":"203001002","name":"مورد محلي 2","level":4,"type":"Equity/Liability","nb":"Cr"},
+{"code":"203002","name":"دائنون متنوعون","level":3,"type":"Equity/Liability","nb":"Cr"},
+{"code":"203002001","name":"دائنون متنوعون 1","level":4,"type":"Equity/Liability","nb":"Cr"},
+{"code":"203003","name":"ضرائب دائنة","level":3,"type":"Equity/Liability","nb":"Cr"},
+{"code":"203003001","name":"ضريبة القيمة المضافة","level":4,"type":"Equity/Liability","nb":"Cr"},
+{"code":"203003002","name":"ضريبة الدخل","level":4,"type":"Equity/Liability","nb":"Cr"},
+{"code":"203004","name":"مصروفات مستحقة","level":3,"type":"Equity/Liability","nb":"Cr"},
+{"code":"203004001","name":"مصروفات مستحقة - مرتبات","level":4,"type":"Equity/Liability","nb":"Cr"},
+{"code":"3","name":"الإيرادات","level":1,"type":"Revenue","nb":"Cr"},
+{"code":"301","name":"إيرادات المبيعات","level":2,"type":"Revenue","nb":"Cr"},
+{"code":"301001","name":"مبيعات - تمور خام","level":3,"type":"Revenue","nb":"Cr"},
+{"code":"301001001","name":"مبيعات تمور خام - محلية","level":4,"type":"Revenue","nb":"Cr"},
+{"code":"301001002","name":"مبيعات تمور خام - تصدير","level":4,"type":"Revenue","nb":"Cr"},
+{"code":"301002","name":"مبيعات - تمور جاهزة","level":3,"type":"Revenue","nb":"Cr"},
+{"code":"301002001","name":"مبيعات تمور جاهزة - محلية","level":4,"type":"Revenue","nb":"Cr"},
+{"code":"301002002","name":"مبيعات تمور جاهزة - تصدير","level":4,"type":"Revenue","nb":"Cr"},
+{"code":"301003","name":"مبيعات - مواد تعبئة وتغليف","level":3,"type":"Revenue","nb":"Cr"},
+{"code":"301003001","name":"مبيعات مواد تعبئة 1","level":4,"type":"Revenue","nb":"Cr"},
+{"code":"302","name":"إيرادات أخرى","level":2,"type":"Revenue","nb":"Cr"},
+{"code":"302001","name":"إيرادات متنوعة","level":3,"type":"Revenue","nb":"Cr"},
+{"code":"302001001","name":"إيرادات متنوعة 1","level":4,"type":"Revenue","nb":"Cr"},
+{"code":"4","name":"المصروفات","level":1,"type":"Expense","nb":"Dr"},
+{"code":"401","name":"تكلفة البضاعة المباعة","level":2,"type":"Expense","nb":"Dr"},
+{"code":"401001","name":"تكلفة المبيعات - تمور","level":3,"type":"Expense","nb":"Dr"},
+{"code":"401001001","name":"تكلفة مبيعات تمور خام","level":4,"type":"Expense","nb":"Dr"},
+{"code":"401001002","name":"تكلفة مبيعات تمور جاهزة","level":4,"type":"Expense","nb":"Dr"},
+{"code":"402","name":"مصروفات التشغيل","level":2,"type":"Expense","nb":"Dr"},
+{"code":"402001","name":"مصروفات الرواتب والأجور","level":3,"type":"Expense","nb":"Dr"},
+{"code":"402001001","name":"رواتب موظفين","level":4,"type":"Expense","nb":"Dr"},
+{"code":"402001002","name":"أجور عمال","level":4,"type":"Expense","nb":"Dr"},
+{"code":"402001003","name":"اكراميات","level":4,"type":"Expense","nb":"Dr"},
+{"code":"402002","name":"مصروفات الإيجار","level":3,"type":"Expense","nb":"Dr"},
+{"code":"402002001","name":"إيجار مخازن","level":4,"type":"Expense","nb":"Dr"},
+{"code":"402002002","name":"إيجار مكاتب","level":4,"type":"Expense","nb":"Dr"},
+{"code":"402003","name":"مصروفات الكهرباء والمياه","level":3,"type":"Expense","nb":"Dr"},
+{"code":"402003001","name":"كهرباء","level":4,"type":"Expense","nb":"Dr"},
+{"code":"402003002","name":"مياه","level":4,"type":"Expense","nb":"Dr"},
+{"code":"402004","name":"مصروفات الصيانة","level":3,"type":"Expense","nb":"Dr"},
+{"code":"402004001","name":"صيانة ثلاجات","level":4,"type":"Expense","nb":"Dr"},
+{"code":"402004002","name":"صيانة ماكينات","level":4,"type":"Expense","nb":"Dr"},
+{"code":"402005","name":"مصروفات النقل والتوزيع","level":3,"type":"Expense","nb":"Dr"},
+{"code":"402005001","name":"وقود ونقل","level":4,"type":"Expense","nb":"Dr"},
+{"code":"402005002","name":"توزيع وشحن","level":4,"type":"Expense","nb":"Dr"},
+{"code":"402006","name":"مصروفات إدارية وعمومية","level":3,"type":"Expense","nb":"Dr"},
+{"code":"402006001","name":"مصروفات مكتبية","level":4,"type":"Expense","nb":"Dr"},
+{"code":"402006002","name":"اتصالات وإنترنت","level":4,"type":"Expense","nb":"Dr"},
+{"code":"402007","name":"مصروفات التسويق والإعلان","level":3,"type":"Expense","nb":"Dr"},
+{"code":"402007001","name":"إعلانات","level":4,"type":"Expense","nb":"Dr"},
+{"code":"402007002","name":"تسويق إلكتروني","level":4,"type":"Expense","nb":"Dr"},
+{"code":"403","name":"مصروفات مالية","level":2,"type":"Expense","nb":"Dr"},
+{"code":"403001","name":"فوائد بنكية","level":3,"type":"Expense","nb":"Dr"},
+{"code":"403001001","name":"فوائد قروض","level":4,"type":"Expense","nb":"Dr"},
+{"code":"403002","name":"عمولات بنكية","level":3,"type":"Expense","nb":"Dr"},
+{"code":"403002001","name":"عمولات بنكية","level":4,"type":"Expense","nb":"Dr"}
+];
+
+// =====================================================
+// STATE
+// =====================================================
+let journalEntries = JSON.parse(localStorage.getItem('journal_entries') || '[]');
+let nextEntryNum = parseInt(localStorage.getItem('next_entry_num') || '1');
+let currentLines = [];
+let currentTypeFilter = 'ALL';
+let currentSearchFilter = '';
+
+// Build account lookup
+const accountMap = {};
+ACCOUNTS_DATA.forEach(a => { accountMap[a.code] = a; });
+
+// =====================================================
+// NAVIGATION
+// =====================================================
+function navigate(page) {
+  document.querySelectorAll('.tabs').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('page-' + page).classList.add('active');
+  event.currentTarget.classList.add('active');
+
+  if (page === 'trial') renderTrialBalance();
+  if (page === 'income') renderIncomeStatement();
+  if (page === 'balance') renderBalanceSheet();
+  if (page === 'dashboard') updateDashboard();
+  if (page === 'coa') renderCOA();
+  if (page === 'journal') renderEntriesList();
+}
+
+// =====================================================
+// CHART OF ACCOUNTS
+// =====================================================
+function renderCOA() {
+  const tbody = document.getElementById('coa-tbody');
+  const filtered = ACCOUNTS_DATA.filter(a => {
+    const typeMatch = currentTypeFilter === 'ALL' || a.type === currentTypeFilter;
+    const q = currentSearchFilter.toLowerCase();
+    const searchMatch = !q || a.code.includes(q) || a.name.includes(q) || a.name.toLowerCase().includes(q);
+    return typeMatch && searchMatch;
+  });
+
+  tbody.innerHTML = filtered.map(a => {
+    const typeBadgeClass = {
+      'Asset': 'type-asset',
+      'Equity/Liability': 'type-liability',
+      'Revenue': 'type-revenue',
+      'Expense': 'type-expense'
+    }[a.type] || 'type-asset';
+
+    const typeLabel = {
+      'Asset': 'أصول',
+      'Equity/Liability': 'التزامات',
+      'Revenue': 'إيرادات',
+      'Expense': 'مصروفات'
+    }[a.type] || a.type;
+
+    const indent = (a.level - 1) * 16;
+
+    return `<tr class="account-row level-${a.level}">
+      <td style="padding-right:${12 + indent}px">${a.name}</td>
+      <td><span class="code-badge">${a.code}</span></td>
+      <td><span class="type-badge ${typeBadgeClass}">${typeLabel}</span></td>
+      <td><span style="font-weight:700;color:${a.nb==='Dr'?'var(--dr-color)':'var(--cr-color)'}">${a.nb}</span></td>
+      <td style="color:var(--text3);font-family:'IBM Plex Mono',monospace;font-size:11px;">L${a.level}</td>
+    </tr>`;
+  }).join('');
+}
+
+function filterCOA(val) {
+  currentSearchFilter = val;
+  renderCOA();
+}
+
+function filterByType(type, btn) {
+  currentTypeFilter = type;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderCOA();
+}
+
+// =====================================================
+// JOURNAL ENTRY
+// =====================================================
+let suggestionTarget = null;
+
+function newEntry() {
+  document.getElementById('entry-form-panel').style.display = 'block';
+  const today = new Date().toISOString().split('T')[0];
+  document.getElementById('entry-date').value = today;
+  document.getElementById('entry-num').value = 'JE-' + String(nextEntryNum).padStart(4, '0');
+  document.getElementById('entry-desc').value = '';
+  currentLines = [];
+  addLine();
+  addLine();
+  updateLineTotals();
+  document.getElementById('form-alert').className = 'alert';
+}
+
+function cancelEntry() {
+  document.getElementById('entry-form-panel').style.display = 'none';
+  currentLines = [];
+}
+
+function addLine() {
+  const id = Date.now() + Math.random();
+  currentLines.push({ id, code: '', name: '', dr: '', cr: '' });
+  renderLines();
+}
+
+function renderLines() {
+  const container = document.getElementById('journal-lines-container');
+  container.innerHTML = currentLines.map((line, idx) => `
+    <div class="journal-line" data-idx="${idx}">
+      <div class="account-code-input-wrap">
+        <input type="text" class="form-input" placeholder="كود الحساب" 
+          value="${line.code}"
+          onchange="updateLineCode(${idx}, this.value)"
+          oninput="showSuggestions(${idx}, this)"
+          onfocus="showSuggestions(${idx}, this)"
+          autocomplete="off"
+          style="font-family:'IBM Plex Mono',monospace;font-size:12px;">
+        <div class="account-suggestion" id="sug-${idx}" style="display:none;"></div>
+      </div>
+      <input type="text" class="form-input" placeholder="اسم الحساب (تلقائي)" 
+        value="${line.name}" readonly
+        style="background:var(--surface3);font-size:12px;">
+      <input type="number" class="form-input" placeholder="0.00" 
+        value="${line.dr}"
+        onchange="updateLineDr(${idx}, this.value)"
+        oninput="updateLineDr(${idx}, this.value)"
+        style="font-family:'IBM Plex Mono',monospace;color:var(--dr-color);">
+      <input type="number" class="form-input" placeholder="0.00"
+        value="${line.cr}"
+        onchange="updateLineCr(${idx}, this.value)"
+        oninput="updateLineCr(${idx}, this.value)"
+        style="font-family:'IBM Plex Mono',monospace;color:var(--cr-color);">
+      <button class="btn btn-danger btn-sm" onclick="removeLine(${idx})" ${currentLines.length <= 2 ? 'disabled' : ''}>✕</button>
+    </div>
+  `).join('');
+}
+
+function showSuggestions(idx, input) {
+  const val = input.value.trim().toLowerCase();
+  const sugDiv = document.getElementById('sug-' + idx);
+  
+  if (!val || val.length < 1) { sugDiv.style.display = 'none'; return; }
+  
+  const matches = ACCOUNTS_DATA.filter(a => 
+    a.level === 4 && (a.code.startsWith(val) || a.name.includes(val))
+  ).slice(0, 8);
+
+  if (!matches.length) { sugDiv.style.display = 'none'; return; }
+
+  sugDiv.innerHTML = matches.map(a => `
+    <div class="suggestion-item" onclick="selectAccount(${idx}, '${a.code}')">
+      <span class="sug-code">${a.code}</span>
+      <span class="sug-name">${a.name}</span>
+    </div>
+  `).join('');
+  sugDiv.style.display = 'block';
+}
+
+function selectAccount(idx, code) {
+  currentLines[idx].code = code;
+  const acc = accountMap[code];
+  currentLines[idx].name = acc ? acc.name : '';
+  document.getElementById('sug-' + idx).style.display = 'none';
+  renderLines();
+  updateLineTotals();
+}
+
+function updateLineCode(idx, val) {
+  currentLines[idx].code = val.trim();
+  const acc = accountMap[val.trim()];
+  currentLines[idx].name = acc ? acc.name : (val.trim() ? '❓ كود غير موجود' : '');
+  updateLineTotals();
+}
+
+function updateLineDr(idx, val) {
+  currentLines[idx].dr = val;
+  if (val && parseFloat(val) > 0) currentLines[idx].cr = '';
+  updateLineTotals();
+}
+
+function updateLineCr(idx, val) {
+  currentLines[idx].cr = val;
+  if (val && parseFloat(val) > 0) currentLines[idx].dr = '';
+  updateLineTotals();
+}
+
+function removeLine(idx) {
+  if (currentLines.length <= 2) return;
+  currentLines.splice(idx, 1);
+  renderLines();
+  updateLineTotals();
+}
+
+function updateLineTotals() {
+  const drTotal = currentLines.reduce((s, l) => s + (parseFloat(l.dr) || 0), 0);
+  const crTotal = currentLines.reduce((s, l) => s + (parseFloat(l.cr) || 0), 0);
+  document.getElementById('line-dr-total').textContent = formatNum(drTotal);
+  document.getElementById('line-cr-total').textContent = formatNum(crTotal);
+  const statusEl = document.getElementById('bal-status-text');
+  const diff = Math.abs(drTotal - crTotal);
+  if (drTotal === 0 && crTotal === 0) {
+    statusEl.textContent = '⏳ في انتظار البيانات';
+    statusEl.style.color = 'var(--text3)';
+  } else if (diff < 0.01) {
+    statusEl.textContent = '✅ الميزان متوازن';
+    statusEl.style.color = 'var(--accent2)';
+  } else {
+    statusEl.textContent = `⚠️ فارق: ${formatNum(diff)}`;
+    statusEl.style.color = 'var(--danger)';
+  }
+}
+
+function saveEntry() {
+  const date = document.getElementById('entry-date').value;
+  const desc = document.getElementById('entry-desc').value.trim();
+  const alertEl = document.getElementById('form-alert');
+
+  if (!date) { showAlert(alertEl, 'يرجى إدخال التاريخ', 'error'); return; }
+
+  const validLines = currentLines.filter(l => l.code && (parseFloat(l.dr) > 0 || parseFloat(l.cr) > 0));
+  if (validLines.length < 2) { showAlert(alertEl, 'يجب إدخال سطرين على الأقل مع مبالغ', 'error'); return; }
+
+  const drTotal = validLines.reduce((s, l) => s + (parseFloat(l.dr) || 0), 0);
+  const crTotal = validLines.reduce((s, l) => s + (parseFloat(l.cr) || 0), 0);
+
+  if (Math.abs(drTotal - crTotal) > 0.01) {
+    showAlert(alertEl, `القيد غير متوازن! مجموع مدين: ${formatNum(drTotal)} | مجموع دائن: ${formatNum(crTotal)}`, 'error');
+    return;
+  }
+
+  const entry = {
+    num: nextEntryNum,
+    numStr: 'JE-' + String(nextEntryNum).padStart(4, '0'),
+    date,
+    desc,
+    lines: validLines.map(l => ({
+      code: l.code,
+      name: accountMap[l.code]?.name || l.code,
+      dr: parseFloat(l.dr) || 0,
+      cr: parseFloat(l.cr) || 0
+    }))
+  };
+
+  journalEntries.push(entry);
+  nextEntryNum++;
+  localStorage.setItem('journal_entries', JSON.stringify(journalEntries));
+  localStorage.setItem('next_entry_num', nextEntryNum.toString());
+
+  document.getElementById('entry-form-panel').style.display = 'none';
+  currentLines = [];
+  renderEntriesList();
+  updateDashboard();
+  showToast('✅ تم حفظ القيد بنجاح', 'success');
+}
+
+function deleteEntry(num) {
+  if (!confirm('هل تريد حذف هذا القيد؟')) return;
+  journalEntries = journalEntries.filter(e => e.num !== num);
+  localStorage.setItem('journal_entries', JSON.stringify(journalEntries));
+  renderEntriesList();
+  updateDashboard();
+  showToast('🗑️ تم حذف القيد', 'success');
+}
+
+function renderEntriesList() {
+  const container = document.getElementById('entries-list');
+  const countEl = document.getElementById('entries-count');
+  countEl.textContent = journalEntries.length + ' قيد';
+
+  if (!journalEntries.length) {
+    container.innerHTML = `<div class="empty-state"><div class="empty-icon">📋</div><p>لا توجد قيود مسجلة</p></div>`;
+    return;
+  }
+
+  container.innerHTML = [...journalEntries].reverse().map(e => `
+    <div class="panel" style="margin-bottom:12px;border-color:var(--border);">
+      <div class="panel-header" style="padding:10px 14px;">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span class="entry-num-badge">${e.numStr}</span>
+          <span style="font-size:12px;color:var(--text2);">${e.date}</span>
+          <span style="font-size:12px;color:var(--text);">${e.desc || '—'}</span>
+        </div>
+        <button class="btn btn-danger btn-sm" onclick="deleteEntry(${e.num})">حذف</button>
+      </div>
+      <div style="padding:10px 14px;">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>الحساب</th>
+              <th>الكود</th>
+              <th style="text-align:left">مدين</th>
+              <th style="text-align:left">دائن</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${e.lines.map(l => `
+              <tr>
+                <td>${l.name}</td>
+                <td><span class="code-badge">${l.code}</span></td>
+                <td class="num dr-num">${l.dr > 0 ? formatNum(l.dr) : ''}</td>
+                <td class="num cr-num">${l.cr > 0 ? formatNum(l.cr) : ''}</td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  `).join('');
+}
+
+// =====================================================
+// TRIAL BALANCE
+// =====================================================
+function computeAccountBalances() {
+  // Compute level-4 balances from journal entries
+  const balances = {}; // code -> {dr, cr}
+
+  journalEntries.forEach(e => {
+    e.lines.forEach(l => {
+      if (!balances[l.code]) balances[l.code] = { dr: 0, cr: 0 };
+      balances[l.code].dr += l.dr;
+      balances[l.code].cr += l.cr;
+    });
+  });
+
+  return balances;
+}
+
+function aggregateToParents(balances) {
+  // For each account that has balance, propagate up to parents
+  const all = {};
+
+  // Init all accounts
+  ACCOUNTS_DATA.forEach(a => { all[a.code] = { dr: 0, cr: 0, ...a }; });
+
+  // Add direct balances
+  Object.entries(balances).forEach(([code, bal]) => {
+    if (all[code]) {
+      all[code].dr += bal.dr;
+      all[code].cr += bal.cr;
+    }
+  });
+
+  // Propagate up: level 4 -> 3 -> 2 -> 1
+  ACCOUNTS_DATA.filter(a => a.level === 4).forEach(a => {
+    const parentCode3 = a.code.substring(0, 6); // e.g., 102001
+    const parentCode2 = a.code.substring(0, 3); // e.g., 102
+    const parentCode1 = a.code.substring(0, 1); // e.g., 1
+    [parentCode3, parentCode2, parentCode1].forEach(pc => {
+      if (all[pc]) {
+        all[pc].dr += all[a.code].dr;
+        all[pc].cr += all[a.code].cr;
+      }
+    });
+  });
+
+  return all;
+}
+
+function renderTrialBalance() {
+  const balances = computeAccountBalances();
+  const all = aggregateToParents(balances);
+
+  // Filter: only show accounts with movement at level 4, plus their parents
+  const activeCodes = new Set(Object.keys(balances));
+  const activeParents = new Set();
+  activeCodes.forEach(code => {
+    // Add all parent prefixes
+    if (code.length >= 9) { 
+      activeParents.add(code.substring(0,6));
+      activeParents.add(code.substring(0,3));
+      activeParents.add(code.substring(0,1));
+    } else if (code.length >= 6) {
+      activeParents.add(code.substring(0,3));
+      activeParents.add(code.substring(0,1));
+    } else if (code.length >= 3) {
+      activeParents.add(code.substring(0,1));
+    }
+  });
+
+  let totalDr = 0, totalCr = 0;
+  const tbody = document.getElementById('tb-tbody');
+
+  if (!activeCodes.size) {
+    tbody.innerHTML = `<tr><td colspan="10" class="empty-state" style="padding:30px;text-align:center;color:var(--text3);">لا توجد قيود مسجلة بعد</td></tr>`;
+    document.getElementById('tb-dr-total').textContent = '0.00';
+    document.getElementById('tb-cr-total').textContent = '0.00';
+    document.getElementById('tb-balance-status').textContent = '✅ متوازن';
+    return;
+  }
+
+  const rows = ACCOUNTS_DATA.filter(a => activeCodes.has(a.code) || activeParents.has(a.code));
+
+  tbody.innerHTML = rows.map(a => {
+    const bal = all[a.code] || { dr: 0, cr: 0 };
+    const drBal = a.type === 'Asset' || a.type === 'Expense' ? Math.max(0, bal.dr - bal.cr) : 0;
+    const crBal = a.type !== 'Asset' && a.type !== 'Expense' ? Math.max(0, bal.cr - bal.dr) : 0;
+
+    if (a.level === 4) {
+      totalDr += bal.dr;
+    }
+
+    const indent = (a.level - 1) * 16;
+    return `<tr class="account-row level-${a.level}">
+      <td style="padding-right:${12+indent}px">${a.name}</td>
+      <td><span class="code-badge">${a.code}</span></td>
+      <td class="num">${bal.dr > 0 ? formatNum(bal.dr) : ''}</td>
+      <td class="num"></td>
+      <td class="num dr-num">${a.level===4 && bal.dr > 0 ? formatNum(bal.dr) : ''}</td>
+      <td class="num cr-num">${a.level===4 && bal.cr > 0 ? formatNum(bal.cr) : ''}</td>
+      <td class="num dr-num">${a.level<=2 && bal.dr > 0 ? formatNum(bal.dr) : (a.level===4 ? formatNum(bal.dr) : '')}</td>
+      <td class="num cr-num">${a.level<=2 && bal.cr > 0 ? formatNum(bal.cr) : (a.level===4 ? formatNum(bal.cr) : '')}</td>
+      <td class="num dr-num">${drBal > 0 ? formatNum(drBal) : ''}</td>
+      <td class="num cr-num">${crBal > 0 ? formatNum(crBal) : ''}</td>
+    </tr>`;
+  }).join('');
+
+  // Compute real totals from level-4 accounts
+  let realDr = 0, realCr = 0;
+  Object.values(balances).forEach(b => { realDr += b.dr; realCr += b.cr; });
+  
+  document.getElementById('tb-dr-total').textContent = formatNum(realDr);
+  document.getElementById('tb-cr-total').textContent = formatNum(realCr);
+  const balanced = Math.abs(realDr - realCr) < 0.01;
+  const statusEl = document.getElementById('tb-balance-status');
+  statusEl.textContent = balanced ? '✅ متوازن' : '⚠️ غير متوازن';
+  statusEl.className = 'tb-total-val ' + (balanced ? 'balanced' : 'unbalanced');
+}
+
+// =====================================================
+// INCOME STATEMENT
+// =====================================================
+function renderIncomeStatement() {
+  const balances = computeAccountBalances();
+  const all = aggregateToParents(balances);
+  const body = document.getElementById('income-statement-body');
+
+  const revAccounts = ACCOUNTS_DATA.filter(a => a.type === 'Revenue');
+  const expAccounts = ACCOUNTS_DATA.filter(a => a.type === 'Expense');
+
+  let totalRev = 0, totalExp = 0;
+
+  const hasData = [...revAccounts, ...expAccounts].some(a => {
+    const b = all[a.code];
+    return b && (b.dr > 0 || b.cr > 0);
+  });
+
+  if (!hasData) {
+    body.innerHTML = `<div class="empty-state"><div class="empty-icon">📈</div><p>لا توجد بيانات إيرادات أو مصروفات</p></div>`;
+    return;
+  }
+
+  // Revenue section
+  let revHTML = `<div class="fs-section">
+    <div class="fs-section-title">📊 الإيرادات - Revenue</div>`;
+  
+  revAccounts.filter(a => a.level >= 2).forEach(a => {
+    const b = all[a.code] || { dr: 0, cr: 0 };
+    const val = b.cr - b.dr;
+    if (a.level === 1) return;
+    if (val === 0 && a.level > 2) return;
+
+    if (a.level === 2) {
+      revHTML += `<div class="fs-row" style="font-weight:700;color:var(--text);">
+        <span>${a.name}</span><span></span>
+      </div>`;
+    } else if (a.level === 3) {
+      revHTML += `<div class="fs-row" style="padding-right:24px;">
+        <span class="fs-label">${a.name}</span>
+        <span class="fs-value ${val >= 0 ? 'positive' : 'negative'}">${val !== 0 ? formatNum(Math.abs(val)) : ''}</span>
+      </div>`;
+      totalRev += val;
+    }
+  });
+
+  revHTML += `<div class="fs-row subtotal">
+    <span>إجمالي الإيرادات</span>
+    <span class="fs-value positive">${formatNum(totalRev)}</span>
+  </div></div>`;
+
+  // Expense section
+  let expHTML = `<div class="fs-section">
+    <div class="fs-section-title" style="border-color:var(--accent3);background:rgba(245,158,11,0.1);">💸 المصروفات - Expenses</div>`;
+
+  expAccounts.filter(a => a.level >= 2).forEach(a => {
+    const b = all[a.code] || { dr: 0, cr: 0 };
+    const val = b.dr - b.cr;
+    if (a.level === 1) return;
+    if (val === 0 && a.level > 2) return;
+
+    if (a.level === 2) {
+      expHTML += `<div class="fs-row" style="font-weight:700;color:var(--text);">
+        <span>${a.name}</span><span></span>
+      </div>`;
+    } else if (a.level === 3) {
+      expHTML += `<div class="fs-row" style="padding-right:24px;">
+        <span class="fs-label">${a.name}</span>
+        <span class="fs-value negative">${val !== 0 ? '(' + formatNum(val) + ')' : ''}</span>
+      </div>`;
+      totalExp += val;
+    }
+  });
+
+  expHTML += `<div class="fs-row subtotal">
+    <span>إجمالي المصروفات</span>
+    <span class="fs-value negative">(${formatNum(totalExp)})</span>
+  </div></div>`;
+
+  const netIncome = totalRev - totalExp;
+  const netHTML = `<div class="fs-row net-income">
+    <span style="font-weight:900;font-size:15px;">صافي الربح / الخسارة</span>
+    <span class="fs-value ${netIncome >= 0 ? 'positive' : 'negative'}" style="font-size:18px;">
+      ${netIncome >= 0 ? '' : '('}${formatNum(Math.abs(netIncome))}${netIncome >= 0 ? '' : ')'}
+    </span>
+  </div>`;
+
+  body.innerHTML = revHTML + expHTML + netHTML;
+}
+
+// =====================================================
+// BALANCE SHEET
+// =====================================================
+function renderBalanceSheet() {
+  const balances = computeAccountBalances();
+  const all = aggregateToParents(balances);
+  const body = document.getElementById('balance-sheet-body');
+
+  const assetAccounts = ACCOUNTS_DATA.filter(a => a.type === 'Asset');
+  const liabAccounts = ACCOUNTS_DATA.filter(a => a.type === 'Equity/Liability');
+
+  let totalAssets = 0, totalLiab = 0;
+
+  const hasData = [...assetAccounts, ...liabAccounts].some(a => {
+    const b = all[a.code];
+    return b && (b.dr > 0 || b.cr > 0);
+  });
+
+  if (!hasData) {
+    body.innerHTML = `<div class="empty-state"><div class="empty-icon">🏦</div><p>لا توجد بيانات أصول أو التزامات</p></div>`;
+    return;
+  }
+
+  // Assets
+  let assHTML = `<div class="fs-section">
+    <div class="fs-section-title">🏗️ الأصول - Assets</div>`;
+
+  assetAccounts.filter(a => a.level >= 2).forEach(a => {
+    const b = all[a.code] || { dr: 0, cr: 0 };
+    const val = b.dr - b.cr;
+    if (a.level === 1) return;
+    if (val === 0 && a.level > 2) return;
+
+    if (a.level === 2) {
+      assHTML += `<div class="fs-row" style="font-weight:700;color:var(--text);">
+        <span>${a.name}</span><span></span>
+      </div>`;
+    } else if (a.level === 3) {
+      assHTML += `<div class="fs-row" style="padding-right:24px;">
+        <span class="fs-label">${a.name}</span>
+        <span class="fs-value positive">${val !== 0 ? formatNum(val) : ''}</span>
+      </div>`;
+      totalAssets += val;
+    }
+  });
+
+  assHTML += `<div class="fs-row total">
+    <span>إجمالي الأصول</span>
+    <span class="fs-value positive">${formatNum(totalAssets)}</span>
+  </div></div>`;
+
+  // Liabilities & Equity
+  let liabHTML = `<div class="fs-section">
+    <div class="fs-section-title" style="border-color:var(--danger);background:rgba(239,68,68,0.08);">⚖️ الالتزامات وحقوق الملكية</div>`;
+
+  liabAccounts.filter(a => a.level >= 2).forEach(a => {
+    const b = all[a.code] || { dr: 0, cr: 0 };
+    const val = b.cr - b.dr;
+    if (a.level === 1) return;
+    if (val === 0 && a.level > 2) return;
+
+    if (a.level === 2) {
+      liabHTML += `<div class="fs-row" style="font-weight:700;color:var(--text);">
+        <span>${a.name}</span><span></span>
+      </div>`;
+    } else if (a.level === 3) {
+      liabHTML += `<div class="fs-row" style="padding-right:24px;">
+        <span class="fs-label">${a.name}</span>
+        <span class="fs-value ${val >= 0 ? 'positive' : 'negative'}">${val !== 0 ? formatNum(Math.abs(val)) : ''}</span>
+      </div>`;
+      totalLiab += val;
+    }
+  });
+
+  liabHTML += `<div class="fs-row total">
+    <span>إجمالي الالتزامات وحقوق الملكية</span>
+    <span class="fs-value positive">${formatNum(totalLiab)}</span>
+  </div></div>`;
+
+  const balanced = Math.abs(totalAssets - totalLiab) < 0.01;
+  const checkHTML = `<div class="fs-row net-income" style="${balanced ? '' : 'background:rgba(239,68,68,0.1);border-color:var(--danger)'}">
+    <span>${balanced ? '✅ الميزانية متوازنة' : '⚠️ الميزانية غير متوازنة'}</span>
+    <span class="fs-value ${balanced ? 'positive' : 'negative'}">
+      ${balanced ? 'الأصول = الالتزامات + حقوق الملكية' : 'فارق: ' + formatNum(Math.abs(totalAssets - totalLiab))}
+    </span>
+  </div>`;
+
+  body.innerHTML = assHTML + liabHTML + checkHTML;
+}
+
+// =====================================================
+// DASHBOARD UPDATE
+// =====================================================
+function updateDashboard() {
+  document.getElementById('dash-total-entries').textContent = journalEntries.length;
+  
+  let totalDr = 0, totalCr = 0;
+  journalEntries.forEach(e => {
+    e.lines.forEach(l => { totalDr += l.dr; totalCr += l.cr; });
+  });
+
+  document.getElementById('dash-total-dr').textContent = formatNum(totalDr);
+  document.getElementById('dash-total-cr').textContent = formatNum(totalCr);
+
+  // Balance status
+  const balanced = Math.abs(totalDr - totalCr) < 0.01;
+  const balDiv = document.getElementById('balance-status');
+  balDiv.innerHTML = `
+    <div style="font-size:40px;margin-bottom:8px;">${balanced ? '✅' : '⚠️'}</div>
+    <div style="font-size:16px;font-weight:700;color:${balanced ? 'var(--accent2)' : 'var(--danger)'}">
+      ${balanced ? 'الميزان متوازن' : 'الميزان غير متوازن'}
+    </div>
+    <div style="font-size:12px;color:var(--text3);margin-top:4px;">
+      ${balanced ? 'مجموع المدين = مجموع الدائن' : 'يرجى مراجعة القيود'}
+    </div>
+  `;
+
+  // Recent entries
+  const recentDiv = document.getElementById('recent-entries');
+  if (!journalEntries.length) {
+    recentDiv.innerHTML = `<div class="empty-state"><div class="empty-icon">📋</div><p>لا توجد قيود مسجلة حتى الآن</p></div>`;
+    return;
+  }
+
+  const recent = [...journalEntries].reverse().slice(0, 5);
+  recentDiv.innerHTML = `<table class="data-table">
+    <thead><tr><th>رقم القيد</th><th>التاريخ</th><th>البيان</th><th style="text-align:left">مجموع مدين</th><th style="text-align:left">مجموع دائن</th></tr></thead>
+    <tbody>
+      ${recent.map(e => {
+        const dr = e.lines.reduce((s,l) => s+l.dr, 0);
+        const cr = e.lines.reduce((s,l) => s+l.cr, 0);
+        return `<tr>
+          <td><span class="entry-num-badge">${e.numStr}</span></td>
+          <td style="color:var(--text2);font-size:12px;">${e.date}</td>
+          <td style="font-size:12px;">${e.desc || '—'}</td>
+          <td class="num dr-num">${formatNum(dr)}</td>
+          <td class="num cr-num">${formatNum(cr)}</td>
+        </tr>`;
+      }).join('')}
+    </tbody>
+  </table>`;
+}
+
+// =====================================================
+// UTILITIES
+// =====================================================
+function formatNum(n) {
+  if (!n && n !== 0) return '';
+  return n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+
+function showAlert(el, msg, type) {
+  el.textContent = msg;
+  el.className = 'alert show alert-' + type;
+  setTimeout(() => { el.className = 'alert'; }, 4000);
+}
+
+function showToast(msg, type = 'success') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast show ' + type;
+  setTimeout(() => { t.className = 'toast'; }, 3000);
+}
+
+// Close suggestions when clicking outside
+document.addEventListener('click', e => {
+  if (!e.target.closest('.account-code-input-wrap')) {
+    document.querySelectorAll('.account-suggestion').forEach(d => d.style.display = 'none');
+  }
+});
+
+// =====================================================
+// INIT
+// =====================================================
+renderCOA();
+updateDashboard();
+</script>
+</body>
+</html>
