@@ -32,7 +32,6 @@ body { font-family: 'Cairo', sans-serif; background: var(--bg); color: var(--tex
 ::-webkit-scrollbar-track { background: var(--bg); }
 ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
 
-/* NAV */
 nav {
   position: sticky; top: 0; z-index: 100;
   background: rgba(13,15,20,0.97); backdrop-filter: blur(12px);
@@ -52,7 +51,6 @@ nav {
 .nav-tab.active { background: var(--accent); color: #fff; }
 .nav-tab .icon { font-size: 15px; }
 
-/* PAGES */
 .page { display: none; padding: 28px 24px; max-width: 1400px; margin: 0 auto; }
 .page.active { display: block; animation: fadeIn 0.25s ease; }
 @keyframes fadeIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:none} }
@@ -60,7 +58,6 @@ nav {
 .page-title { font-size: 22px; font-weight: 900; }
 .page-subtitle { font-size: 13px; color: var(--text2); margin-top: 3px; }
 
-/* CARDS */
 .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 20px; }
 .card-title {
   font-size: 14px; font-weight: 700; color: var(--text2); text-transform: uppercase;
@@ -68,12 +65,10 @@ nav {
 }
 .card-title::before { content: ''; display: block; width: 4px; height: 16px; border-radius: 2px; background: var(--accent); }
 
-/* STATS */
 .stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 24px; }
 .stat-card {
   background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
-  padding: 18px 20px; position: relative; overflow: hidden;
-  transition: transform 0.2s, border-color 0.2s;
+  padding: 18px 20px; position: relative; overflow: hidden; transition: transform 0.2s, border-color 0.2s;
 }
 .stat-card:hover { transform: translateY(-2px); border-color: var(--accent); }
 .stat-card::after { content: ''; position: absolute; top: 0; right: 0; width: 3px; height: 100%; border-radius: 0 12px 12px 0; }
@@ -89,7 +84,6 @@ nav {
 .stat-value.revenue { color: var(--revenue); }
 .stat-sub { font-size: 12px; color: var(--text3); }
 
-/* TABLES */
 .table-wrap { overflow-x: auto; border-radius: 10px; border: 1px solid var(--border); }
 table { width: 100%; border-collapse: collapse; font-size: 13px; }
 th {
@@ -112,7 +106,6 @@ tr:hover td { background: rgba(255,255,255,0.02); }
 .badge-cr { background: rgba(16,185,129,0.2); color: var(--green); border: 1px solid rgba(16,185,129,0.3); }
 .mono { font-family: 'IBM Plex Mono', monospace; font-size: 12px; }
 
-/* LEVEL INDENTATION */
 .lvl1 { font-weight: 900; font-size: 14px; color: var(--text); }
 .lvl2 { font-weight: 700; color: var(--text); padding-right: 16px !important; }
 .lvl3 { font-weight: 600; color: var(--text2); padding-right: 32px !important; }
@@ -121,7 +114,6 @@ tr:hover td { background: rgba(255,255,255,0.02); }
 .lvl2-row td { background: rgba(255,255,255,0.02); border-bottom: 1px solid rgba(42,48,80,0.3) !important; }
 .lvl3-row td { background: rgba(255,255,255,0.01); }
 
-/* FORMS */
 .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; }
 .form-group { display: flex; flex-direction: column; gap: 6px; }
 .form-group label { font-size: 12px; font-weight: 700; color: var(--text2); text-transform: uppercase; letter-spacing: 0.4px; }
@@ -134,7 +126,6 @@ tr:hover td { background: rgba(255,255,255,0.02); }
 .form-control::placeholder { color: var(--text3); }
 select.form-control option { background: var(--surface2); }
 
-/* BUTTONS */
 .btn {
   display: inline-flex; align-items: center; gap: 7px; padding: 9px 18px;
   border-radius: 8px; border: none; font-family: 'Cairo', sans-serif;
@@ -150,9 +141,10 @@ select.form-control option { background: var(--surface2); }
 .btn-ghost:hover { background: var(--surface2); color: var(--text); }
 .btn-gold { background: var(--gold); color: #000; }
 .btn-gold:hover { background: #d97706; }
+.btn-purple { background: var(--purple); color: #fff; }
+.btn-purple:hover { background: #7c3aed; }
 .btn-sm { padding: 6px 12px; font-size: 12px; }
 
-/* JOURNAL ENTRY BUILDER */
 .entry-block {
   background: var(--surface2); border: 1px solid var(--border); border-radius: 12px;
   margin-bottom: 12px; overflow: hidden; animation: slideIn 0.2s ease;
@@ -175,7 +167,6 @@ select.form-control option { background: var(--surface2); }
 .dr .line-type-label { background: rgba(59,130,246,0.2); color: var(--accent2); }
 .cr .line-type-label { background: rgba(16,185,129,0.2); color: var(--green); }
 
-/* Entry form lines */
 .form-line-grid {
   display: grid; grid-template-columns: auto 2fr 1fr auto;
   gap: 8px; align-items: center; padding: 8px 12px; border-radius: 8px; margin-bottom: 6px;
@@ -193,7 +184,6 @@ select.form-control option { background: var(--surface2); }
 .balance-ok { color: var(--green); font-weight: 700; }
 .balance-bad { color: var(--red); font-weight: 700; }
 
-/* TRIAL BALANCE */
 .tb-totals { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
 .tb-total-box { background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; padding: 16px 20px; text-align: center; }
 .tb-total-box.balanced { border-color: var(--green); background: rgba(16,185,129,0.06); }
@@ -208,7 +198,7 @@ select.form-control option { background: var(--surface2); }
 .balance-banner.ok { background: rgba(16,185,129,0.1); color: var(--green); border: 1px solid rgba(16,185,129,0.3); }
 .balance-banner.bad { background: rgba(239,68,68,0.1); color: var(--red); border: 1px solid rgba(239,68,68,0.3); }
 
-/* BEGINNING OF YEAR MODAL */
+/* MODALS */
 .modal-overlay {
   position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 200;
   display: flex; align-items: center; justify-content: center; padding: 20px;
@@ -219,6 +209,7 @@ select.form-control option { background: var(--surface2); }
   width: 100%; max-width: 700px; max-height: 85vh; display: flex; flex-direction: column;
   animation: slideIn 0.25s ease;
 }
+.modal-box.wide { max-width: 1000px; }
 .modal-header {
   padding: 20px 24px; border-bottom: 1px solid var(--border);
   display: flex; align-items: center; justify-content: space-between;
@@ -227,7 +218,6 @@ select.form-control option { background: var(--surface2); }
 .modal-body { padding: 20px 24px; overflow-y: auto; flex: 1; }
 .modal-footer { padding: 16px 24px; border-top: 1px solid var(--border); display: flex; gap: 10px; justify-content: flex-end; }
 
-/* BOY INPUT TABLE */
 .boy-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 12px; }
 .boy-table th { background: var(--surface3); padding: 9px 12px; text-align: right; font-size: 11px; font-weight: 700; color: var(--text2); border-bottom: 1px solid var(--border); }
 .boy-table td { padding: 6px 8px; border-bottom: 1px solid rgba(42,48,80,0.4); }
@@ -237,9 +227,7 @@ select.form-control option { background: var(--surface2); }
   width: 100%; text-align: left;
 }
 .boy-table input:focus { outline: none; border-color: var(--accent); }
-.boy-table input::placeholder { color: var(--text3); font-family: 'Cairo', sans-serif; }
 
-/* FINANCIAL STATEMENTS */
 .fs-section { margin-bottom: 24px; }
 .fs-section-title {
   font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.6px;
@@ -260,8 +248,7 @@ select.form-control option { background: var(--surface2); }
 .fs-indent-1 { padding-right: 32px !important; font-size: 13px; }
 .fs-indent-2 { padding-right: 48px !important; font-size: 12px; color: var(--text2) !important; }
 
-/* SEARCH */
-.search-box { position: relative; max-width: 300px; }
+.search-box { position: relative; }
 .search-box input {
   background: var(--surface2); border: 1px solid var(--border); border-radius: 8px;
   padding: 8px 12px 8px 36px; color: var(--text); font-family: 'Cairo', sans-serif;
@@ -270,7 +257,6 @@ select.form-control option { background: var(--surface2); }
 .search-box input:focus { outline: none; border-color: var(--accent); }
 .search-icon { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: var(--text3); font-size: 14px; pointer-events: none; }
 
-/* FILTERS */
 .filter-row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
 .filter-btn {
   padding: 5px 12px; border-radius: 20px; border: 1px solid var(--border);
@@ -280,7 +266,6 @@ select.form-control option { background: var(--surface2); }
 .filter-btn:hover { border-color: var(--accent); color: var(--accent2); }
 .filter-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
 
-/* TOAST */
 #toast-container { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; gap: 8px; z-index: 9999; pointer-events: none; }
 .toast { padding: 12px 20px; border-radius: 10px; font-size: 13px; font-weight: 600; animation: toastIn 0.3s ease; box-shadow: 0 8px 32px rgba(0,0,0,0.4); white-space: nowrap; }
 .toast.success { background: var(--green); color: #fff; }
@@ -288,20 +273,42 @@ select.form-control option { background: var(--surface2); }
 .toast.info    { background: var(--accent); color: #fff; }
 @keyframes toastIn { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:none} }
 
-/* EMPTY STATE */
 .empty-state { text-align: center; padding: 48px 24px; color: var(--text3); }
 .empty-state .empty-icon { font-size: 40px; margin-bottom: 12px; }
 .empty-state p { font-size: 14px; }
 
-/* SEPARATOR ROW */
 .sep-row td { background: var(--surface3) !important; height: 6px; border: none !important; }
 
-/* RESPONSIVE */
+/* COA action buttons */
+.coa-actions { display: flex; gap: 6px; }
+.coa-clickable { cursor: pointer; }
+.coa-clickable:hover td { background: rgba(59,130,246,0.08) !important; }
+
+/* Account detail ledger */
+.ledger-row { display: grid; grid-template-columns: 120px 1fr 110px 110px 110px; gap: 0; }
+.ledger-header { background: var(--surface3); font-weight: 700; font-size: 11px; color: var(--text2); text-transform: uppercase; }
+.ledger-row > div { padding: 9px 12px; border-bottom: 1px solid rgba(42,48,80,0.4); }
+.ledger-row.dr-row { background: rgba(59,130,246,0.04); }
+.ledger-row.cr-row { background: rgba(16,185,129,0.04); }
+
+/* Date filter bar */
+.date-filter-bar {
+  display: flex; gap: 10px; align-items: center; flex-wrap: wrap;
+  background: var(--surface2); border: 1px solid var(--border); border-radius: 10px;
+  padding: 12px 16px; margin-bottom: 16px;
+}
+.date-input {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 7px;
+  padding: 7px 12px; color: var(--text); font-family: 'Cairo', sans-serif; font-size: 13px;
+}
+.date-input:focus { outline: none; border-color: var(--accent); }
+
 @media (max-width: 768px) {
   .form-line-grid { grid-template-columns: 1fr; }
   .nav-tab .tab-text { display: none; }
   .stats-row { grid-template-columns: 1fr 1fr; }
   .tb-totals { grid-template-columns: 1fr; }
+  .ledger-row { grid-template-columns: 90px 1fr 90px 90px 90px; }
 }
 </style>
 </head>
@@ -333,13 +340,13 @@ select.form-control option { background: var(--surface2); }
 
 <div id="toast-container"></div>
 
-<!-- BEGINNING OF YEAR MODAL -->
+<!-- BOY MODAL -->
 <div class="modal-overlay" id="boy-modal" style="display:none;">
   <div class="modal-box">
     <div class="modal-header">
       <div>
         <div class="modal-title">📅 أرصدة أول المدة — Beginning of Year</div>
-        <div style="font-size:12px;color:var(--text3);margin-top:4px">أدخل الرصيد الافتتاحي لكل حساب في بداية السنة</div>
+        <div style="font-size:12px;color:var(--text3);margin-top:4px">أدخل الرصيد الافتتاحي لكل حساب</div>
       </div>
       <button class="btn btn-ghost btn-sm" onclick="closeBOYModal()">✕ إغلاق</button>
     </div>
@@ -357,30 +364,131 @@ select.form-control option { background: var(--surface2); }
           <input type="text" id="boy-search" placeholder="بحث..." oninput="renderBOYTable()">
         </div>
       </div>
-      <div style="background:rgba(59,130,246,0.08);border:1px solid rgba(59,130,246,0.2);border-radius:8px;padding:10px 14px;margin-bottom:14px;font-size:12px;color:var(--accent2);">
-        💡 <strong>ملاحظة:</strong> أدخل الرصيد المدين أو الدائن لكل حساب على حدة. الحسابات بدون أرصدة تترك فارغة.
-      </div>
       <table class="boy-table">
         <thead>
-          <tr>
-            <th style="width:120px">الكود</th>
-            <th>اسم الحساب</th>
-            <th style="width:100px">النوع</th>
-            <th style="width:130px">مدين Dr</th>
-            <th style="width:130px">دائن Cr</th>
-          </tr>
+          <tr><th style="width:120px">الكود</th><th>اسم الحساب</th><th style="width:100px">النوع</th><th style="width:130px">مدين Dr</th><th style="width:130px">دائن Cr</th></tr>
         </thead>
         <tbody id="boy-table-body"></tbody>
       </table>
     </div>
     <div class="modal-footer">
       <div style="flex:1;font-size:12px;color:var(--text3);display:flex;align-items:center;gap:16px;">
-        <span>إجمالي مدين: <span id="boy-total-dr" style="color:var(--accent2);font-family:'IBM Plex Mono',monospace;font-weight:700">0.00</span></span>
-        <span>إجمالي دائن: <span id="boy-total-cr" style="color:var(--green);font-family:'IBM Plex Mono',monospace;font-weight:700">0.00</span></span>
+        <span>مدين: <span id="boy-total-dr" style="color:var(--accent2);font-family:'IBM Plex Mono',monospace;font-weight:700">0.00</span></span>
+        <span>دائن: <span id="boy-total-cr" style="color:var(--green);font-family:'IBM Plex Mono',monospace;font-weight:700">0.00</span></span>
         <span id="boy-balance-status" style="font-weight:700"></span>
       </div>
-      <button class="btn btn-ghost" onclick="clearBOY()">🗑 مسح الكل</button>
-      <button class="btn btn-gold" onclick="saveBOY()">✔ حفظ الأرصدة الافتتاحية</button>
+      <button class="btn btn-ghost" onclick="clearBOY()">🗑 مسح</button>
+      <button class="btn btn-gold" onclick="saveBOY()">✔ حفظ</button>
+    </div>
+  </div>
+</div>
+
+<!-- ADD/EDIT ACCOUNT MODAL -->
+<div class="modal-overlay" id="account-modal" style="display:none;">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div class="modal-title" id="account-modal-title">➕ إضافة حساب جديد</div>
+      <button class="btn btn-ghost btn-sm" onclick="closeAccountModal()">✕ إغلاق</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="form-group">
+          <label>كود الحساب — Account Code</label>
+          <input type="text" id="acc-code" class="form-control" placeholder="مثال: 103001003">
+        </div>
+        <div class="form-group">
+          <label>اسم الحساب — Account Name</label>
+          <input type="text" id="acc-name" class="form-control" placeholder="اسم الحساب بالعربية">
+        </div>
+        <div class="form-group">
+          <label>المستوى — Level</label>
+          <select id="acc-level" class="form-control">
+            <option value="1">1 — حساب رئيسي</option>
+            <option value="2">2 — حساب فرعي</option>
+            <option value="3">3 — مجموعة</option>
+            <option value="4" selected>4 — حساب تفصيلي</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>نوع الحساب — Type</label>
+          <select id="acc-type" class="form-control" onchange="autoSetNB()">
+            <option value="Asset">أصل — Asset</option>
+            <option value="Equity/Liability">التزام/حقوق — Equity/Liability</option>
+            <option value="Expense">مصروف — Expense</option>
+            <option value="Revenue">إيراد — Revenue</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>الرصيد الطبيعي — Normal Balance</label>
+          <select id="acc-nb" class="form-control">
+            <option value="Dr">Dr — مدين</option>
+            <option value="Cr">Cr — دائن</option>
+          </select>
+        </div>
+      </div>
+      <div style="background:rgba(59,130,246,0.08);border:1px solid rgba(59,130,246,0.2);border-radius:8px;padding:10px 14px;margin-top:14px;font-size:12px;color:var(--accent2);">
+        💡 الحسابات المستخدمة في قيود اليومية يجب أن تكون من المستوى الرابع (4) فقط
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeAccountModal()">إلغاء</button>
+      <button class="btn btn-primary" id="account-modal-save-btn" onclick="saveAccount()">✔ حفظ الحساب</button>
+    </div>
+  </div>
+</div>
+
+<!-- ACCOUNT DETAIL MODAL -->
+<div class="modal-overlay" id="account-detail-modal" style="display:none;">
+  <div class="modal-box wide">
+    <div class="modal-header">
+      <div>
+        <div class="modal-title" id="detail-modal-title">📒 تفاصيل الحساب</div>
+        <div style="font-size:12px;color:var(--text3);margin-top:4px" id="detail-modal-code"></div>
+      </div>
+      <button class="btn btn-ghost btn-sm" onclick="closeDetailModal()">✕ إغلاق</button>
+    </div>
+    <div class="modal-body">
+      <!-- Date filter -->
+      <div class="date-filter-bar">
+        <span style="font-size:13px;font-weight:700;color:var(--text2);">🗓 فلترة بالتاريخ:</span>
+        <div style="display:flex;align-items:center;gap:6px;">
+          <label style="font-size:12px;color:var(--text3);">من</label>
+          <input type="date" id="detail-from-date" class="date-input" oninput="renderDetailTable()">
+        </div>
+        <div style="display:flex;align-items:center;gap:6px;">
+          <label style="font-size:12px;color:var(--text3);">إلى</label>
+          <input type="date" id="detail-to-date" class="date-input" oninput="renderDetailTable()">
+        </div>
+        <button class="btn btn-ghost btn-sm" onclick="clearDetailDates()">✕ مسح</button>
+        <div class="search-box" style="max-width:200px;margin-right:auto;">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="detail-search" placeholder="بحث في الشرح..." oninput="renderDetailTable()">
+        </div>
+      </div>
+      <!-- Summary -->
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:16px;" id="detail-summary"></div>
+      <!-- Ledger table -->
+      <div class="table-wrap" style="max-height:50vh;overflow-y:auto;">
+        <table>
+          <thead>
+            <tr>
+              <th style="width:120px">التاريخ</th>
+              <th>القيد #</th>
+              <th>الشرح / الوصف</th>
+              <th>الفاتورة</th>
+              <th>مركز التكلفة</th>
+              <th style="width:110px">مدين Dr</th>
+              <th style="width:110px">دائن Cr</th>
+              <th style="width:110px">الرصيد</th>
+            </tr>
+          </thead>
+          <tbody id="detail-table-body"></tbody>
+        </table>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <div id="detail-footer-totals" style="flex:1;font-size:12px;color:var(--text3);display:flex;gap:20px;align-items:center;"></div>
+      <button class="btn btn-ghost" onclick="closeDetailModal()">إغلاق</button>
     </div>
   </div>
 </div>
@@ -398,26 +506,10 @@ select.form-control option { background: var(--surface2); }
     </div>
   </div>
   <div class="stats-row">
-    <div class="stat-card asset">
-      <div class="stat-label">إجمالي الأصول</div>
-      <div class="stat-value asset" id="stat-assets">—</div>
-      <div class="stat-sub">Total Assets</div>
-    </div>
-    <div class="stat-card liability">
-      <div class="stat-label">الالتزامات وحقوق الملكية</div>
-      <div class="stat-value liability" id="stat-liability">—</div>
-      <div class="stat-sub">Liabilities & Equity</div>
-    </div>
-    <div class="stat-card revenue">
-      <div class="stat-label">إجمالي الإيرادات</div>
-      <div class="stat-value revenue" id="stat-revenue">—</div>
-      <div class="stat-sub">Total Revenue</div>
-    </div>
-    <div class="stat-card expense">
-      <div class="stat-label">إجمالي المصروفات</div>
-      <div class="stat-value expense" id="stat-expenses">—</div>
-      <div class="stat-sub">Total Expenses</div>
-    </div>
+    <div class="stat-card asset"><div class="stat-label">إجمالي الأصول</div><div class="stat-value asset" id="stat-assets">—</div><div class="stat-sub">Total Assets</div></div>
+    <div class="stat-card liability"><div class="stat-label">الالتزامات وحقوق الملكية</div><div class="stat-value liability" id="stat-liability">—</div><div class="stat-sub">Liabilities & Equity</div></div>
+    <div class="stat-card revenue"><div class="stat-label">إجمالي الإيرادات</div><div class="stat-value revenue" id="stat-revenue">—</div><div class="stat-sub">Total Revenue</div></div>
+    <div class="stat-card expense"><div class="stat-label">إجمالي المصروفات</div><div class="stat-value expense" id="stat-expenses">—</div><div class="stat-sub">Total Expenses</div></div>
   </div>
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px;">
     <div class="card">
@@ -436,10 +528,7 @@ select.form-control option { background: var(--surface2); }
     <div class="table-wrap">
       <table>
         <thead>
-          <tr>
-            <th>رقم القيد</th><th>التاريخ</th><th>الحساب</th><th>نوع الحساب</th>
-            <th>مدين Dr</th><th>دائن Cr</th><th>نوع</th>
-          </tr>
+          <tr><th>رقم القيد</th><th>التاريخ</th><th>الحساب</th><th>نوع الحساب</th><th>مدين Dr</th><th>دائن Cr</th><th>نوع</th></tr>
         </thead>
         <tbody id="dash-journal-body">
           <tr><td colspan="7"><div class="empty-state"><div class="empty-icon">📝</div><p>لا توجد قيود محاسبية مسجلة بعد</p></div></td></tr>
@@ -454,7 +543,7 @@ select.form-control option { background: var(--surface2); }
   <div class="page-header">
     <div>
       <div class="page-title">دليل الحسابات</div>
-      <div class="page-subtitle">الهيكل الهرمي — Main Account → Sub Account → Group Account → Detailed Account</div>
+      <div class="page-subtitle">يمكنك إضافة وتعديل وحذف الحسابات — انقر على الحساب لعرض تفاصيله</div>
     </div>
     <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
       <div class="search-box">
@@ -468,6 +557,7 @@ select.form-control option { background: var(--surface2); }
         <button class="filter-btn" onclick="setCOAFilter('Expense',this)">مصروفات</button>
         <button class="filter-btn" onclick="setCOAFilter('Revenue',this)">إيرادات</button>
       </div>
+      <button class="btn btn-primary btn-sm" onclick="openAddAccount()">➕ حساب جديد</button>
     </div>
   </div>
   <div class="card">
@@ -476,7 +566,8 @@ select.form-control option { background: var(--surface2); }
         <thead>
           <tr>
             <th style="width:140px">الكود</th><th>اسم الحساب</th>
-            <th style="width:80px">المستوى</th><th style="width:140px">النوع</th><th style="width:100px">الرصيد الطبيعي</th>
+            <th style="width:80px">المستوى</th><th style="width:140px">النوع</th>
+            <th style="width:100px">الرصيد الطبيعي</th><th style="width:140px">إجراءات</th>
           </tr>
         </thead>
         <tbody id="coa-body"></tbody>
@@ -499,6 +590,25 @@ select.form-control option { background: var(--surface2); }
     </div>
   </div>
 
+  <!-- Date + Search filter for journal -->
+  <div class="date-filter-bar" style="margin-bottom:20px;">
+    <span style="font-size:13px;font-weight:700;color:var(--text2);">🔍 فلترة القيود:</span>
+    <div style="display:flex;align-items:center;gap:6px;">
+      <label style="font-size:12px;color:var(--text3);">من</label>
+      <input type="date" id="je-from-date" class="date-input" oninput="renderSavedEntries()">
+    </div>
+    <div style="display:flex;align-items:center;gap:6px;">
+      <label style="font-size:12px;color:var(--text3);">إلى</label>
+      <input type="date" id="je-to-date" class="date-input" oninput="renderSavedEntries()">
+    </div>
+    <div class="search-box" style="max-width:220px;">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="je-search" placeholder="بحث في الشرح / الفاتورة..." oninput="renderSavedEntries()">
+    </div>
+    <button class="btn btn-ghost btn-sm" onclick="clearJEFilters()">✕ مسح الفلتر</button>
+    <span id="je-filter-count" style="font-size:12px;color:var(--text3);"></span>
+  </div>
+
   <!-- New Entry Form -->
   <div class="card" id="new-entry-form" style="display:none;">
     <div class="card-title">بيانات القيد الجديد</div>
@@ -508,7 +618,7 @@ select.form-control option { background: var(--surface2); }
         <input type="date" id="entry-date" class="form-control">
       </div>
       <div class="form-group">
-        <label>📄 رقم الفاتورة — Invoice No. (Numerical)</label>
+        <label>📄 رقم الفاتورة — Invoice No.</label>
         <input type="text" id="entry-invoice" class="form-control" placeholder="رقم الفاتورة أو المستند...">
       </div>
       <div class="form-group">
@@ -538,16 +648,10 @@ select.form-control option { background: var(--surface2); }
   <div class="card" style="margin-top:20px;">
     <div class="card-title">فحص توازن اليومية الإجمالي</div>
     <div class="tb-totals">
-      <div class="tb-total-box" id="je-total-dr-box">
-        <div class="tb-total-label">إجمالي المدين</div>
-        <div class="tb-total-val dr" id="je-total-dr">0.00</div>
-      </div>
-      <div class="tb-total-box" id="je-total-cr-box">
-        <div class="tb-total-label">إجمالي الدائن</div>
-        <div class="tb-total-val cr" id="je-total-cr">0.00</div>
-      </div>
+      <div class="tb-total-box" id="je-total-dr-box"><div class="tb-total-label">إجمالي المدين</div><div class="tb-total-val dr" id="je-total-dr">0.00</div></div>
+      <div class="tb-total-box" id="je-total-cr-box"><div class="tb-total-label">إجمالي الدائن</div><div class="tb-total-val cr" id="je-total-cr">0.00</div></div>
     </div>
-    <div id="je-balance-banner" class="balance-banner ok">✔ القيود متوازنة — مجموع المدين = مجموع الدائن</div>
+    <div id="je-balance-banner" class="balance-banner ok">✔ القيود متوازنة — Credit = Debit</div>
   </div>
 </div>
 
@@ -556,10 +660,18 @@ select.form-control option { background: var(--surface2); }
   <div class="page-header">
     <div>
       <div class="page-title">ميزان المراجعة — Trial Balance</div>
-      <div class="page-subtitle">رصيد أول المدة + الحركات = الإجمالي → الرصيد النهائي</div>
+      <div class="page-subtitle">يعرض فقط الحسابات التي لها قيود أو أرصدة — انقر على الحساب لعرض تفاصيله</div>
     </div>
-    <div style="display:flex;gap:8px;align-items:center;">
+    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
       <button class="btn btn-gold btn-sm" onclick="openBOYModal()">📅 أرصدة أول المدة</button>
+      <!-- Date filter for trial balance -->
+      <div style="display:flex;align-items:center;gap:6px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:6px 12px;">
+        <label style="font-size:12px;color:var(--text3);">من</label>
+        <input type="date" id="tb-from-date" class="date-input" style="padding:4px 8px;font-size:12px;" oninput="renderTrialBalance()">
+        <label style="font-size:12px;color:var(--text3);">إلى</label>
+        <input type="date" id="tb-to-date" class="date-input" style="padding:4px 8px;font-size:12px;" oninput="renderTrialBalance()">
+        <button class="btn btn-ghost btn-sm" onclick="clearTBDates()" style="padding:4px 8px;">✕</button>
+      </div>
       <div class="search-box">
         <span class="search-icon">🔍</span>
         <input type="text" id="tb-search" placeholder="بحث في الحسابات..." oninput="renderTrialBalance()">
@@ -567,32 +679,13 @@ select.form-control option { background: var(--surface2); }
     </div>
   </div>
 
-  <!-- TB Totals -->
   <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:20px;">
-    <div class="tb-total-box" id="tb-boy-dr-box">
-      <div class="tb-total-label">أول المدة Dr</div>
-      <div class="tb-total-val dr" id="tb-boy-dr">0.00</div>
-    </div>
-    <div class="tb-total-box" id="tb-boy-cr-box">
-      <div class="tb-total-label">أول المدة Cr</div>
-      <div class="tb-total-val cr" id="tb-boy-cr">0.00</div>
-    </div>
-    <div class="tb-total-box" id="tb-mov-dr-box">
-      <div class="tb-total-label">حركة المدين Dr</div>
-      <div class="tb-total-val dr" id="tb-mov-dr">0.00</div>
-    </div>
-    <div class="tb-total-box" id="tb-mov-cr-box">
-      <div class="tb-total-label">حركة الدائن Cr</div>
-      <div class="tb-total-val cr" id="tb-mov-cr">0.00</div>
-    </div>
-    <div class="tb-total-box" id="tb-dr-box">
-      <div class="tb-total-label">إجمالي مدين Dr</div>
-      <div class="tb-total-val dr" id="tb-grand-dr">0.00</div>
-    </div>
-    <div class="tb-total-box" id="tb-cr-box">
-      <div class="tb-total-label">إجمالي دائن Cr</div>
-      <div class="tb-total-val cr" id="tb-grand-cr">0.00</div>
-    </div>
+    <div class="tb-total-box" id="tb-boy-dr-box"><div class="tb-total-label">أول المدة Dr</div><div class="tb-total-val dr" id="tb-boy-dr">0.00</div></div>
+    <div class="tb-total-box" id="tb-boy-cr-box"><div class="tb-total-label">أول المدة Cr</div><div class="tb-total-val cr" id="tb-boy-cr">0.00</div></div>
+    <div class="tb-total-box" id="tb-mov-dr-box"><div class="tb-total-label">حركة المدين Dr</div><div class="tb-total-val dr" id="tb-mov-dr">0.00</div></div>
+    <div class="tb-total-box" id="tb-mov-cr-box"><div class="tb-total-label">حركة الدائن Cr</div><div class="tb-total-val cr" id="tb-mov-cr">0.00</div></div>
+    <div class="tb-total-box" id="tb-dr-box"><div class="tb-total-label">إجمالي مدين Dr</div><div class="tb-total-val dr" id="tb-grand-dr">0.00</div></div>
+    <div class="tb-total-box" id="tb-cr-box"><div class="tb-total-label">إجمالي دائن Cr</div><div class="tb-total-val cr" id="tb-grand-cr">0.00</div></div>
   </div>
   <div id="tb-balance-banner" class="balance-banner ok">✔ الميزان متوازن</div>
   <div class="card">
@@ -600,17 +693,11 @@ select.form-control option { background: var(--surface2); }
       <table>
         <thead>
           <tr>
-            <th style="width:130px">الكود</th>
-            <th>اسم الحساب</th>
-            <th style="width:100px">نوع الحساب</th>
-            <th style="width:100px">أول المدة Dr</th>
-            <th style="width:100px">أول المدة Cr</th>
-            <th style="width:100px">حركة Dr</th>
-            <th style="width:100px">حركة Cr</th>
-            <th style="width:100px">إجمالي Dr</th>
-            <th style="width:100px">إجمالي Cr</th>
-            <th style="width:100px">رصيد Dr</th>
-            <th style="width:100px">رصيد Cr</th>
+            <th style="width:130px">الكود</th><th>اسم الحساب</th><th style="width:100px">نوع الحساب</th>
+            <th style="width:100px">أول المدة Dr</th><th style="width:100px">أول المدة Cr</th>
+            <th style="width:100px">حركة Dr</th><th style="width:100px">حركة Cr</th>
+            <th style="width:100px">إجمالي Dr</th><th style="width:100px">إجمالي Cr</th>
+            <th style="width:100px">رصيد Dr</th><th style="width:100px">رصيد Cr</th>
           </tr>
         </thead>
         <tbody id="tb-body"></tbody>
@@ -622,34 +709,24 @@ select.form-control option { background: var(--surface2); }
 <!-- INCOME STATEMENT -->
 <div class="page" id="page-income">
   <div class="page-header">
-    <div>
-      <div class="page-title">قائمة الدخل — Income Statement</div>
-      <div class="page-subtitle">الإيرادات - المصروفات = صافي الربح | Net Income = Revenues – Expenses</div>
-    </div>
+    <div><div class="page-title">قائمة الدخل — Income Statement</div><div class="page-subtitle">الإيرادات - المصروفات = صافي الربح</div></div>
   </div>
-  <div style="max-width:800px;margin:0 auto;">
-    <div id="income-statement-content"></div>
-  </div>
+  <div style="max-width:800px;margin:0 auto;"><div id="income-statement-content"></div></div>
 </div>
 
 <!-- BALANCE SHEET -->
 <div class="page" id="page-balance">
   <div class="page-header">
-    <div>
-      <div class="page-title">الميزانية العمومية — Balance Sheet</div>
-      <div class="page-subtitle">Assets = Liabilities + Owners' Equity</div>
-    </div>
+    <div><div class="page-title">الميزانية العمومية — Balance Sheet</div><div class="page-subtitle">Assets = Liabilities + Owners' Equity</div></div>
   </div>
-  <div style="max-width:1100px;margin:0 auto;">
-    <div id="balance-sheet-content"></div>
-  </div>
+  <div style="max-width:1100px;margin:0 auto;"><div id="balance-sheet-content"></div></div>
 </div>
 
 <script>
 // ═══════════════════════════════════════════════════════════════
 //  DATA — Full Chart of Accounts
 // ═══════════════════════════════════════════════════════════════
-const COA = [
+let COA = [
   {code:'1',        name:'الأصول',                                          level:1, type:'Asset',            nb:'Dr'},
   {code:'101',      name:'الأصول الثابتة',                                  level:2, type:'Asset',            nb:'Dr'},
   {code:'101001',   name:'الأصول الثابتة - ثلاجات التبريد',                level:3, type:'Asset',            nb:'Dr'},
@@ -734,8 +811,7 @@ const COA = [
   {code:'105004001',name:'مواد التعبئة - كرتون',                          level:4, type:'Asset',            nb:'Dr'},
   {code:'105005',   name:'مخزن - مواد ومهمات',                           level:3, type:'Asset',            nb:'Dr'},
   {code:'105005001',name:'مواد ومهمات - 1',                               level:4, type:'Asset',            nb:'Dr'},
-  // LIABILITIES & EQUITY
-  {code:'2',        name:'الالتزامات وحقوق الملكية — Liabilities & Owners\' Equity', level:1, type:'Equity/Liability', nb:'Cr'},
+  {code:'2',        name:"الالتزامات وحقوق الملكية — Liabilities & Owners' Equity", level:1, type:'Equity/Liability', nb:'Cr'},
   {code:'201',      name:'حسابات رأس المال — Capital (Equity)',            level:2, type:'Equity/Liability', nb:'Cr'},
   {code:'201001',   name:'رأس المال المدفوع',                             level:3, type:'Equity/Liability', nb:'Cr'},
   {code:'201001001',name:'رأس المال - رأس المال المدفوع',                 level:4, type:'Equity/Liability', nb:'Cr'},
@@ -781,7 +857,6 @@ const COA = [
   {code:'203007001',name:'مجمع الإهلاك - الأصول الثابتة - 1',            level:4, type:'Equity/Liability', nb:'Cr'},
   {code:'203007002',name:'مجمع الإهلاك - الأصول الثابتة - 2',            level:4, type:'Equity/Liability', nb:'Cr'},
   {code:'203007003',name:'مجمع الإهلاك - الأصول الثابتة - 3',            level:4, type:'Equity/Liability', nb:'Cr'},
-  // EXPENSES
   {code:'3',        name:'المصروفات — Expenses',                           level:1, type:'Expense',          nb:'Dr'},
   {code:'301',      name:'مصروفات العمليات والتشغيل',                     level:2, type:'Expense',          nb:'Dr'},
   {code:'301001',   name:'مصروفات التشغيل',                               level:3, type:'Expense',          nb:'Dr'},
@@ -820,7 +895,6 @@ const COA = [
   {code:'302001023',name:'مصروفات عمومية - مصروفات سفر',                level:4, type:'Expense',          nb:'Dr'},
   {code:'302001024',name:'مصروفات عمومية - صيانة ونظافة',               level:4, type:'Expense',          nb:'Dr'},
   {code:'302001025',name:'مصروفات عمومية - مساهمة تكافلية تأمين صحي',   level:4, type:'Expense',          nb:'Dr'},
-  // REVENUE
   {code:'4',        name:'الإيرادات — Revenues',                          level:1, type:'Revenue',          nb:'Cr'},
   {code:'401',      name:'إيرادات مباشرة',                                level:2, type:'Revenue',          nb:'Cr'},
   {code:'401001',   name:'إيرادات المشاريع',                              level:3, type:'Revenue',          nb:'Cr'},
@@ -837,8 +911,12 @@ const COA = [
   {code:'402001004',name:'إيرادات غير مباشرة - فوائد مكتسبة',            level:4, type:'Revenue',          nb:'Cr'},
 ];
 
-const COA_MAP = {};
-COA.forEach(a => { COA_MAP[a.code] = a; });
+function rebuildMap() {
+  COA_MAP = {};
+  COA.forEach(a => { COA_MAP[a.code] = a; });
+}
+let COA_MAP = {};
+rebuildMap();
 
 // ═══════════════════════════════════════════════════════════════
 //  STATE
@@ -849,9 +927,9 @@ let currentLines = [];
 let coaFilter    = 'all';
 let newEntryOpen = false;
 let boyFilter    = 'all';
-
-// Beginning of Year balances: { code: { dr: 0, cr: 0 } }
 let boyBalances  = {};
+let editingAccountCode = null; // null = adding new
+let currentDetailCode  = null;
 
 // ═══════════════════════════════════════════════════════════════
 //  NAVIGATION
@@ -870,15 +948,207 @@ function showPage(id) {
 }
 
 // ═══════════════════════════════════════════════════════════════
-//  BEGINNING OF YEAR
+//  CHART OF ACCOUNTS — CRUD
+// ═══════════════════════════════════════════════════════════════
+function openAddAccount() {
+  editingAccountCode = null;
+  document.getElementById('account-modal-title').textContent = '➕ إضافة حساب جديد';
+  document.getElementById('account-modal-save-btn').textContent = '✔ إضافة الحساب';
+  document.getElementById('acc-code').value = '';
+  document.getElementById('acc-name').value = '';
+  document.getElementById('acc-level').value = '4';
+  document.getElementById('acc-type').value = 'Asset';
+  document.getElementById('acc-nb').value = 'Dr';
+  document.getElementById('account-modal').style.display = 'flex';
+}
+function openEditAccount(code) {
+  const acc = COA_MAP[code];
+  if (!acc) return;
+  editingAccountCode = code;
+  document.getElementById('account-modal-title').textContent = '✏️ تعديل الحساب';
+  document.getElementById('account-modal-save-btn').textContent = '✔ حفظ التعديلات';
+  document.getElementById('acc-code').value = acc.code;
+  document.getElementById('acc-name').value = acc.name;
+  document.getElementById('acc-level').value = acc.level;
+  document.getElementById('acc-type').value = acc.type;
+  document.getElementById('acc-nb').value = acc.nb;
+  document.getElementById('account-modal').style.display = 'flex';
+}
+function closeAccountModal() {
+  document.getElementById('account-modal').style.display = 'none';
+  editingAccountCode = null;
+}
+function autoSetNB() {
+  const type = document.getElementById('acc-type').value;
+  document.getElementById('acc-nb').value = (type === 'Asset' || type === 'Expense') ? 'Dr' : 'Cr';
+}
+function saveAccount() {
+  const code  = document.getElementById('acc-code').value.trim();
+  const name  = document.getElementById('acc-name').value.trim();
+  const level = parseInt(document.getElementById('acc-level').value);
+  const type  = document.getElementById('acc-type').value;
+  const nb    = document.getElementById('acc-nb').value;
+
+  if (!code) { toast('يرجى إدخال كود الحساب', 'error'); return; }
+  if (!name) { toast('يرجى إدخال اسم الحساب', 'error'); return; }
+
+  if (editingAccountCode) {
+    // EDIT: update in place
+    const idx = COA.findIndex(a => a.code === editingAccountCode);
+    if (idx === -1) { toast('الحساب غير موجود', 'error'); return; }
+    COA[idx] = { code, name, level, type, nb };
+  } else {
+    // ADD: check duplicate
+    if (COA_MAP[code]) { toast('هذا الكود موجود بالفعل!', 'error'); return; }
+    // Insert in sorted order
+    const insertIdx = COA.findIndex(a => a.code > code);
+    if (insertIdx === -1) COA.push({ code, name, level, type, nb });
+    else COA.splice(insertIdx, 0, { code, name, level, type, nb });
+  }
+
+  rebuildMap();
+  closeAccountModal();
+  renderCOA();
+  toast(editingAccountCode ? '✔ تم تعديل الحساب' : '✔ تم إضافة الحساب بنجاح', 'success');
+  editingAccountCode = null;
+}
+function deleteAccount(code) {
+  // Check if used in entries
+  const used = entries.some(e => e.lines.some(l => l.code === code));
+  if (used) { toast('لا يمكن حذف حساب مستخدم في قيود مسجلة', 'error'); return; }
+  if (!confirm(`هل تريد حذف الحساب: ${COA_MAP[code]?.name}؟`)) return;
+  COA = COA.filter(a => a.code !== code);
+  if (boyBalances[code]) delete boyBalances[code];
+  rebuildMap();
+  renderCOA();
+  toast('تم حذف الحساب', 'info');
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  ACCOUNT DETAIL MODAL
+// ═══════════════════════════════════════════════════════════════
+function openAccountDetail(code) {
+  const acc = COA_MAP[code];
+  if (!acc) return;
+  currentDetailCode = code;
+  document.getElementById('detail-modal-title').textContent = `📒 ${acc.name}`;
+  document.getElementById('detail-modal-code').textContent = `كود: ${code} | ${typeShort(acc.type)} | الرصيد الطبيعي: ${acc.nb}`;
+  document.getElementById('detail-from-date').value = '';
+  document.getElementById('detail-to-date').value   = '';
+  document.getElementById('detail-search').value    = '';
+  document.getElementById('account-detail-modal').style.display = 'flex';
+  renderDetailTable();
+}
+function closeDetailModal() {
+  document.getElementById('account-detail-modal').style.display = 'none';
+  currentDetailCode = null;
+}
+function clearDetailDates() {
+  document.getElementById('detail-from-date').value = '';
+  document.getElementById('detail-to-date').value   = '';
+  renderDetailTable();
+}
+function renderDetailTable() {
+  if (!currentDetailCode) return;
+  const acc     = COA_MAP[currentDetailCode];
+  const fromD   = document.getElementById('detail-from-date').value;
+  const toD     = document.getElementById('detail-to-date').value;
+  const q       = (document.getElementById('detail-search').value || '').toLowerCase();
+  const code    = currentDetailCode;
+
+  // Collect all lines for this account from all entries
+  const rows = [];
+  entries.forEach(e => {
+    e.lines.forEach(l => {
+      if (l.code !== code) return;
+      // Date filter
+      if (fromD && e.date < fromD) return;
+      if (toD   && e.date > toD)   return;
+      // Text filter
+      if (q && !(e.desc||'').toLowerCase().includes(q) && !(e.invoice||'').toLowerCase().includes(q) && !(e.cc||'').toLowerCase().includes(q)) return;
+      rows.push({ date: e.date, entryId: e.id, desc: e.desc, invoice: e.invoice, cc: e.cc, type: l.type, amount: l.amount });
+    });
+  });
+
+  // Sort by date then entry id
+  rows.sort((a,b) => a.date.localeCompare(b.date) || a.entryId - b.entryId);
+
+  // BOY balance
+  const boy = boyBalances[code] || { dr: 0, cr: 0 };
+  let runBal = (acc.nb === 'Dr') ? (boy.dr - boy.cr) : (boy.cr - boy.dr);
+  let totDr = 0, totCr = 0;
+
+  let html = '';
+
+  // BOY row
+  if (boy.dr || boy.cr) {
+    const boyBal = acc.nb === 'Dr' ? runBal : -runBal;
+    html += `<tr style="background:rgba(245,158,11,0.08);">
+      <td class="mono" style="color:var(--gold);">أول المدة</td>
+      <td>—</td><td style="color:var(--gold);font-size:12px;">رصيد أول المدة</td><td>—</td><td>—</td>
+      <td>${boy.dr ? `<span class="mono" style="color:var(--accent2)">${fmt(boy.dr)}</span>` : '—'}</td>
+      <td>${boy.cr ? `<span class="mono" style="color:var(--green)">${fmt(boy.cr)}</span>`  : '—'}</td>
+      <td><span class="mono" style="color:var(--gold)">${fmt(Math.abs(runBal))} ${runBal >= 0 ? (acc.nb==='Dr'?'Dr':'Cr') : (acc.nb==='Dr'?'Cr':'Dr')}</span></td>
+    </tr>`;
+  }
+
+  if (!rows.length && !boy.dr && !boy.cr) {
+    document.getElementById('detail-table-body').innerHTML =
+      '<tr><td colspan="8"><div class="empty-state"><div class="empty-icon">📭</div><p>لا توجد معاملات لهذا الحساب في هذه الفترة</p></div></td></tr>';
+    document.getElementById('detail-summary').innerHTML = '';
+    document.getElementById('detail-footer-totals').innerHTML = '';
+    return;
+  }
+
+  rows.forEach(r => {
+    if (r.type === 'dr') { runBal += r.amount; totDr += r.amount; }
+    else                 { runBal -= r.amount; totCr += r.amount; }
+    if (acc.nb === 'Cr') runBal = -(runBal); // flip for display
+
+    const balColor = Math.abs(runBal) === 0 ? 'var(--text3)' : (runBal >= 0 ? 'var(--green)' : 'var(--red)');
+    const balLabel = runBal >= 0 ? (acc.nb==='Cr'?'Cr':'Dr') : (acc.nb==='Cr'?'Dr':'Cr');
+
+    if (acc.nb === 'Cr') runBal = -(runBal); // flip back
+
+    html += `<tr class="${r.type}-row">
+      <td class="mono" style="font-size:12px;color:var(--text2)">${r.date}</td>
+      <td class="mono" style="color:var(--accent2)">#${r.entryId}</td>
+      <td style="font-size:12px">${r.desc || '—'}</td>
+      <td style="font-size:11px;color:var(--text3)">${r.invoice || '—'}</td>
+      <td style="font-size:11px;color:var(--text3)">${r.cc || '—'}</td>
+      <td>${r.type==='dr'?`<span class="mono" style="color:var(--accent2)">${fmt(r.amount)}</span>`:'—'}</td>
+      <td>${r.type==='cr'?`<span class="mono" style="color:var(--green)">${fmt(r.amount)}</span>`:'—'}</td>
+      <td><span class="mono" style="color:${balColor}">${fmt(Math.abs(runBal))} ${balLabel}</span></td>
+    </tr>`;
+  });
+
+  document.getElementById('detail-table-body').innerHTML = html;
+
+  // Summary cards
+  const finalBal = acc.nb === 'Dr' ? ((boy.dr-boy.cr) + (totDr-totCr)) : ((boy.cr-boy.dr) + (totCr-totDr));
+  document.getElementById('detail-summary').innerHTML = `
+    <div class="tb-total-box"><div class="tb-total-label">إجمالي مدين Dr</div><div class="tb-total-val dr">${fmt(totDr)}</div></div>
+    <div class="tb-total-box"><div class="tb-total-label">إجمالي دائن Cr</div><div class="tb-total-val cr">${fmt(totCr)}</div></div>
+    <div class="tb-total-box ${finalBal>=0?'balanced':''}">
+      <div class="tb-total-label">الرصيد النهائي</div>
+      <div class="tb-total-val" style="color:${finalBal>=0?'var(--green)':'var(--red)'}">${fmt(Math.abs(finalBal))} ${finalBal>=0?acc.nb:(acc.nb==='Dr'?'Cr':'Dr')}</div>
+    </div>
+    <div class="tb-total-box"><div class="tb-total-label">عدد المعاملات</div><div class="tb-total-val" style="color:var(--gold)">${rows.length}</div></div>
+  `;
+  document.getElementById('detail-footer-totals').innerHTML =
+    `<span>إجمالي مدين: <strong style="color:var(--accent2);font-family:'IBM Plex Mono',monospace">${fmt(totDr)}</strong></span>
+     <span>إجمالي دائن: <strong style="color:var(--green);font-family:'IBM Plex Mono',monospace">${fmt(totCr)}</strong></span>
+     <span>${rows.length} معاملة</span>`;
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  BOY MODAL
 // ═══════════════════════════════════════════════════════════════
 function openBOYModal() {
   document.getElementById('boy-modal').style.display = 'flex';
   renderBOYTable();
 }
-function closeBOYModal() {
-  document.getElementById('boy-modal').style.display = 'none';
-}
+function closeBOYModal() { document.getElementById('boy-modal').style.display = 'none'; }
 function setBOYFilter(f, btn) {
   boyFilter = f;
   document.querySelectorAll('#boy-filters .filter-btn').forEach(b => b.classList.remove('active'));
@@ -896,21 +1166,16 @@ function renderBOYTable() {
   const tbody = document.getElementById('boy-table-body');
   tbody.innerHTML = list.map(a => {
     const b = boyBalances[a.code] || { dr: '', cr: '' };
-    const typeBadge = typeLabel(a.type);
     return `<tr>
       <td class="mono" style="color:var(--text3);font-size:11px">${a.code}</td>
       <td style="font-size:12px">${a.name}</td>
-      <td>${typeBadge}</td>
-      <td><input type="number" min="0" step="0.01" placeholder="0.00"
-        value="${b.dr || ''}"
+      <td>${typeLabel(a.type)}</td>
+      <td><input type="number" min="0" step="0.01" placeholder="0.00" value="${b.dr||''}"
         oninput="updateBOY('${a.code}','dr',this.value)"
-        style="${a.nb==='Dr'?'border-color:rgba(59,130,246,0.4)':''}"
-      ></td>
-      <td><input type="number" min="0" step="0.01" placeholder="0.00"
-        value="${b.cr || ''}"
+        style="${a.nb==='Dr'?'border-color:rgba(59,130,246,0.4)':''}"></td>
+      <td><input type="number" min="0" step="0.01" placeholder="0.00" value="${b.cr||''}"
         oninput="updateBOY('${a.code}','cr',this.value)"
-        style="${a.nb==='Cr'?'border-color:rgba(16,185,129,0.4)':''}"
-      ></td>
+        style="${a.nb==='Cr'?'border-color:rgba(16,185,129,0.4)':''}"></td>
     </tr>`;
   }).join('');
   updateBOYTotals();
@@ -922,11 +1187,11 @@ function updateBOY(code, side, val) {
 }
 function updateBOYTotals() {
   let totDr = 0, totCr = 0;
-  Object.values(boyBalances).forEach(b => { totDr += b.dr || 0; totCr += b.cr || 0; });
+  Object.values(boyBalances).forEach(b => { totDr += b.dr||0; totCr += b.cr||0; });
   document.getElementById('boy-total-dr').textContent = fmt(totDr);
   document.getElementById('boy-total-cr').textContent = fmt(totCr);
   const el = document.getElementById('boy-balance-status');
-  if (totDr === 0 && totCr === 0) { el.textContent = ''; return; }
+  if (!totDr && !totCr) { el.textContent = ''; return; }
   const balanced = Math.abs(totDr - totCr) < 0.001;
   el.textContent = balanced ? '✔ متوازن' : `✘ فرق: ${fmt(Math.abs(totDr-totCr))}`;
   el.style.color = balanced ? 'var(--green)' : 'var(--red)';
@@ -945,13 +1210,13 @@ function saveBOY() {
 }
 
 // ═══════════════════════════════════════════════════════════════
-//  CHART OF ACCOUNTS
+//  CHART OF ACCOUNTS — RENDER
 // ═══════════════════════════════════════════════════════════════
 function renderCOA(data) {
   const list = data || filterCOAData();
   const tbody = document.getElementById('coa-body');
   if (!list.length) {
-    tbody.innerHTML = '<tr><td colspan="5"><div class="empty-state"><div class="empty-icon">🔍</div><p>لا توجد نتائج</p></div></td></tr>';
+    tbody.innerHTML = '<tr><td colspan="6"><div class="empty-state"><div class="empty-icon">🔍</div><p>لا توجد نتائج</p></div></td></tr>';
     return;
   }
   tbody.innerHTML = list.map(a => {
@@ -961,12 +1226,19 @@ function renderCOA(data) {
     const nbBadge   = a.nb === 'Dr'
       ? '<span class="badge badge-dr">Dr مدين</span>'
       : '<span class="badge badge-cr">Cr دائن</span>';
-    return `<tr class="${lvlClass}">
+    const canDetail = a.level === 4;
+    return `<tr class="${lvlClass}${canDetail?' coa-clickable':''}" ${canDetail?`onclick="openAccountDetail('${a.code}')" title="انقر لعرض تفاصيل الحساب"`:''}">
       <td class="mono" style="color:var(--text3)">${a.code}</td>
-      <td class="${nameCls}">${a.name}</td>
+      <td class="${nameCls}">${a.name}${canDetail?` <span style="font-size:10px;color:var(--text3)">🔍 تفاصيل</span>`:''}</td>
       <td style="text-align:center;color:var(--text3)">${a.level}</td>
       <td>${typeBadge}</td>
       <td>${nbBadge}</td>
+      <td onclick="event.stopPropagation()">
+        <div class="coa-actions">
+          <button class="btn btn-ghost btn-sm" onclick="openEditAccount('${a.code}')" title="تعديل">✏️</button>
+          <button class="btn btn-danger btn-sm" onclick="deleteAccount('${a.code}')" title="حذف">🗑</button>
+        </div>
+      </td>
     </tr>`;
   }).join('');
 }
@@ -998,12 +1270,14 @@ function setCOAFilter(f, btn) {
 // ═══════════════════════════════════════════════════════════════
 //  JOURNAL ENTRIES
 // ═══════════════════════════════════════════════════════════════
+function clearJEFilters() {
+  document.getElementById('je-from-date').value = '';
+  document.getElementById('je-to-date').value   = '';
+  document.getElementById('je-search').value    = '';
+  renderSavedEntries();
+}
 function addNewEntry() {
-  if (newEntryOpen) {
-    toast('القيد الحالي لا يزال مفتوحاً — احفظه أو ألغِه أولاً', 'error');
-    document.getElementById('new-entry-form').scrollIntoView({ behavior: 'smooth' });
-    return;
-  }
+  if (newEntryOpen) { toast('القيد الحالي لا يزال مفتوحاً', 'error'); return; }
   newEntryOpen = true;
   const form = document.getElementById('new-entry-form');
   form.style.display = 'block';
@@ -1013,12 +1287,10 @@ function addNewEntry() {
   document.getElementById('entry-invoice').value = '';
   document.getElementById('entry-cost-center').value = '';
   currentLines = [];
-  addDrLine();
-  addCrLine();
+  addDrLine(); addCrLine();
 }
 function cancelCurrentEntry() {
-  newEntryOpen = false;
-  currentLines = [];
+  newEntryOpen = false; currentLines = [];
   document.getElementById('new-entry-form').style.display = 'none';
   document.getElementById('entry-lines-container').innerHTML = '';
   document.getElementById('current-balance-check').style.display = 'none';
@@ -1038,33 +1310,24 @@ function removeCurrentLine(id) {
 function renderCurrentLines() {
   const container = document.getElementById('entry-lines-container');
   if (!currentLines.length) {
-    container.innerHTML = '<div class="empty-state" style="padding:20px"><p>اضغط "+ سطر مدين" أو "+ سطر دائن" لإضافة حسابات</p></div>';
-    document.getElementById('current-balance-check').style.display = 'none';
+    container.innerHTML = '<div class="empty-state" style="padding:20px"><p>اضغط "+ سطر مدين" أو "+ سطر دائن"</p></div>';
     return;
   }
-  // Only level-4 accounts can be used in journal entries
   const options = COA.filter(a => a.level === 4).map(a =>
-    `<option value="${a.code}">${a.code} — ${a.name}</option>`
-  ).join('');
-
+    `<option value="${a.code}">${a.code} — ${a.name}</option>`).join('');
   container.innerHTML = currentLines.map(line => `
     <div class="form-line-grid ${line.type}">
-      <span class="line-type-label">${line.type === 'dr' ? 'مدين Dr' : 'دائن Cr'}</span>
+      <span class="line-type-label">${line.type==='dr'?'مدين Dr':'دائن Cr'}</span>
       <div style="display:flex;flex-direction:column;gap:4px;">
         <select onchange="updateLineCode('${line.id}',this.value)">
-          <option value="">-- اختر الحساب (الكود) --</option>
-          ${options}
+          <option value="">-- اختر الحساب --</option>${options}
         </select>
         <span id="line-type-info-${line.id}" style="font-size:10px;color:var(--text3);padding:0 4px;"></span>
       </div>
       <input type="number" placeholder="المبلغ" min="0" step="0.01"
-        value="${line.amount || ''}"
-        oninput="updateLineAmount('${line.id}',this.value)">
+        value="${line.amount||''}" oninput="updateLineAmount('${line.id}',this.value)">
       <button class="btn btn-danger btn-sm" onclick="removeCurrentLine('${line.id}')">✕</button>
-    </div>
-  `).join('');
-
-  // restore values
+    </div>`).join('');
   currentLines.forEach(line => {
     const sel = container.querySelector(`[onchange="updateLineCode('${line.id}',this.value)"]`);
     if (sel && line.code) { sel.value = line.code; updateLineTypeInfo(line.id, line.code); }
@@ -1086,7 +1349,7 @@ function updateLineTypeInfo(id, code) {
   if (!el) return;
   const acc = COA_MAP[code];
   if (acc) {
-    el.innerHTML = `<span style="color:${typeColor(acc.type)}">${typeShort(acc.type)}</span> — الرصيد الطبيعي: <span style="color:${acc.nb==='Dr'?'var(--accent2)':'var(--green)'}"><strong>${acc.nb}</strong></span>`;
+    el.innerHTML = `<span style="color:${typeColor(acc.type)}">${typeShort(acc.type)}</span> — الرصيد الطبيعي: <strong style="color:${acc.nb==='Dr'?'var(--accent2)':'var(--green)'}">${acc.nb}</strong>`;
   } else { el.textContent = ''; }
 }
 function typeColor(type) {
@@ -1097,8 +1360,8 @@ function checkCurrentBalance() {
   const totalCr = currentLines.filter(l=>l.type==='cr').reduce((s,l)=>s+l.amount, 0);
   const el = document.getElementById('current-balance-check');
   el.style.display = 'flex';
-  if (totalDr === 0 && totalCr === 0) {
-    el.innerHTML = '<span style="color:var(--text3)">أدخل المبالغ للتحقق من التوازن | Credit = Debit</span>';
+  if (!totalDr && !totalCr) {
+    el.innerHTML = '<span style="color:var(--text3)">أدخل المبالغ للتحقق من التوازن</span>';
   } else if (Math.abs(totalDr - totalCr) < 0.001) {
     el.innerHTML = `<span class="balance-ok">✔ متوازن — Credit = Debit</span> <span style="color:var(--text3);font-size:11px">Dr = Cr = ${fmt(totalDr)}</span>`;
   } else {
@@ -1110,20 +1373,15 @@ function saveCurrentEntry() {
   const desc    = document.getElementById('entry-desc').value;
   const invoice = document.getElementById('entry-invoice').value;
   const cc      = document.getElementById('entry-cost-center').value;
-
   if (!date)                { toast('يرجى إدخال التاريخ', 'error'); return; }
   if (!currentLines.length) { toast('يرجى إضافة سطور للقيد', 'error'); return; }
-  if (currentLines.some(l => !l.code))       { toast('يرجى اختيار الحساب لكل سطر', 'error'); return; }
-  if (currentLines.some(l => l.amount <= 0)) { toast('يرجى إدخال مبلغ أكبر من صفر لكل سطر', 'error'); return; }
-
+  if (currentLines.some(l => !l.code))      { toast('يرجى اختيار الحساب لكل سطر', 'error'); return; }
+  if (currentLines.some(l => l.amount <= 0)){ toast('يرجى إدخال مبلغ أكبر من صفر', 'error'); return; }
   const totalDr = currentLines.filter(l=>l.type==='dr').reduce((s,l)=>s+l.amount, 0);
   const totalCr = currentLines.filter(l=>l.type==='cr').reduce((s,l)=>s+l.amount, 0);
-  if (Math.abs(totalDr - totalCr) > 0.001) {
-    toast('القيد غير متوازن! Credit ≠ Debit', 'error'); return;
-  }
-
+  if (Math.abs(totalDr - totalCr) > 0.001) { toast('القيد غير متوازن! Credit ≠ Debit', 'error'); return; }
   entryCounter++;
-  entries.push({ id: entryCounter, date, desc, invoice, cc, lines: currentLines.map(l => ({...l})) });
+  entries.push({ id: entryCounter, date, desc, invoice, cc, lines: currentLines.map(l=>({...l})) });
   toast(`✔ تم حفظ القيد رقم #${entryCounter}`, 'success');
   cancelCurrentEntry();
   renderSavedEntries();
@@ -1133,9 +1391,7 @@ function saveCurrentEntry() {
 function deleteEntry(id) {
   if (!confirm('هل تريد حذف هذا القيد؟')) return;
   entries = entries.filter(e => e.id !== id);
-  renderSavedEntries();
-  updateJETotals();
-  updateDashboard();
+  renderSavedEntries(); updateJETotals(); updateDashboard();
   toast('تم حذف القيد', 'info');
 }
 function clearAllEntries() {
@@ -1146,25 +1402,47 @@ function clearAllEntries() {
   toast('تم مسح جميع القيود', 'info');
 }
 function renderSavedEntries() {
+  const fromD = document.getElementById('je-from-date')?.value || '';
+  const toD   = document.getElementById('je-to-date')?.value   || '';
+  const q     = (document.getElementById('je-search')?.value   || '').toLowerCase();
+
+  const filtered = [...entries].reverse().filter(e => {
+    if (fromD && e.date < fromD) return false;
+    if (toD   && e.date > toD)   return false;
+    if (q && !(e.desc||'').toLowerCase().includes(q)
+           && !(e.invoice||'').toLowerCase().includes(q)
+           && !(e.cc||'').toLowerCase().includes(q)) return false;
+    return true;
+  });
+
+  const countEl = document.getElementById('je-filter-count');
+  if (fromD || toD || q) {
+    countEl.textContent = `${filtered.length} من ${entries.length} قيد`;
+  } else { countEl.textContent = ''; }
+
   const container = document.getElementById('saved-entries-container');
   if (!entries.length) {
     container.innerHTML = `<div class="card"><div class="empty-state"><div class="empty-icon">📝</div><p>لا توجد قيود مسجلة — اضغط "قيد جديد" للبدء</p></div></div>`;
     return;
   }
-  container.innerHTML = [...entries].reverse().map(e => {
+  if (!filtered.length) {
+    container.innerHTML = `<div class="card"><div class="empty-state"><div class="empty-icon">🔍</div><p>لا توجد قيود تطابق الفلتر المحدد</p></div></div>`;
+    return;
+  }
+  container.innerHTML = filtered.map(e => {
     const totalDr = e.lines.filter(l=>l.type==='dr').reduce((s,l)=>s+l.amount, 0);
     const linesHtml = e.lines.map(l => {
       const acc = COA_MAP[l.code];
-      const amtColor = l.type==='dr' ? 'var(--accent2)' : 'var(--green)';
+      const amtColor = l.type==='dr'?'var(--accent2)':'var(--green)';
       return `<div class="entry-line ${l.type}">
         <span class="line-type-label">${l.type==='dr'?'Dr مدين':'Cr دائن'}</span>
         <div>
-          <div style="font-size:12px;font-weight:600">${acc ? acc.name : l.code}</div>
+          <div style="font-size:12px;font-weight:600">${acc?acc.name:l.code}</div>
           <div style="font-size:11px;color:var(--text3);font-family:'IBM Plex Mono',monospace">${l.code}</div>
         </div>
         <div style="font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:700;color:${amtColor}">${fmt(l.amount)}</div>
         <div style="font-size:10px;">${typeLabel(acc?.type||'')}</div>
-        <div style="font-size:10px;color:var(--text3)">${acc ? (acc.nb==='Dr'?'<span style="color:var(--accent2)">Dr</span>':'<span style="color:var(--green)">Cr</span>') : ''}</div>
+        <div style="font-size:10px;color:var(--text3)">${acc?(acc.nb==='Dr'?'<span style="color:var(--accent2)">Dr</span>':'<span style="color:var(--green)">Cr</span>'):''}</div>
       </div>`;
     }).join('');
     const meta = [];
@@ -1195,37 +1473,34 @@ function updateJETotals() {
   document.getElementById('je-total-cr').textContent = fmt(cr);
   const balanced = Math.abs(dr-cr) < 0.001;
   const banner = document.getElementById('je-balance-banner');
-  banner.className = 'balance-banner ' + (balanced ? 'ok' : 'bad');
-  banner.textContent = balanced
-    ? '✔ القيود متوازنة — Credit = Debit'
-    : `✘ القيود غير متوازنة — الفرق: ${fmt(Math.abs(dr-cr))}`;
-  document.getElementById('je-total-dr-box').classList.toggle('balanced', balanced);
-  document.getElementById('je-total-cr-box').classList.toggle('balanced', balanced);
+  banner.className = 'balance-banner ' + (balanced?'ok':'bad');
+  banner.textContent = balanced ? '✔ القيود متوازنة — Credit = Debit' : `✘ القيود غير متوازنة — الفرق: ${fmt(Math.abs(dr-cr))}`;
 }
 
 // ═══════════════════════════════════════════════════════════════
 //  LEDGER CALCULATIONS
 // ═══════════════════════════════════════════════════════════════
-// Returns { dr, cr } movement for a level-4 account code
-function getMovement(code) {
+function getMovement(code, fromD, toD) {
   let dr = 0, cr = 0;
-  entries.forEach(e => e.lines.forEach(l => {
-    if (l.code === code) { if (l.type==='dr') dr+=l.amount; else cr+=l.amount; }
-  }));
+  entries.forEach(e => {
+    if (fromD && e.date < fromD) return;
+    if (toD   && e.date > toD)   return;
+    e.lines.forEach(l => {
+      if (l.code === code) { if (l.type==='dr') dr+=l.amount; else cr+=l.amount; }
+    });
+  });
   return { dr, cr };
 }
-// BOY balance for a level-4 account
 function getBOY(code) {
   const b = boyBalances[code] || { dr: 0, cr: 0 };
-  return { dr: b.dr || 0, cr: b.cr || 0 };
+  return { dr: b.dr||0, cr: b.cr||0 };
 }
-// Aggregate BOY + movement for any level (sums all level-4 descendants)
-function getAggregated(code) {
+function getAggregated(code, fromD, toD) {
   const l4 = COA.filter(a => a.level===4 && a.code.startsWith(code));
   let boyDr=0, boyCr=0, movDr=0, movCr=0;
   l4.forEach(a => {
     const b = getBOY(a.code);
-    const m = getMovement(a.code);
+    const m = getMovement(a.code, fromD, toD);
     boyDr += b.dr; boyCr += b.cr;
     movDr += m.dr; movCr += m.cr;
   });
@@ -1241,55 +1516,77 @@ function getAggregated(code) {
 }
 
 // ═══════════════════════════════════════════════════════════════
-//  TRIAL BALANCE
+//  TRIAL BALANCE — shows ONLY accounts with activity
 // ═══════════════════════════════════════════════════════════════
+function clearTBDates() {
+  document.getElementById('tb-from-date').value = '';
+  document.getElementById('tb-to-date').value   = '';
+  renderTrialBalance();
+}
 function renderTrialBalance() {
-  const q = (document.getElementById('tb-search')?.value || '').toLowerCase();
-  const rows = COA.filter(a => !q || a.code.includes(q) || a.name.toLowerCase().includes(q));
+  const q     = (document.getElementById('tb-search')?.value || '').toLowerCase();
+  const fromD = document.getElementById('tb-from-date')?.value || '';
+  const toD   = document.getElementById('tb-to-date')?.value   || '';
+
+  // Only level-4 accounts with any balance (BOY or movement)
+  const activeAccounts = COA.filter(a => {
+    if (a.level !== 4) return false;
+    if (q && !a.code.includes(q) && !a.name.toLowerCase().includes(q)) return false;
+    const g = getAggregated(a.code, fromD, toD);
+    return g.boyDr || g.boyCr || g.movDr || g.movCr;
+  });
+
   const tbody = document.getElementById('tb-body');
+  if (!activeAccounts.length) {
+    tbody.innerHTML = `<tr><td colspan="11"><div class="empty-state"><div class="empty-icon">📭</div><p>لا توجد قيود أو أرصدة مسجلة بعد</p></div></td></tr>`;
+    // reset totals
+    ['tb-boy-dr','tb-boy-cr','tb-mov-dr','tb-mov-cr','tb-grand-dr','tb-grand-cr'].forEach(id=>document.getElementById(id).textContent='0.00');
+    return;
+  }
+
+  const sv = (v, color) => v ? `<span class="mono" style="color:${color}">${fmt(v)}</span>` : `<span style="color:var(--text3);font-size:11px">—</span>`;
 
   let html = '';
-  let prevLevel = 0;
-  rows.forEach(a => {
-    // Separator between level-1 groups
-    if (a.level === 1 && prevLevel !== 0) {
-      html += `<tr class="sep-row"><td colspan="11"></td></tr>`;
-    }
-    prevLevel = a.level;
+  let gBoyDr=0,gBoyCr=0,gMovDr=0,gMovCr=0,gTotDr=0,gTotCr=0;
 
-    const g = getAggregated(a.code);
-    const lvlClass = `lvl${a.level}-row`;
-    const nameCls  = `lvl${a.level}`;
-    const sv = (v, color) => v ? `<span class="mono" style="color:${color}">${fmt(v)}</span>` : `<span style="color:var(--text3);font-size:11px">—</span>`;
-
-    html += `<tr class="${lvlClass}">
+  activeAccounts.forEach(a => {
+    const g = getAggregated(a.code, fromD, toD);
+    gBoyDr+=g.boyDr; gBoyCr+=g.boyCr; gMovDr+=g.movDr; gMovCr+=g.movCr;
+    gTotDr+=g.totDr; gTotCr+=g.totCr;
+    html += `<tr class="lvl4-row" style="cursor:pointer" onclick="openAccountDetail('${a.code}')" title="انقر لعرض تفاصيل الحساب">
       <td class="mono" style="color:var(--text3);font-size:11px">${a.code}</td>
-      <td class="${nameCls}">${a.name}</td>
-      <td style="font-size:11px">${a.level===4?typeLabel(a.type):''}</td>
+      <td class="lvl4">${a.name} <span style="font-size:10px;color:var(--text3)">🔍</span></td>
+      <td style="font-size:11px">${typeLabel(a.type)}</td>
       <td style="text-align:left">${sv(g.boyDr,'var(--accent2)')}</td>
       <td style="text-align:left">${sv(g.boyCr,'var(--green)')}</td>
       <td style="text-align:left">${sv(g.movDr,'var(--accent2)')}</td>
       <td style="text-align:left">${sv(g.movCr,'var(--green)')}</td>
       <td style="text-align:left">${sv(g.totDr,'var(--accent2)')}</td>
       <td style="text-align:left">${sv(g.totCr,'var(--green)')}</td>
-      <td style="text-align:left">${g.balDr ? sv(g.balDr,'var(--accent2)') : '<span style="color:var(--text3);font-size:11px">—</span>'}</td>
-      <td style="text-align:left">${g.balCr ? sv(g.balCr,'var(--green)')  : '<span style="color:var(--text3);font-size:11px">—</span>'}</td>
+      <td style="text-align:left">${g.balDr?sv(g.balDr,'var(--accent2)'):sv(0,'')}</td>
+      <td style="text-align:left">${g.balCr?sv(g.balCr,'var(--green)'):sv(0,'')}</td>
     </tr>`;
   });
+
+  // Grand total row
+  html += `<tr style="background:rgba(59,130,246,0.07);font-weight:900;">
+    <td colspan="2" style="font-size:13px;font-weight:900;color:var(--text)">الإجمالي العام</td>
+    <td></td>
+    <td style="text-align:left"><span class="mono" style="color:var(--accent2)">${fmt(gBoyDr)}</span></td>
+    <td style="text-align:left"><span class="mono" style="color:var(--green)">${fmt(gBoyCr)}</span></td>
+    <td style="text-align:left"><span class="mono" style="color:var(--accent2)">${fmt(gMovDr)}</span></td>
+    <td style="text-align:left"><span class="mono" style="color:var(--green)">${fmt(gMovCr)}</span></td>
+    <td style="text-align:left"><span class="mono" style="color:var(--accent2)">${fmt(gTotDr)}</span></td>
+    <td style="text-align:left"><span class="mono" style="color:var(--green)">${fmt(gTotCr)}</span></td>
+    <td colspan="2"></td>
+  </tr>`;
+
   tbody.innerHTML = html;
 
-  // Grand totals from all level-4
-  const all = COA.filter(a=>a.level===4);
-  let gBoyDr=0,gBoyCr=0,gMovDr=0,gMovCr=0,gTotDr=0,gTotCr=0;
-  all.forEach(a=>{
-    const g=getAggregated(a.code);
-    gBoyDr+=g.boyDr; gBoyCr+=g.boyCr; gMovDr+=g.movDr; gMovCr+=g.movCr;
-    gTotDr+=g.totDr; gTotCr+=g.totCr;
-  });
-  document.getElementById('tb-boy-dr').textContent = fmt(gBoyDr);
-  document.getElementById('tb-boy-cr').textContent = fmt(gBoyCr);
-  document.getElementById('tb-mov-dr').textContent = fmt(gMovDr);
-  document.getElementById('tb-mov-cr').textContent = fmt(gMovCr);
+  document.getElementById('tb-boy-dr').textContent  = fmt(gBoyDr);
+  document.getElementById('tb-boy-cr').textContent  = fmt(gBoyCr);
+  document.getElementById('tb-mov-dr').textContent  = fmt(gMovDr);
+  document.getElementById('tb-mov-cr').textContent  = fmt(gMovCr);
   document.getElementById('tb-grand-dr').textContent = fmt(gTotDr);
   document.getElementById('tb-grand-cr').textContent = fmt(gTotCr);
 
@@ -1297,7 +1594,7 @@ function renderTrialBalance() {
   const banner = document.getElementById('tb-balance-banner');
   banner.className = 'balance-banner ' + (balanced?'ok':'bad');
   banner.textContent = balanced
-    ? `✔ الميزان متوازن — إجمالي المدين = إجمالي الدائن = ${fmt(gTotDr)}`
+    ? `✔ الميزان متوازن — ${activeAccounts.length} حساب نشط | الإجمالي = ${fmt(gTotDr)}`
     : `✘ الميزان غير متوازن — Dr: ${fmt(gTotDr)} | Cr: ${fmt(gTotCr)} | فرق: ${fmt(Math.abs(gTotDr-gTotCr))}`;
   ['tb-dr-box','tb-cr-box','tb-boy-dr-box','tb-boy-cr-box','tb-mov-dr-box','tb-mov-cr-box']
     .forEach(id=>document.getElementById(id).classList.toggle('balanced', balanced));
@@ -1308,38 +1605,28 @@ function renderTrialBalance() {
 // ═══════════════════════════════════════════════════════════════
 function sumGroupNet(prefix, isRevenue) {
   return COA.filter(a => a.level===4 && a.code.startsWith(prefix)).reduce((s,a) => {
-    const boy = getBOY(a.code);
-    const mov = getMovement(a.code);
-    const totDr = boy.dr + mov.dr;
-    const totCr = boy.cr + mov.cr;
-    return s + (isRevenue ? (totCr - totDr) : (totDr - totCr));
+    const boy = getBOY(a.code); const mov = getMovement(a.code);
+    const totDr=boy.dr+mov.dr; const totCr=boy.cr+mov.cr;
+    return s + (isRevenue ? totCr-totDr : totDr-totCr);
   }, 0);
 }
 function renderIncomeStatement() {
-  const rev401 = sumGroupNet('401', true);
-  const rev402 = sumGroupNet('402', true);
-  const totalRevenue  = rev401 + rev402;
-  const exp301 = sumGroupNet('301', false);
-  const exp302 = sumGroupNet('302', false);
-  const totalExpenses = exp301 + exp302;
+  const rev401=sumGroupNet('401',true), rev402=sumGroupNet('402',true);
+  const totalRevenue = rev401+rev402;
+  const exp301=sumGroupNet('301',false), exp302=sumGroupNet('302',false);
+  const totalExpenses = exp301+exp302;
   const netProfit = totalRevenue - totalExpenses;
 
-  let html = `
-  <div class="card">
+  let html = `<div class="card">
     <div style="text-align:center;margin-bottom:24px;padding-bottom:16px;border-bottom:1px solid var(--border)">
       <div style="font-size:11px;color:var(--text3);letter-spacing:2px;text-transform:uppercase">قائمة الدخل</div>
       <div style="font-size:22px;font-weight:900;margin:6px 0">Income Statement</div>
-      <div style="font-size:12px;color:var(--text3)">من بداية الفترة حتى الآن — Net Income = Revenues – Expenses</div>
+      <div style="font-size:12px;color:var(--text3)">من بداية الفترة حتى الآن</div>
     </div>
-
     <div class="fs-section">
-      <div class="fs-section-title">
-        <span>الإيرادات — Revenues</span>
-        <span style="color:var(--green);font-family:'IBM Plex Mono',monospace">${fmtAcc(totalRevenue)}</span>
-      </div>`;
+      <div class="fs-section-title"><span>الإيرادات — Revenues</span><span style="color:var(--green);font-family:'IBM Plex Mono',monospace">${fmtAcc(totalRevenue)}</span></div>`;
 
-  const revGroups = [{code:'401',total:rev401,name:'إيرادات مباشرة'},{code:'402',total:rev402,name:'إيرادات غير مباشرة'}];
-  revGroups.forEach(({code,total,name}) => {
+  [{code:'401',total:rev401,name:'إيرادات مباشرة'},{code:'402',total:rev402,name:'إيرادات غير مباشرة'}].forEach(({code,total,name}) => {
     if (!total) return;
     html += `<div class="fs-row fs-indent-1"><span>${name}</span><span class="fs-amount pos">${fmtAcc(total)}</span></div>`;
     COA.filter(a=>a.level===4&&a.code.startsWith(code)).forEach(a=>{
@@ -1349,16 +1636,11 @@ function renderIncomeStatement() {
       html+=`<div class="fs-row fs-indent-2"><span>${a.name}</span><span class="fs-amount pos">${fmtAcc(val)}</span></div>`;
     });
   });
-  html+=`<div class="fs-row total-row"><span>إجمالي الإيرادات — Total Revenues</span><span class="fs-amount pos">${fmtAcc(totalRevenue)}</span></div></div>
-
+  html+=`<div class="fs-row total-row"><span>إجمالي الإيرادات</span><span class="fs-amount pos">${fmtAcc(totalRevenue)}</span></div></div>
     <div class="fs-section">
-      <div class="fs-section-title">
-        <span>المصروفات — Expenses</span>
-        <span style="color:var(--red);font-family:'IBM Plex Mono',monospace">${fmtAcc(totalExpenses)}</span>
-      </div>`;
+      <div class="fs-section-title"><span>المصروفات — Expenses</span><span style="color:var(--red);font-family:'IBM Plex Mono',monospace">${fmtAcc(totalExpenses)}</span></div>`;
 
-  const expGroups = [{code:'301',total:exp301,name:'مصروفات العمليات والتشغيل'},{code:'302',total:exp302,name:'مصروفات الإدارة العامة'}];
-  expGroups.forEach(({code,total,name}) => {
+  [{code:'301',total:exp301,name:'مصروفات العمليات والتشغيل'},{code:'302',total:exp302,name:'مصروفات الإدارة العامة'}].forEach(({code,total,name}) => {
     if(!total) return;
     html+=`<div class="fs-row fs-indent-1"><span>${name}</span><span class="fs-amount neg">${fmtAcc(total)}</span></div>`;
     COA.filter(a=>a.level===4&&a.code.startsWith(code)).forEach(a=>{
@@ -1371,13 +1653,11 @@ function renderIncomeStatement() {
 
   const profitColor = netProfit>=0?'var(--green)':'var(--red)';
   const profitLabel = netProfit>=0?'✔ صافي الربح — Net Income':'✘ صافي الخسارة — Net Loss';
-  html+=`<div class="fs-row total-row"><span>إجمالي المصروفات — Total Expenses</span><span class="fs-amount neg">${fmtAcc(totalExpenses)}</span></div></div>
+  html+=`<div class="fs-row total-row"><span>إجمالي المصروفات</span><span class="fs-amount neg">${fmtAcc(totalExpenses)}</span></div></div>
     <div class="fs-row net-row">
       <span style="font-size:16px;font-weight:900">${profitLabel}</span>
       <span class="fs-amount" style="font-size:22px;color:${profitColor}">${fmtAcc(Math.abs(netProfit))}</span>
-    </div>
-  </div>`;
-
+    </div></div>`;
   document.getElementById('income-statement-content').innerHTML = html;
 }
 
@@ -1388,16 +1668,15 @@ function renderBalanceSheet() {
   const assetGroups = [
     {code:'101',label:'الأصول الثابتة — Fixed Assets'},
     {code:'102',label:'البنوك والنقدية — Cash & Banks'},
-    {code:'103',label:'العملاء — A/R (Accounts Receivable)'},
+    {code:'103',label:'العملاء — A/R'},
     {code:'104',label:'مدينون متنوعون'},
     {code:'105',label:'المخزون — Inventory'},
   ];
   const liabGroups = [
-    {code:'201',label:'حسابات رأس المال — Capital (Equity)'},
-    {code:'202',label:'التزامات غير متداولة — N/P (Notes Payable)'},
-    {code:'203',label:'التزامات متداولة — A/P (Accounts Payable)'},
+    {code:'201',label:'حسابات رأس المال — Capital'},
+    {code:'202',label:'التزامات غير متداولة — N/P'},
+    {code:'203',label:'التزامات متداولة — A/P'},
   ];
-
   function buildSection(groups, isAsset) {
     let html = ''; let sectionTotal = 0;
     groups.forEach(g => {
@@ -1409,60 +1688,52 @@ function renderBalanceSheet() {
       }, 0);
       if (!groupTotal) return;
       sectionTotal += groupTotal;
-      const amtCls = isAsset ? 'neu' : 'pos';
-      html += `<div class="fs-row fs-indent-1"><span>${g.label}</span><span class="fs-amount ${amtCls}">${fmtAcc(groupTotal)}</span></div>`;
+      html += `<div class="fs-row fs-indent-1"><span>${g.label}</span><span class="fs-amount ${isAsset?'neu':'pos'}">${fmtAcc(groupTotal)}</span></div>`;
       accs.forEach(a => {
         const boy=getBOY(a.code); const mov=getMovement(a.code);
         const val = isAsset ? (boy.dr+mov.dr)-(boy.cr+mov.cr) : (boy.cr+mov.cr)-(boy.dr+mov.dr);
         if (!val) return;
-        html += `<div class="fs-row fs-indent-2"><span>${a.name}</span><span class="fs-amount ${amtCls}">${fmtAcc(val)}</span></div>`;
+        html += `<div class="fs-row fs-indent-2"><span>${a.name}</span><span class="fs-amount ${isAsset?'neu':'pos'}">${fmtAcc(val)}</span></div>`;
       });
     });
     return { html, sectionTotal };
   }
-
   const assets = buildSection(assetGroups, true);
   const liabs  = buildSection(liabGroups, false);
   const netProfit = sumGroupNet('401',true)+sumGroupNet('402',true)-sumGroupNet('301',false)-sumGroupNet('302',false);
   const totalLiabAndEquity = liabs.sectionTotal + netProfit;
   const balanced = Math.abs(assets.sectionTotal - totalLiabAndEquity) < 0.001;
-  const netLabel = netProfit >= 0 ? 'صافي الربح — Net Income' : 'صافي الخسارة — Net Loss';
-  const netCls   = netProfit >= 0 ? 'pos' : 'neg';
+  const netLabel = netProfit>=0?'صافي الربح — Net Income':'صافي الخسارة — Net Loss';
+  const netCls   = netProfit>=0?'pos':'neg';
 
   document.getElementById('balance-sheet-content').innerHTML = `
   <div style="text-align:center;margin-bottom:20px">
     <div style="font-size:11px;color:var(--text3);letter-spacing:2px;text-transform:uppercase">الميزانية العمومية</div>
-    <div style="font-size:22px;font-weight:900;margin:6px 0">Balance Sheet — Statement of Financial Position</div>
+    <div style="font-size:22px;font-weight:900;margin:6px 0">Balance Sheet</div>
     <div style="font-size:12px;color:var(--text3)">Assets = Liabilities + Owners' Equity</div>
   </div>
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:16px">
     <div class="card">
       <div style="text-align:center;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--border)">
-        <div style="font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:1px">الأصول</div>
+        <div style="font-size:11px;color:var(--text3);text-transform:uppercase">الأصول</div>
         <div style="font-size:18px;font-weight:900">Assets</div>
         <div style="font-size:12px;color:var(--asset);font-family:'IBM Plex Mono',monospace;font-weight:700;margin-top:4px">${fmtAcc(assets.sectionTotal)}</div>
       </div>
       <div class="fs-section">
-        ${assets.html || '<div style="color:var(--text3);text-align:center;padding:20px;font-size:13px">لا توجد أرصدة</div>'}
-        <div class="fs-row total-row">
-          <span>إجمالي الأصول — Total Assets</span>
-          <span class="fs-amount neu">${fmtAcc(assets.sectionTotal)}</span>
-        </div>
+        ${assets.html||'<div style="color:var(--text3);text-align:center;padding:20px;font-size:13px">لا توجد أرصدة</div>'}
+        <div class="fs-row total-row"><span>إجمالي الأصول</span><span class="fs-amount neu">${fmtAcc(assets.sectionTotal)}</span></div>
       </div>
     </div>
     <div class="card">
       <div style="text-align:center;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--border)">
-        <div style="font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:1px">الالتزامات وحقوق الملكية</div>
-        <div style="font-size:18px;font-weight:900">Liabilities & Owners' Equity</div>
+        <div style="font-size:11px;color:var(--text3);text-transform:uppercase">الالتزامات وحقوق الملكية</div>
+        <div style="font-size:18px;font-weight:900">Liabilities & Equity</div>
         <div style="font-size:12px;color:var(--green);font-family:'IBM Plex Mono',monospace;font-weight:700;margin-top:4px">${fmtAcc(totalLiabAndEquity)}</div>
       </div>
       <div class="fs-section">
-        ${liabs.html || '<div style="color:var(--text3);text-align:center;padding:20px;font-size:13px">لا توجد أرصدة</div>'}
-        ${netProfit !== 0 ? `<div class="fs-row fs-indent-1"><span>${netLabel}</span><span class="fs-amount ${netCls}">${fmtAcc(Math.abs(netProfit))}</span></div>` : ''}
-        <div class="fs-row total-row">
-          <span>إجمالي الالتزامات وحقوق الملكية</span>
-          <span class="fs-amount pos">${fmtAcc(totalLiabAndEquity)}</span>
-        </div>
+        ${liabs.html||'<div style="color:var(--text3);text-align:center;padding:20px;font-size:13px">لا توجد أرصدة</div>'}
+        ${netProfit!==0?`<div class="fs-row fs-indent-1"><span>${netLabel}</span><span class="fs-amount ${netCls}">${fmtAcc(Math.abs(netProfit))}</span></div>`:''}
+        <div class="fs-row total-row"><span>إجمالي الالتزامات وحقوق الملكية</span><span class="fs-amount pos">${fmtAcc(totalLiabAndEquity)}</span></div>
       </div>
     </div>
   </div>
@@ -1478,46 +1749,41 @@ function renderBalanceSheet() {
 // ═══════════════════════════════════════════════════════════════
 function updateDashboard() {
   const assetTotal = COA.filter(a=>a.level===4&&a.type==='Asset').reduce((s,a)=>{
-    const b=getBOY(a.code); const m=getMovement(a.code);
-    return s+(b.dr+m.dr)-(b.cr+m.cr);
+    const b=getBOY(a.code); const m=getMovement(a.code); return s+(b.dr+m.dr)-(b.cr+m.cr);
   }, 0);
   const liabTotal = COA.filter(a=>a.level===4&&a.type==='Equity/Liability').reduce((s,a)=>{
-    const b=getBOY(a.code); const m=getMovement(a.code);
-    return s+(b.cr+m.cr)-(b.dr+m.dr);
+    const b=getBOY(a.code); const m=getMovement(a.code); return s+(b.cr+m.cr)-(b.dr+m.dr);
   }, 0);
   const revTotal = COA.filter(a=>a.level===4&&a.type==='Revenue').reduce((s,a)=>{
-    const b=getBOY(a.code); const m=getMovement(a.code);
-    return s+(b.cr+m.cr)-(b.dr+m.dr);
+    const b=getBOY(a.code); const m=getMovement(a.code); return s+(b.cr+m.cr)-(b.dr+m.dr);
   }, 0);
   const expTotal = COA.filter(a=>a.level===4&&a.type==='Expense').reduce((s,a)=>{
-    const b=getBOY(a.code); const m=getMovement(a.code);
-    return s+(b.dr+m.dr)-(b.cr+m.cr);
+    const b=getBOY(a.code); const m=getMovement(a.code); return s+(b.dr+m.dr)-(b.cr+m.cr);
   }, 0);
   const netProfit = revTotal - expTotal;
 
-  document.getElementById('stat-assets').textContent   = fmtAcc(assetTotal);
-  document.getElementById('stat-liability').textContent = fmtAcc(liabTotal);
-  document.getElementById('stat-revenue').textContent   = fmtAcc(revTotal);
-  document.getElementById('stat-expenses').textContent  = fmtAcc(expTotal);
+  document.getElementById('stat-assets').textContent    = fmtAcc(assetTotal);
+  document.getElementById('stat-liability').textContent  = fmtAcc(liabTotal);
+  document.getElementById('stat-revenue').textContent    = fmtAcc(revTotal);
+  document.getElementById('stat-expenses').textContent   = fmtAcc(expTotal);
 
   const npEl = document.getElementById('net-profit-display');
-  const hasData = entries.length > 0 || Object.keys(boyBalances).length > 0;
-  if (!hasData) { npEl.textContent = '—'; npEl.style.color = 'var(--text3)'; }
+  const hasData = entries.length>0 || Object.keys(boyBalances).length>0;
+  if (!hasData) { npEl.textContent='—'; npEl.style.color='var(--text3)'; }
   else {
     npEl.textContent = fmtAcc(Math.abs(netProfit));
-    npEl.style.color = netProfit>=0 ? 'var(--green)' : 'var(--red)';
+    npEl.style.color = netProfit>=0?'var(--green)':'var(--red)';
   }
 
-  // Balance status
   const all = COA.filter(a=>a.level===4);
   let totDr=0, totCr=0;
   all.forEach(a=>{ const g=getAggregated(a.code); totDr+=g.totDr; totCr+=g.totCr; });
   const statusEl = document.getElementById('dash-balance-status');
-  if (totDr===0 && totCr===0) { statusEl.textContent='لا توجد أرصدة مسجلة'; statusEl.style.color='var(--text3)'; }
+  if (!totDr && !totCr) { statusEl.textContent='لا توجد أرصدة مسجلة'; statusEl.style.color='var(--text3)'; }
   else {
     const balanced = Math.abs(totDr-totCr)<0.001;
     statusEl.textContent = balanced ? '✔ الميزان متوازن' : `✘ الميزان غير متوازن — فرق: ${fmt(Math.abs(totDr-totCr))}`;
-    statusEl.style.color = balanced ? 'var(--green)' : 'var(--red)';
+    statusEl.style.color = balanced?'var(--green)':'var(--red)';
   }
 
   document.getElementById('dashboard-date').textContent =
@@ -1525,9 +1791,7 @@ function updateDashboard() {
 
   const tbody = document.getElementById('dash-journal-body');
   const lastLines = [];
-  [...entries].reverse().slice(0,3).forEach(e => {
-    e.lines.forEach(l => lastLines.push({...l, entryId:e.id, date:e.date}));
-  });
+  [...entries].reverse().slice(0,3).forEach(e => e.lines.forEach(l => lastLines.push({...l,entryId:e.id,date:e.date})));
   if (!lastLines.length) {
     tbody.innerHTML='<tr><td colspan="7"><div class="empty-state"><div class="empty-icon">📝</div><p>لا توجد قيود محاسبية مسجلة بعد</p></div></td></tr>';
     return;
@@ -1550,20 +1814,18 @@ function updateDashboard() {
 //  UTILITIES
 // ═══════════════════════════════════════════════════════════════
 function fmt(n) {
-  if (n === undefined || n === null || n === '') return '—';
+  if (n===undefined||n===null||n==='') return '—';
   return Number(n).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
 }
 function fmtAcc(n) {
   if (!n && n!==0) return '—';
-  if (n === 0) return '—';
+  if (n===0) return '—';
   return Number(n).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
 }
 function toast(msg, type='info') {
   const c=document.getElementById('toast-container');
   const t=document.createElement('div');
-  t.className=`toast ${type}`;
-  t.textContent=msg;
-  c.appendChild(t);
+  t.className=`toast ${type}`; t.textContent=msg; c.appendChild(t);
   setTimeout(()=>{ t.style.opacity='0'; t.style.transition='opacity 0.3s'; setTimeout(()=>t.remove(),300); },3000);
 }
 
@@ -1575,10 +1837,9 @@ document.addEventListener('DOMContentLoaded', () => {
   updateDashboard();
   renderSavedEntries();
   document.getElementById('entry-date').value = new Date().toISOString().split('T')[0];
-  // Close modal on overlay click
-  document.getElementById('boy-modal').addEventListener('click', function(e){
-    if(e.target === this) closeBOYModal();
-  });
+  document.getElementById('boy-modal').addEventListener('click', function(e){ if(e.target===this) closeBOYModal(); });
+  document.getElementById('account-modal').addEventListener('click', function(e){ if(e.target===this) closeAccountModal(); });
+  document.getElementById('account-detail-modal').addEventListener('click', function(e){ if(e.target===this) closeDetailModal(); });
 });
 </script>
 </body>
