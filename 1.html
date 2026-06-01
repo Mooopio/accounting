@@ -1,0 +1,1578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Accounting Principles 1 — Chapter 1 Exam Prep</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+  /* ─── TOKENS ─── */
+  :root {
+    --bg:        #0d0f14;
+    --surface:   #141720;
+    --surface2:  #1c2030;
+    --border:    #2a2f42;
+    --accent:    #e8c96d;
+    --accent2:   #5b8dee;
+    --accent3:   #6eddb4;
+    --danger:    #e8706d;
+    --text:      #e8eaf0;
+    --muted:     #7a7f96;
+    --radius:    14px;
+    --transition: .3s cubic-bezier(.4,0,.2,1);
+  }
+  .light {
+    --bg:        #f5f4ef;
+    --surface:   #ffffff;
+    --surface2:  #f0ede4;
+    --border:    #ddd9cc;
+    --text:      #1a1c24;
+    --muted:     #6b6f82;
+  }
+
+  /* ─── RESET ─── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    transition: background var(--transition), color var(--transition);
+    overflow-x: hidden;
+  }
+
+  /* ─── NOISE TEXTURE OVERLAY ─── */
+  body::before {
+    content:'';
+    position:fixed; inset:0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events:none; z-index:0; opacity:.5;
+  }
+
+  /* ─── TOPBAR ─── */
+  .topbar {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    backdrop-filter: blur(12px);
+    display: flex; align-items: center; gap: 12px;
+    padding: 0 24px; height: 60px;
+    box-shadow: 0 2px 24px rgba(0,0,0,.2);
+  }
+  .topbar-brand {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700; font-size: 1.1rem;
+    color: var(--accent); white-space: nowrap;
+    letter-spacing: -.5px;
+  }
+  .topbar-divider { width: 1px; height: 28px; background: var(--border); flex-shrink:0; }
+  .nav-pills { display: flex; gap: 4px; flex-wrap: wrap; flex: 1; }
+  .nav-btn {
+    padding: 6px 14px; border-radius: 8px;
+    border: none; background: transparent;
+    color: var(--muted); font-family: 'DM Sans', sans-serif;
+    font-size: .83rem; font-weight: 500; cursor: pointer;
+    transition: all var(--transition); white-space: nowrap;
+  }
+  .nav-btn:hover { background: var(--surface2); color: var(--text); }
+  .nav-btn.active { background: var(--accent); color: #1a1209; font-weight: 600; }
+  .theme-btn {
+    margin-left: auto; width: 38px; height: 38px; border-radius: 50%;
+    border: 1px solid var(--border); background: var(--surface2);
+    color: var(--text); cursor: pointer; font-size: 1.1rem;
+    display: flex; align-items: center; justify-content: center;
+    transition: all var(--transition); flex-shrink: 0;
+  }
+  .theme-btn:hover { transform: rotate(20deg); border-color: var(--accent); }
+
+  /* ─── SECTIONS ─── */
+  .section { display: none; animation: fadeUp .45s ease both; }
+  .section.active { display: block; }
+  @keyframes fadeUp {
+    from { opacity:0; transform:translateY(18px); }
+    to   { opacity:1; transform:translateY(0); }
+  }
+
+  /* ─── HERO ─── */
+  .hero {
+    position: relative; overflow: hidden;
+    padding: 64px 24px 48px; text-align: center;
+  }
+  .hero::before {
+    content:'';
+    position: absolute; top:-80px; left:50%; transform:translateX(-50%);
+    width: 600px; height: 600px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(232,201,109,.12) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .hero-eyebrow {
+    font-family: 'DM Mono', monospace; font-size: .78rem;
+    color: var(--accent); letter-spacing: 3px; text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3.4rem); font-weight: 900;
+    line-height: 1.1; margin-bottom: 16px;
+  }
+  .hero-title span { color: var(--accent); }
+  .hero-sub { color: var(--muted); font-size: 1.05rem; max-width: 520px; margin: 0 auto 32px; line-height: 1.7; }
+  .badge-row { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+  .badge {
+    padding: 5px 14px; border-radius: 20px; font-size: .8rem; font-weight: 600;
+    border: 1px solid; letter-spacing: .5px;
+  }
+  .badge-gold  { border-color: var(--accent);  color: var(--accent); }
+  .badge-blue  { border-color: var(--accent2); color: var(--accent2); }
+  .badge-green { border-color: var(--accent3); color: var(--accent3); }
+
+  /* ─── LAYOUT ─── */
+  .content { max-width: 960px; margin: 0 auto; padding: 0 20px 80px; }
+
+  /* ─── CARDS ─── */
+  .card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 28px 32px; margin-bottom: 24px;
+    position: relative; transition: box-shadow var(--transition);
+  }
+  .card:hover { box-shadow: 0 6px 32px rgba(0,0,0,.18); }
+  .card-title {
+    font-family: 'Playfair Display', serif; font-size: 1.35rem;
+    font-weight: 700; margin-bottom: 16px; display: flex;
+    align-items: center; gap: 10px;
+  }
+  .card-title .icon {
+    width: 34px; height: 34px; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem; flex-shrink: 0;
+  }
+  .icon-gold  { background: rgba(232,201,109,.15); color: var(--accent); }
+  .icon-blue  { background: rgba(91,141,238,.15);  color: var(--accent2); }
+  .icon-green { background: rgba(110,221,180,.15); color: var(--accent3); }
+  .icon-red   { background: rgba(232,112,109,.15); color: var(--danger); }
+
+  /* ─── KEY BOX ─── */
+  .key-box {
+    background: var(--surface2); border-left: 3px solid var(--accent);
+    border-radius: 8px; padding: 14px 18px; margin: 14px 0;
+    font-size: .95rem; line-height: 1.7;
+  }
+  .key-box.blue  { border-color: var(--accent2); }
+  .key-box.green { border-color: var(--accent3); }
+  .key-box.red   { border-color: var(--danger); }
+
+  /* ─── TYPOGRAPHY ─── */
+  h3 { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 700; margin: 20px 0 8px; color: var(--accent); }
+  h4 { font-size: .95rem; font-weight: 600; margin: 14px 0 6px; color: var(--accent2); }
+  p  { line-height: 1.8; color: var(--text); margin-bottom: 10px; font-size: .95rem; }
+  ul, ol { padding-left: 20px; margin-bottom: 10px; }
+  li { line-height: 1.8; font-size: .95rem; margin-bottom: 4px; }
+  strong { color: var(--accent); font-weight: 600; }
+  em { color: var(--accent3); font-style: normal; font-weight: 500; }
+  code { font-family: 'DM Mono', monospace; background: var(--surface2); padding: 2px 7px; border-radius: 5px; font-size: .85rem; }
+
+  /* ─── TABLE ─── */
+  .tbl-wrap { overflow-x: auto; margin: 16px 0; border-radius: var(--radius); border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; font-size: .88rem; }
+  th { background: var(--surface2); color: var(--accent); font-weight: 600; padding: 10px 14px; text-align: left; border-bottom: 2px solid var(--accent); }
+  td { padding: 9px 14px; border-bottom: 1px solid var(--border); vertical-align: top; line-height: 1.6; }
+  tr:last-child td { border-bottom: none; }
+  tr:nth-child(even) td { background: rgba(255,255,255,.02); }
+
+  /* ─── COLLAPSIBLE ─── */
+  .collapse-btn {
+    width: 100%; background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 10px; padding: 13px 18px; text-align: left;
+    color: var(--text); font-family: 'DM Sans', sans-serif; font-size: .95rem;
+    font-weight: 500; cursor: pointer; display: flex; justify-content: space-between;
+    align-items: center; margin-bottom: 6px; transition: all var(--transition);
+  }
+  .collapse-btn:hover { border-color: var(--accent); }
+  .collapse-btn .arrow { transition: transform var(--transition); font-size: .8rem; }
+  .collapse-btn.open .arrow { transform: rotate(180deg); }
+  .collapse-body { display: none; padding: 14px 18px 4px; }
+  .collapse-body.open { display: block; }
+
+  /* ─── SUMMARY BULLETS ─── */
+  .sum-item {
+    display: flex; gap: 10px; align-items: flex-start; margin-bottom: 10px;
+  }
+  .sum-dot {
+    width: 8px; height: 8px; border-radius: 50%; margin-top: 8px;
+    flex-shrink: 0;
+  }
+  .dot-gold  { background: var(--accent); }
+  .dot-blue  { background: var(--accent2); }
+  .dot-green { background: var(--accent3); }
+  .dot-red   { background: var(--danger); }
+
+  /* ─── MCQ ─── */
+  .mcq-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 22px 26px; margin-bottom: 18px;
+    transition: border-color var(--transition);
+  }
+  .mcq-num { font-family: 'DM Mono', monospace; font-size: .8rem; color: var(--muted); margin-bottom: 6px; }
+  .mcq-q { font-size: .97rem; font-weight: 500; line-height: 1.6; margin-bottom: 14px; }
+  .diff-badge {
+    display: inline-block; padding: 2px 9px; border-radius: 20px;
+    font-size: .72rem; font-weight: 600; margin-left: 8px;
+    vertical-align: middle;
+  }
+  .easy   { background: rgba(110,221,180,.15); color: var(--accent3); }
+  .medium { background: rgba(91,141,238,.15);  color: var(--accent2); }
+  .hard   { background: rgba(232,112,109,.15); color: var(--danger); }
+  .mcq-options { display: flex; flex-direction: column; gap: 8px; }
+  .mcq-opt {
+    padding: 9px 14px; border-radius: 8px; border: 1px solid var(--border);
+    cursor: pointer; font-size: .92rem; transition: all var(--transition);
+    background: var(--surface2);
+  }
+  .mcq-opt:hover { border-color: var(--accent2); }
+  .mcq-opt.correct { border-color: var(--accent3); background: rgba(110,221,180,.1); color: var(--accent3); }
+  .mcq-opt.wrong   { border-color: var(--danger);  background: rgba(232,112,109,.1); color: var(--danger); }
+  .mcq-explain {
+    display: none; margin-top: 12px; padding: 12px 14px;
+    background: var(--surface2); border-radius: 8px;
+    border-left: 3px solid var(--accent3); font-size: .88rem; line-height: 1.7;
+  }
+  .mcq-explain.show { display: block; }
+  .score-bar {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 20px 26px; margin-bottom: 24px;
+    display: flex; align-items: center; gap: 20px; flex-wrap: wrap;
+  }
+  .score-num { font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--accent); font-weight: 900; }
+  .score-label { color: var(--muted); font-size: .9rem; }
+  .reset-btn {
+    margin-left: auto; padding: 8px 20px; border-radius: 8px;
+    background: var(--surface2); border: 1px solid var(--border);
+    color: var(--text); cursor: pointer; font-family: 'DM Sans'; font-size: .88rem;
+    transition: all var(--transition);
+  }
+  .reset-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* ─── WRITTEN Q ─── */
+  .written-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 22px 26px; margin-bottom: 18px;
+  }
+  .written-q { font-size: .97rem; font-weight: 600; margin-bottom: 12px; }
+  .model-ans {
+    display: none; margin-top: 12px; padding: 14px 16px;
+    background: var(--surface2); border-radius: 8px;
+    border-left: 3px solid var(--accent); font-size: .9rem; line-height: 1.8;
+  }
+  .model-ans.show { display: block; }
+  .toggle-ans-btn {
+    padding: 7px 16px; border-radius: 7px; border: 1px solid var(--border);
+    background: transparent; color: var(--accent); cursor: pointer;
+    font-family: 'DM Sans'; font-size: .85rem; font-weight: 500;
+    transition: all var(--transition);
+  }
+  .toggle-ans-btn:hover { background: rgba(232,201,109,.1); }
+
+  /* ─── REVISION ─── */
+  .rev-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+  .rev-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 20px 22px;
+  }
+  .rev-card h3 { margin-top: 0; font-size: .95rem; }
+  .rev-card li { font-size: .86rem; margin-bottom: 6px; }
+  .formula-box {
+    background: var(--surface2); border: 1px solid var(--accent);
+    border-radius: 8px; padding: 10px 14px; margin: 8px 0;
+    font-family: 'DM Mono', monospace; font-size: .88rem;
+    text-align: center; color: var(--accent);
+  }
+  .mnemonic {
+    background: rgba(232,201,109,.08); border: 1px dashed var(--accent);
+    border-radius: 8px; padding: 10px 14px; margin: 8px 0;
+    font-size: .88rem; line-height: 1.7;
+  }
+  .night-sheet {
+    background: linear-gradient(135deg, #1a1209 0%, #0d1420 100%);
+    border: 2px solid var(--accent); border-radius: var(--radius);
+    padding: 28px 32px; margin-top: 24px;
+  }
+  .light .night-sheet { background: linear-gradient(135deg, #fffbe8 0%, #e8f0ff 100%); }
+  .night-sheet h2 {
+    font-family: 'Playfair Display', serif; color: var(--accent);
+    font-size: 1.4rem; margin-bottom: 20px; text-align: center;
+  }
+  .ns-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
+  .ns-box {
+    background: rgba(255,255,255,.04); border: 1px solid var(--border);
+    border-radius: 10px; padding: 14px 16px;
+  }
+  .light .ns-box { background: rgba(0,0,0,.04); }
+  .ns-box h4 { color: var(--accent2); font-size: .85rem; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px; }
+  .ns-box li { font-size: .82rem; margin-bottom: 5px; }
+
+  /* ─── PROGRESS ─── */
+  .progress-wrap { height: 4px; background: var(--surface2); border-radius: 4px; margin-bottom: 28px; overflow: hidden; }
+  .progress-bar  { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent2)); border-radius: 4px; transition: width .5s ease; }
+
+  /* ─── CHIPS ─── */
+  .chip {
+    display: inline-block; padding: 3px 10px; border-radius: 20px;
+    font-size: .78rem; font-weight: 600; margin: 2px;
+    background: var(--surface2); border: 1px solid var(--border);
+  }
+
+  /* ─── SCROLL TO TOP ─── */
+  .fab {
+    position: fixed; bottom: 28px; right: 28px;
+    width: 46px; height: 46px; border-radius: 50%;
+    background: var(--accent); border: none; cursor: pointer;
+    color: #1a1209; font-size: 1.1rem; display: flex;
+    align-items: center; justify-content: center;
+    box-shadow: 0 4px 20px rgba(232,201,109,.4);
+    transition: all var(--transition); z-index: 200;
+  }
+  .fab:hover { transform: translateY(-3px) scale(1.07); }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width:640px) {
+    .topbar { padding: 0 12px; }
+    .card { padding: 20px 18px; }
+    .content { padding: 0 14px 60px; }
+    .mcq-card, .written-card { padding: 18px 16px; }
+    .night-sheet { padding: 20px 18px; }
+  }
+
+  /* ─── SEPARATOR ─── */
+  .sep { height: 1px; background: var(--border); margin: 24px 0; }
+
+  /* ─── FIELD TAGS ─── */
+  .tag-row { display: flex; gap: 8px; flex-wrap: wrap; margin: 12px 0; }
+  .ftag {
+    padding: 4px 12px; border-radius: 20px; font-size: .8rem; font-weight: 600;
+    border: 1px solid;
+  }
+  .ftag-fin   { border-color:#5b8dee; color:#5b8dee; background:rgba(91,141,238,.08);}
+  .ftag-mgmt  { border-color:#e8c96d; color:#e8c96d; background:rgba(232,201,109,.08);}
+  .ftag-cost  { border-color:#6eddb4; color:#6eddb4; background:rgba(110,221,180,.08);}
+  .ftag-tax   { border-color:#e8706d; color:#e8706d; background:rgba(232,112,109,.08);}
+  .ftag-audit { border-color:#c96de8; color:#c96de8; background:rgba(201,109,232,.08);}
+  .ftag-govt  { border-color:#6db4e8; color:#6db4e8; background:rgba(109,180,232,.08);}
+  .ftag-natl  { border-color:#e8a96d; color:#e8a96d; background:rgba(232,169,109,.08);}
+  .ftag-intl  { border-color:#6de8c9; color:#6de8c9; background:rgba(109,232,201,.08);}
+  .ftag-resp  { border-color:#e8e86d; color:#aaa030; background:rgba(232,232,109,.08);}
+  .ftag-budg  { border-color:#e86db4; color:#e86db4; background:rgba(232,109,180,.08);}
+</style>
+</head>
+<body>
+
+<!-- TOP NAV -->
+<nav class="topbar">
+  <div class="topbar-brand">📘 Acc. Principles 1</div>
+  <div class="topbar-divider"></div>
+  <div class="nav-pills">
+    <button class="nav-btn active" onclick="showSection('explain',this)">📖 Explanation</button>
+    <button class="nav-btn" onclick="showSection('summary',this)">📋 Summary</button>
+    <button class="nav-btn" onclick="showSection('memory',this)">🧠 Memory</button>
+    <button class="nav-btn" onclick="showSection('mcq',this)">❓ MCQs</button>
+    <button class="nav-btn" onclick="showSection('written',this)">✍️ Written</button>
+    <button class="nav-btn" onclick="showSection('revision',this)">⚡ Revision</button>
+  </div>
+  <button class="theme-btn" id="themeBtn" onclick="toggleTheme()" title="Toggle theme">🌙</button>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════════
+     SECTION 1: EXPLANATION
+════════════════════════════════════════════════════════════ -->
+<section id="explain" class="section active">
+  <div class="hero">
+    <div class="hero-eyebrow">Chapter 1 · Deep Understanding</div>
+    <h1 class="hero-title">Accounting & Users of<br/><span>Accounting Information</span></h1>
+    <p class="hero-sub">Every concept explained clearly with analogies, examples, and exam-critical highlights — nothing skipped.</p>
+    <div class="badge-row">
+      <span class="badge badge-gold">Dr. Hamdy Habl</span>
+      <span class="badge badge-blue">Accounting Dept – HU</span>
+      <span class="badge badge-green">6 Major Topics</span>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- ── TOPIC 1: DEFINITION ── -->
+    <div class="card">
+      <div class="card-title">
+        <div class="icon icon-gold">①</div>
+        Definition of Accounting
+      </div>
+
+      <h3>A. Accounting as a System</h3>
+      <div class="key-box">
+        <strong>Definition:</strong> Accounting is a system to <em>provide quantitative information with financial nature</em> about an economic entity to help in making <em>economic decisions</em>.
+      </div>
+      <p>Think of accounting as the <strong>GPS of business</strong>. Just as GPS tells you where you are and how to reach your destination, accounting tells a business its financial position and guides decisions about the future.</p>
+      <p>The definition has <strong>three critical pillars</strong>:</p>
+      <ul>
+        <li><strong>Quantitative information</strong> — Accounting speaks in <em>numbers</em>. Non-numerical information (e.g., employee morale, office location, management style) is <em>excluded</em>. If you can't count it in money, accounting doesn't record it directly.</li>
+        <li><strong>Financial nature</strong> — Even among numbers, only those <em>expressible in monetary units</em> qualify. A company hiring 50 workers is not an accounting event until salaries are paid or owed.</li>
+        <li><strong>Decision making</strong> — Everything accounting does ultimately exists to help someone <em>make a better economic decision</em>. This is the final and most important purpose.</li>
+      </ul>
+
+      <h3>B. Accounting as a Process</h3>
+      <div class="key-box blue">
+        <strong>Definition:</strong> A process of <em>identifying, recording, summarizing, and reporting</em> economic information about an economic entity to decision makers.
+      </div>
+      <p>The four steps form a pipeline — each stage feeds the next:</p>
+
+      <div class="collapse-btn" onclick="toggleCollapse(this)">
+        <span>① Identifying — What counts as an accounting event?</span><span class="arrow">▼</span>
+      </div>
+      <div class="collapse-body">
+        <p>Analyzing every business event to decide: <em>Is it financial? Can it be expressed in money?</em> Non-financial events (hiring, training) are not recorded. A sale, a purchase, a loan — these are identified as accounting events.</p>
+        <p><strong>Analogy:</strong> Like a customs officer deciding what goods to let into the country — only "qualifying items" pass through.</p>
+      </div>
+
+      <div class="collapse-btn" onclick="toggleCollapse(this)">
+        <span>② Recording — Journalizing</span><span class="arrow">▼</span>
+      </div>
+      <div class="collapse-body">
+        <p>Once identified, transactions are entered (journalized) into the <strong>journal</strong> — the book of original entry. This is done chronologically and is the first formal capture of every financial event.</p>
+      </div>
+
+      <div class="collapse-btn" onclick="toggleCollapse(this)">
+        <span>③ Summarizing — Ledger & Trial Balance</span><span class="arrow">▼</span>
+      </div>
+      <div class="collapse-body">
+        <p>Journal entries are transferred (<em>posted</em>) to the <strong>ledger</strong> — a book with one page per account. The ledger classifies all transactions by account type. The <strong>trial balance</strong> then checks that debits = credits before preparing statements.</p>
+      </div>
+
+      <div class="collapse-btn" onclick="toggleCollapse(this)">
+        <span>④ Reporting — Financial Statements</span><span class="arrow">▼</span>
+      </div>
+      <div class="collapse-body">
+        <p>The final output: <strong>general-purpose financial statements</strong> — the language of business communicated to users inside and outside the firm.</p>
+      </div>
+    </div>
+
+    <!-- ── TOPIC 2: REPORTS ── -->
+    <div class="card">
+      <div class="card-title">
+        <div class="icon icon-blue">②</div>
+        Accounting Reports
+      </div>
+
+      <div class="tbl-wrap">
+        <table>
+          <tr><th>Type</th><th>Prepared For</th><th>Examples</th></tr>
+          <tr>
+            <td><strong>Internal Reports</strong></td>
+            <td>Management & internal users only</td>
+            <td>Budgets, Cost Statements, Performance Evaluation Reports, Responsibility Accounting Reports</td>
+          </tr>
+          <tr>
+            <td><strong>External Reports</strong><br/>(General-Purpose Financial Statements)</td>
+            <td>External users primarily, but also internal</td>
+            <td>Statement of Financial Position, Income Statement, Statement of Owners' Equity, Statement of Cash Flows</td>
+          </tr>
+        </table>
+      </div>
+
+      <h3>The Four External Financial Statements</h3>
+
+      <div class="collapse-btn" onclick="toggleCollapse(this)">
+        <span>1️⃣ Statement of Financial Position (Balance Sheet)</span><span class="arrow">▼</span>
+      </div>
+      <div class="collapse-body">
+        <p>Contains <strong>permanent (real) accounts</strong>: Assets, Liabilities, and Owner's Equity. Shows what the company <em>owns</em> and what it <em>owes</em> at a specific date.</p>
+        <ul>
+          <li><strong>Assets</strong> = Expected economic benefits <em>controlled</em> by the entity as a result of past transactions (land, buildings, equipment, cash, inventory, accounts receivable, prepaid expenses, etc.)</li>
+          <li><strong>Liabilities</strong> = Future economic sacrifices — obligations to pay or render service (accounts payable, loans, notes payable, unearned revenue, etc.)</li>
+          <li><strong>Owner's Equity</strong> = Assets − Liabilities. Includes Capital + Net Profit − Drawings.</li>
+        </ul>
+        <div class="formula-box">Assets = Liabilities + Owner's Equity</div>
+      </div>
+
+      <div class="collapse-btn" onclick="toggleCollapse(this)">
+        <span>2️⃣ Income Statement</span><span class="arrow">▼</span>
+      </div>
+      <div class="collapse-body">
+        <p>Prepared at the end of each <em>accounting period</em> (usually 1 year). Contains <strong>temporary (nominal) accounts</strong>: Revenues and Expenses.</p>
+        <ul>
+          <li><strong>Revenue</strong> = Price received for selling goods/services, regardless of whether cash was actually collected.</li>
+          <li><strong>Expense</strong> = Cost of using resources to generate revenue.</li>
+          <li><strong>Profit (Net Income)</strong> = Revenues > Expenses → increases equity.</li>
+          <li><strong>Loss (as a result)</strong> = Revenues < Expenses → decreases equity.</li>
+          <li><strong>Loss (as an item)</strong> = An expense from <em>non-central, unrepeatable</em> activities with no benefit in return.</li>
+          <li><strong>Gain</strong> = Inflow from <em>non-central, non-repeatable</em> activities — increases equity.</li>
+        </ul>
+        <div class="formula-box">Profit / Loss = Total Revenues − Total Expenses</div>
+      </div>
+
+      <div class="collapse-btn" onclick="toggleCollapse(this)">
+        <span>3️⃣ Statement of Owners' Equity</span><span class="arrow">▼</span>
+      </div>
+      <div class="collapse-body">
+        <p>Measures and calculates the <strong>company's obligations toward its owners</strong>. Shows changes in owners' equity over the period: starting capital + net income − drawings = ending equity.</p>
+      </div>
+
+      <div class="collapse-btn" onclick="toggleCollapse(this)">
+        <span>4️⃣ Statement of Cash Flows</span><span class="arrow">▼</span>
+      </div>
+      <div class="collapse-body">
+        <p>Shows all <strong>cash inflows</strong> (cash collected) and <strong>cash outflows</strong> (cash paid) during the period. Divided into operating, investing, and financing activities.</p>
+      </div>
+    </div>
+
+    <!-- ── TOPIC 3: USERS ── -->
+    <div class="card">
+      <div class="card-title">
+        <div class="icon icon-green">③</div>
+        Accounting Users
+      </div>
+
+      <div class="tbl-wrap">
+        <table>
+          <tr><th>Category</th><th>Who?</th><th>What info they need?</th></tr>
+          <tr>
+            <td><strong>Internal Users</strong></td>
+            <td>Management, employees</td>
+            <td>Detailed, financial & non-financial, historical & estimated. Used for Planning, Coordinating, Directing, Controlling, Corrective Action.</td>
+          </tr>
+          <tr>
+            <td><strong>External Users</strong></td>
+            <td>Investors, Creditors, Banks, Others</td>
+            <td>Total, historical, financial information about profitability, resources & uses, financial position, ability to grow and pay debts.</td>
+          </tr>
+        </table>
+      </div>
+
+      <h3>External User Groups (6 Groups)</h3>
+
+      <div class="collapse-btn" onclick="toggleCollapse(this)">
+        <span>👤 1. Investors (Current & Potential)</span><span class="arrow">▼</span>
+      </div>
+      <div class="collapse-body">
+        <ul>
+          <li><strong>Current investors:</strong> Need info on cash flows and risk level to decide whether to <em>continue investing or exit</em>.</li>
+          <li><strong>Potential (future) investors:</strong> Need the same info to <em>compare alternatives</em> and find the best investment opportunity.</li>
+        </ul>
+      </div>
+
+      <div class="collapse-btn" onclick="toggleCollapse(this)">
+        <span>🏦 2. Creditors and Banks</span><span class="arrow">▼</span>
+      </div>
+      <div class="collapse-body">
+        <p>Need financial position information to evaluate the firm's <strong>ability to repay loans and debts</strong>.</p>
+      </div>
+
+      <div class="collapse-btn" onclick="toggleCollapse(this)">
+        <span>🏭 3. Suppliers</span><span class="arrow">▼</span>
+      </div>
+      <div class="collapse-body">
+        <p>Need to ensure the company will <strong>continue operating actively</strong> and has the ability to <em>repay its obligations</em> to them.</p>
+      </div>
+
+      <div class="collapse-btn" onclick="toggleCollapse(this)">
+        <span>🛒 4. Customers</span><span class="arrow">▼</span>
+      </div>
+      <div class="collapse-body">
+        <p>Need to confirm that goods and services will <strong>continue to be available</strong> — including spare parts, maintenance, and replacements.</p>
+      </div>
+
+      <div class="collapse-btn" onclick="toggleCollapse(this)">
+        <span>👷 5. Manpower & Workers' Unions</span><span class="arrow">▼</span>
+      </div>
+      <div class="collapse-body">
+        <p>Need info to know their <strong>share in profits</strong>, to support <em>negotiations on salaries and benefits</em>, and to evaluate the <em>employment position</em>.</p>
+      </div>
+
+      <div class="collapse-btn" onclick="toggleCollapse(this)">
+        <span>⚔️ 6. Competitors</span><span class="arrow">▼</span>
+      </div>
+      <div class="collapse-body">
+        <p>Need info to evaluate their own <strong>competitive position</strong> and the possibility of <em>growth and expansion</em>.</p>
+      </div>
+
+      <div class="collapse-btn" onclick="toggleCollapse(this)">
+        <span>🏛️ Governmental Agencies & Controlling Organizations</span><span class="arrow">▼</span>
+      </div>
+      <div class="collapse-body">
+        <p>Includes: Tax Authority, Ministry of Planning, Ministry of Industry, Stock Exchange Commission. Need info to evaluate entities' <strong>contribution to national income and added value</strong>, and to improve governmental performance.</p>
+      </div>
+
+      <div class="collapse-btn" onclick="toggleCollapse(this)">
+        <span>📊 Financial Analysts & Public</span><span class="arrow">▼</span>
+      </div>
+      <div class="collapse-body">
+        <ul>
+          <li><strong>Financial Analysts:</strong> Evaluate firm performance to provide <em>investment consultation</em> and support academic research.</li>
+          <li><strong>Public:</strong> Know the services and products available in their area.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ── TOPIC 4: OBJECTIVES ── -->
+    <div class="card">
+      <div class="card-title">
+        <div class="icon icon-gold">④</div>
+        Accounting Objectives
+      </div>
+      <p>The four objectives each correspond to a specific financial statement:</p>
+      <div class="tbl-wrap">
+        <table>
+          <tr><th>Objective</th><th>Tool (Statement)</th></tr>
+          <tr><td>Determine <strong>Profit or Loss</strong> (Revenues − Expenses)</td><td>Income Statement</td></tr>
+          <tr><td>Determine <strong>Assets & Liabilities</strong> (financial position)</td><td>Statement of Financial Position</td></tr>
+          <tr><td>Determine <strong>Cash Inflows & Outflows</strong></td><td>Statement of Cash Flows</td></tr>
+          <tr><td>Determine <strong>Owners' Rights</strong> (equity)</td><td>Statement of Owners' Equity</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- ── TOPIC 5: FIELDS ── -->
+    <div class="card">
+      <div class="card-title">
+        <div class="icon icon-blue">⑤</div>
+        Fields of Accounting
+      </div>
+      <div class="tag-row">
+        <span class="ftag ftag-fin">Financial</span>
+        <span class="ftag ftag-mgmt">Managerial</span>
+        <span class="ftag ftag-cost">Cost</span>
+        <span class="ftag ftag-budg">Budgeting</span>
+        <span class="ftag ftag-govt">Governmental</span>
+        <span class="ftag ftag-tax">Tax</span>
+        <span class="ftag ftag-natl">National</span>
+        <span class="ftag ftag-intl">International</span>
+        <span class="ftag ftag-audit">Auditing</span>
+        <span class="ftag ftag-resp">Responsibility</span>
+      </div>
+
+      <div class="tbl-wrap">
+        <table>
+          <tr><th>Field</th><th>Users</th><th>Purpose / Key Features</th></tr>
+          <tr>
+            <td><strong>Financial</strong></td>
+            <td>External</td>
+            <td>Analyzing, recording, classifying, summarizing, reporting financial events for external use.</td>
+          </tr>
+          <tr>
+            <td><strong>Managerial</strong></td>
+            <td>Internal</td>
+            <td>Planning & controlling using budgets, responsibility accounting, and cost accounting.</td>
+          </tr>
+          <tr>
+            <td><strong>Cost</strong></td>
+            <td>Internal</td>
+            <td>Records, measures, reports cost info. Costing products & services, controlling cost. Uses actual vs. predetermined cost systems. Measures variances & takes corrective action.</td>
+          </tr>
+          <tr>
+            <td><strong>Budgeting</strong></td>
+            <td>Internal</td>
+            <td>Planning (translating goals into numbers) + Controlling (comparing actual vs. plan → corrective action).</td>
+          </tr>
+          <tr>
+            <td><strong>Governmental</strong></td>
+            <td>Govt. entities</td>
+            <td>Preparing public budget & final accounts. Financial control before and after spending.</td>
+          </tr>
+          <tr>
+            <td><strong>Tax</strong></td>
+            <td>Tax authority</td>
+            <td>Determining taxable income, taxes payable, and tax planning (minimizing taxes legally).</td>
+          </tr>
+          <tr>
+            <td><strong>National</strong></td>
+            <td>Government/state</td>
+            <td>Measuring national income, preparing national budget, input/output tables for all economy sectors.</td>
+          </tr>
+          <tr>
+            <td><strong>International</strong></td>
+            <td>Multinational firms</td>
+            <td>Foreign currency issues, financial statements for multinationals, translation of foreign branches, harmonizing standards, reducing international differences for comparability.</td>
+          </tr>
+          <tr>
+            <td><strong>Auditing</strong></td>
+            <td>External (auditor)</td>
+            <td>Examine internal control + review documents/records/statements → collect evidence → give professional opinion on fairness of financial statements. Auditor is responsible for negligence.</td>
+          </tr>
+          <tr>
+            <td><strong>Responsibility</strong></td>
+            <td>Internal</td>
+            <td>Divides company into responsibility centers. Each manager is responsible for revenues/expenses under their control only. Performance evaluated by variances from their decisions.</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- ── TOPIC 6: LEGAL FORMS ── -->
+    <div class="card">
+      <div class="card-title">
+        <div class="icon icon-red">⑥</div>
+        Legal Forms of Business Organizations
+      </div>
+      <div class="tbl-wrap">
+        <table>
+          <tr><th>Form</th><th>Owners</th><th>Liability</th><th>Management</th><th>Key Features</th></tr>
+          <tr>
+            <td><strong>Proprietorship</strong></td>
+            <td>1 owner</td>
+            <td>Unlimited (owner personally liable)</td>
+            <td>Owner = Manager</td>
+            <td>Owner gets all profit or bears all loss</td>
+          </tr>
+          <tr>
+            <td><strong>Partnership</strong></td>
+            <td>2–20 partners</td>
+            <td>Unlimited (for unlimited partners)</td>
+            <td>Each unlimited partner is a manager</td>
+            <td>More than one owner; still relatively small</td>
+          </tr>
+          <tr>
+            <td><strong>Corporation</strong></td>
+            <td>Unlimited shareholders</td>
+            <td><em>Limited</em> — based on shares owned</td>
+            <td>Separate management (board)</td>
+            <td>Unlimited capital raising; flexible capital transfer; continuity; <strong>separate legal entity</strong></td>
+          </tr>
+        </table>
+      </div>
+      <h3>The 4 Characteristics of a Corporation</h3>
+      <div class="key-box">
+        <ol>
+          <li><strong>Unlimited ability to raise funds</strong> — Can sell shares to the public to raise capital.</li>
+          <li><strong>Flexibility of capital transfer</strong> — Shareholders can sell their shares freely.</li>
+          <li><strong>Continuity</strong> — The corporation continues even if an owner dies or sells shares.</li>
+          <li><strong>Separate legal entity</strong> — The corporation is a legal "person" distinct from its owners — it can sue and be sued in its own name.</li>
+        </ol>
+      </div>
+    </div>
+
+  </div><!-- /content -->
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     SECTION 2: SUMMARY
+════════════════════════════════════════════════════════════ -->
+<section id="summary" class="section">
+  <div class="hero">
+    <div class="hero-eyebrow">Chapter 1 · Smart Summary</div>
+    <h1 class="hero-title">High-Yield <span>Summary</span></h1>
+    <p class="hero-sub">Hierarchical bullet structure — everything exam-critical, nothing redundant.</p>
+  </div>
+  <div class="content">
+
+    <div class="card">
+      <div class="card-title"><div class="icon icon-gold">📌</div>1. Definition of Accounting</div>
+      <div class="sum-item"><div class="sum-dot dot-gold"></div><div><strong>As a System:</strong> Provides <em>quantitative, financial</em> information about an economic entity → for <em>economic decision making</em>.</div></div>
+      <div class="sum-item"><div class="sum-dot dot-gold"></div><div><strong>As a Process:</strong> <em>Identifying → Recording → Summarizing → Reporting</em></div></div>
+      <div class="sum-item"><div class="sum-dot dot-blue"></div><div>Only <strong>quantitative + financial</strong> info included (non-financial excluded)</div></div>
+      <div class="sum-item"><div class="sum-dot dot-blue"></div><div>Identifying = analyze events; Recording = journalize; Summarizing = ledger + trial balance; Reporting = financial statements</div></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><div class="icon icon-blue">📋</div>2. Accounting Reports</div>
+      <div class="sum-item"><div class="sum-dot dot-blue"></div><div><strong>Internal reports:</strong> Budgets, Cost Statements, Performance Reports, Responsibility Reports</div></div>
+      <div class="sum-item"><div class="sum-dot dot-gold"></div><div><strong>External (General-Purpose) Statements:</strong></div></div>
+      <ul>
+        <li><strong>Statement of Financial Position</strong> → Assets, Liabilities, Owner's Equity (permanent/real accounts)</li>
+        <li><strong>Income Statement</strong> → Revenues − Expenses = Profit/Loss (temporary/nominal accounts)</li>
+        <li><strong>Statement of Owners' Equity</strong> → Rights of owners</li>
+        <li><strong>Statement of Cash Flows</strong> → Cash in & cash out</li>
+      </ul>
+      <div class="sep"></div>
+      <div class="key-box"><strong>Key formulas:</strong><br/>
+        Assets = Liabilities + Owner's Equity<br/>
+        Profit/Loss = Total Revenues − Total Expenses<br/>
+        OE = Capital + Net Profit − Drawings
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><div class="icon icon-green">👥</div>3. Accounting Users</div>
+      <div class="sum-item"><div class="sum-dot dot-green"></div><div><strong>Internal:</strong> Management, Workers → Detailed, financial + non-financial, historical + estimated → Plan, Coordinate, Direct, Control</div></div>
+      <div class="sum-item"><div class="sum-dot dot-gold"></div><div><strong>External:</strong> Investors (current + potential), Creditors/Banks, Suppliers, Customers, Manpower/Unions, Competitors, Government Agencies, Financial Analysts, Public</div></div>
+      <div class="sum-item"><div class="sum-dot dot-blue"></div><div>External users need: <strong>total, historical, financial</strong> data → profitability, resources, financial position, growth ability, debt-paying ability</div></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><div class="icon icon-gold">🎯</div>4. Accounting Objectives</div>
+      <div class="tbl-wrap"><table>
+        <tr><th>Objective</th><th>Statement</th></tr>
+        <tr><td>Profit / Loss</td><td>Income Statement</td></tr>
+        <tr><td>Assets & Liabilities</td><td>Financial Position Statement</td></tr>
+        <tr><td>Cash In & Out</td><td>Cash Flows Statement</td></tr>
+        <tr><td>Owners' Rights</td><td>Owners' Equity Statement</td></tr>
+      </table></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><div class="icon icon-blue">🔬</div>5. Fields of Accounting (10 Fields)</div>
+      <div class="tbl-wrap"><table>
+        <tr><th>Field</th><th>Users</th><th>Key Point</th></tr>
+        <tr><td><strong>Financial</strong></td><td>External</td><td>General-purpose statements</td></tr>
+        <tr><td><strong>Managerial</strong></td><td>Internal</td><td>Planning & control</td></tr>
+        <tr><td><strong>Cost</strong></td><td>Internal</td><td>Costing + variance analysis</td></tr>
+        <tr><td><strong>Budgeting</strong></td><td>Internal</td><td>Plan vs. actual → corrective action</td></tr>
+        <tr><td><strong>Governmental</strong></td><td>Govt. units</td><td>Public budget + financial control</td></tr>
+        <tr><td><strong>Tax</strong></td><td>Tax authority</td><td>Taxable income + tax planning</td></tr>
+        <tr><td><strong>National</strong></td><td>State</td><td>National income measurement</td></tr>
+        <tr><td><strong>International</strong></td><td>Multinationals</td><td>FX, translation, harmonization</td></tr>
+        <tr><td><strong>Auditing</strong></td><td>External auditor</td><td>Opinion on fairness of statements</td></tr>
+        <tr><td><strong>Responsibility</strong></td><td>Internal</td><td>Responsibility centers + manager accountability</td></tr>
+      </table></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><div class="icon icon-red">🏢</div>6. Legal Forms (3 Types)</div>
+      <div class="tbl-wrap"><table>
+        <tr><th>Type</th><th>Owners</th><th>Liability</th><th>Key Feature</th></tr>
+        <tr><td><strong>Proprietorship</strong></td><td>1</td><td>Unlimited</td><td>Owner = manager</td></tr>
+        <tr><td><strong>Partnership</strong></td><td>2–20</td><td>Unlimited</td><td>Each unlimited partner is a manager</td></tr>
+        <tr><td><strong>Corporation</strong></td><td>Unlimited</td><td>Limited (per shares)</td><td>Separate legal entity; 4 characteristics</td></tr>
+      </table></div>
+      <div class="key-box green"><strong>4 Corporation Characteristics:</strong> (1) Unlimited fund-raising ability, (2) Flexible capital transfer, (3) Continuity, (4) Separate legal entity</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     SECTION 3: MEMORY
+════════════════════════════════════════════════════════════ -->
+<section id="memory" class="section">
+  <div class="hero">
+    <div class="hero-eyebrow">Chapter 1 · Memory Optimization</div>
+    <h1 class="hero-title">Remember <span>Everything</span></h1>
+    <p class="hero-sub">Mnemonics, comparisons, common mistakes, chunking — engineered for retention.</p>
+  </div>
+  <div class="content">
+
+    <div class="card">
+      <div class="card-title"><div class="icon icon-gold">🔤</div>Mnemonics</div>
+
+      <h3>The Accounting Process — "I R S R"</h3>
+      <div class="mnemonic">
+        <strong>I</strong>dentifying → <strong>R</strong>ecording → <strong>S</strong>ummarizing → <strong>R</strong>eporting<br/>
+        <em>Memory trigger: "IRS Reports" (like tax — you can't escape it!)</em>
+      </div>
+
+      <h3>The 4 Financial Statements — "FICC"</h3>
+      <div class="mnemonic">
+        <strong>F</strong>inancial Position · <strong>I</strong>ncome Statement · <strong>C</strong>ash Flows · <strong>C</strong>hanges in Equity<br/>
+        <em>Memory trigger: "Financial FICC" — Fix your finances!</em>
+      </div>
+
+      <h3>Corporation's 4 Characteristics — "UFCS"</h3>
+      <div class="mnemonic">
+        <strong>U</strong>nlimited fundraising · <strong>F</strong>lexible capital transfer · <strong>C</strong>ontinuity · <strong>S</strong>eparate legal entity<br/>
+        <em>Memory trigger: "UFCS = Ultra Flexible Corporate System"</em>
+      </div>
+
+      <h3>External Users — "IC SCM GFA P"</h3>
+      <div class="mnemonic">
+        <strong>I</strong>nvestors · <strong>C</strong>reditors/Banks · <strong>S</strong>uppliers · <strong>C</strong>ustomers · <strong>M</strong>anpower/Unions · <strong>G</strong>overnment · <strong>F</strong>inancial Analysts · <strong>P</strong>ublic<br/>
+        <em>Shorter: "I Can See Customers Making Great Financial Progress"</em>
+      </div>
+
+      <h3>Accounting Fields — "FMC B GTNIAR"</h3>
+      <div class="mnemonic">
+        <strong>F</strong>inancial · <strong>M</strong>anagerial · <strong>C</strong>ost · <strong>B</strong>udgeting · <strong>G</strong>overnmental · <strong>T</strong>ax · <strong>N</strong>ational · <strong>I</strong>nternational · <strong>A</strong>uditing · <strong>R</strong>esponsibility<br/>
+        <em>"Fine Managers Can Budget Government Taxes Nationally, Internationally — Auditors Respond"</em>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><div class="icon icon-blue">⚖️</div>Compare: Easily Confused Concepts</div>
+
+      <h3>Revenue vs. Gain</h3>
+      <div class="tbl-wrap"><table>
+        <tr><th></th><th>Revenue</th><th>Gain</th></tr>
+        <tr><td><strong>Source</strong></td><td>Central (main) activities</td><td>Non-central, non-repeatable activities</td></tr>
+        <tr><td><strong>Example</strong></td><td>Sales revenue, service revenue</td><td>Profit from selling old equipment</td></tr>
+        <tr><td><strong>Effect on equity</strong></td><td>Increases equity</td><td>Increases equity</td></tr>
+      </table></div>
+
+      <h3>Loss (as a Result) vs. Loss (as an Item)</h3>
+      <div class="tbl-wrap"><table>
+        <tr><th></th><th>Loss as a Result</th><th>Loss as an Item</th></tr>
+        <tr><td><strong>What it is</strong></td><td>Overall result when Expenses > Revenues</td><td>A specific type of expense (non-central activity, no benefit)</td></tr>
+        <tr><td><strong>Where shown</strong></td><td>Bottom of income statement</td><td>Within expenses on income statement</td></tr>
+        <tr><td><strong>Example</strong></td><td>Company made EGP 1,000 revenue but EGP 1,500 expenses</td><td>Loss from a theft or natural disaster</td></tr>
+      </table></div>
+
+      <h3>Internal vs. External Reports</h3>
+      <div class="tbl-wrap"><table>
+        <tr><th></th><th>Internal Reports</th><th>External Reports</th></tr>
+        <tr><td><strong>Users</strong></td><td>Management, employees</td><td>Investors, creditors, government…</td></tr>
+        <tr><td><strong>Detail level</strong></td><td>Detailed + non-financial info</td><td>Total, aggregated, financial only</td></tr>
+        <tr><td><strong>Time horizon</strong></td><td>Historical + estimated (future)</td><td>Historical primarily</td></tr>
+        <tr><td><strong>Standardized?</strong></td><td>No standard format</td><td>Yes — follows accounting standards</td></tr>
+      </table></div>
+
+      <h3>Proprietorship vs. Partnership vs. Corporation</h3>
+      <div class="tbl-wrap"><table>
+        <tr><th>Feature</th><th>Proprietorship</th><th>Partnership</th><th>Corporation</th></tr>
+        <tr><td>Number of owners</td><td>1</td><td>2–20</td><td>Unlimited</td></tr>
+        <tr><td>Owner liability</td><td>Unlimited</td><td>Unlimited (for unlimited partners)</td><td>Limited (per shares)</td></tr>
+        <tr><td>Separate legal entity</td><td>No</td><td>No</td><td><strong>Yes</strong></td></tr>
+        <tr><td>Continuity</td><td>Ends with owner</td><td>Can end with a partner</td><td><strong>Continues regardless</strong></td></tr>
+        <tr><td>Capital raising</td><td>Limited</td><td>Limited (max 20)</td><td><strong>Unlimited</strong></td></tr>
+      </table></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><div class="icon icon-red">⚠️</div>Common Exam Traps & Mistakes</div>
+
+      <div class="key-box red">
+        <strong>Trap 1:</strong> "Accounting records all information about a company." ❌<br/>
+        ✅ Accounting records ONLY quantitative, financial information expressed in monetary units.
+      </div>
+      <div class="key-box red">
+        <strong>Trap 2:</strong> "Revenue is only recognized when cash is collected." ❌<br/>
+        ✅ Revenue is recognized when goods/services are provided, regardless of cash collection.
+      </div>
+      <div class="key-box red">
+        <strong>Trap 3:</strong> "A loss on the income statement means expenses exceed revenues." ⚠️<br/>
+        ✅ "Loss as a result" = expenses > revenues. But "loss as an item" = a specific expense from non-central activities. These are DIFFERENT things.
+      </div>
+      <div class="key-box red">
+        <strong>Trap 4:</strong> "Financial accounting is for internal users." ❌<br/>
+        ✅ Financial accounting is primarily for EXTERNAL users. Managerial accounting is for internal.
+      </div>
+      <div class="key-box red">
+        <strong>Trap 5:</strong> "In a partnership, the limit is 20 total owners." ✅ Correct — maximum 20 partners.
+      </div>
+      <div class="key-box red">
+        <strong>Trap 6:</strong> "Auditing is an internal accounting field." ❌<br/>
+        ✅ External auditors are independent. They examine from outside and give an opinion on statement fairness.
+      </div>
+      <div class="key-box red">
+        <strong>Trap 7:</strong> "The auditor is not responsible if they miss something." ❌<br/>
+        ✅ The auditor IS responsible for any negligence in their audit.
+      </div>
+      <div class="key-box red">
+        <strong>Trap 8:</strong> Confusing "permanent accounts" and "temporary accounts."<br/>
+        ✅ Permanent (real) = Assets, Liabilities, OE (stay on balance sheet year after year).<br/>
+        ✅ Temporary (nominal) = Revenues, Expenses (reset to zero each period).
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><div class="icon icon-green">📦</div>Information Chunking</div>
+      <h3>Chunk 1: The Big 3 Definitions</h3>
+      <p><strong>Asset</strong> = Expected economic <em>benefit</em>, <em>controlled</em> by entity, from <em>past transactions</em>.<br/>
+      <strong>Liability</strong> = Future economic <em>sacrifice</em>, from <em>current obligations</em>, from <em>past transactions</em>.<br/>
+      <strong>Owner's Equity</strong> = Assets <em>minus</em> Liabilities (residual interest of owners).</p>
+
+      <h3>Chunk 2: Temporary vs. Permanent Accounts</h3>
+      <p><em>Permanent</em> = Balance Sheet items (Assets, Liabilities, OE) — carry forward.<br/>
+      <em>Temporary</em> = Income Statement items (Revenues, Expenses) — reset each period.</p>
+
+      <h3>Chunk 3: The Accounting Equation</h3>
+      <div class="formula-box">Assets = Liabilities + Owner's Equity<br/>OE = Capital + Net Profit − Drawings</div>
+
+      <h3>Chunk 4: Two Main Types of Cost Systems</h3>
+      <p><strong>Actual Cost System</strong> — records costs as they actually occur.<br/>
+      <strong>Predetermined Cost System</strong> — sets expected costs in advance → then compares actual vs. predetermined → calculates <em>variances</em> → takes corrective action.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     SECTION 4: MCQs
+════════════════════════════════════════════════════════════ -->
+<section id="mcq" class="section">
+  <div class="hero">
+    <div class="hero-eyebrow">Chapter 1 · Exam Training</div>
+    <h1 class="hero-title">MCQ <span>Practice</span></h1>
+    <p class="hero-sub">30 carefully crafted questions — easy to hard, including traps. Click an option to see the answer.</p>
+  </div>
+  <div class="content">
+    <div class="score-bar">
+      <div>
+        <div class="score-num" id="scoreDisplay">0 / 30</div>
+        <div class="score-label">Questions answered correctly</div>
+      </div>
+      <button class="reset-btn" onclick="resetMCQ()">↺ Reset All</button>
+    </div>
+    <div class="progress-wrap"><div class="progress-bar" id="progressBar" style="width:0%"></div></div>
+    <div id="mcqContainer"></div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     SECTION 5: WRITTEN QUESTIONS
+════════════════════════════════════════════════════════════ -->
+<section id="written" class="section">
+  <div class="hero">
+    <div class="hero-eyebrow">Chapter 1 · Exam Training</div>
+    <h1 class="hero-title">Written <span>Questions</span></h1>
+    <p class="hero-sub">Short & long form questions with model answers — exactly what professors expect.</p>
+  </div>
+  <div class="content" id="writtenContainer"></div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     SECTION 6: REVISION
+════════════════════════════════════════════════════════════ -->
+<section id="revision" class="section">
+  <div class="hero">
+    <div class="hero-eyebrow">Chapter 1 · Rapid Revision</div>
+    <h1 class="hero-title">Revision <span>Sheet</span></h1>
+    <p class="hero-sub">Everything you need the night before the exam — ultra-compact, ultra-effective.</p>
+  </div>
+  <div class="content">
+
+    <div class="rev-grid">
+      <div class="rev-card">
+        <h3>📌 Accounting Definitions</h3>
+        <ul>
+          <li><strong>System:</strong> Quantitative + financial info → decision making</li>
+          <li><strong>Process:</strong> Identify → Record → Summarize → Report</li>
+          <li><strong>Asset:</strong> Expected economic benefit, controlled, past transaction</li>
+          <li><strong>Liability:</strong> Future economic sacrifice, current obligation, past transaction</li>
+          <li><strong>OE:</strong> Assets − Liabilities</li>
+          <li><strong>Revenue:</strong> Price of goods/services (regardless of cash collection)</li>
+          <li><strong>Expense:</strong> Cost of resources used to generate revenue</li>
+        </ul>
+      </div>
+
+      <div class="rev-card">
+        <h3>🔢 Key Formulas</h3>
+        <div class="formula-box">Assets = Liabilities + Owner's Equity</div>
+        <div class="formula-box">Profit / Loss = Revenues − Expenses</div>
+        <div class="formula-box">OE = Capital + Net Profit − Drawings</div>
+        <div class="formula-box">Gain: non-central inflow → ↑ equity</div>
+        <div class="formula-box">Loss (item): non-central expense, no benefit</div>
+      </div>
+
+      <div class="rev-card">
+        <h3>📋 4 Financial Statements</h3>
+        <ul>
+          <li><strong>Financial Position</strong> → Assets, Liabilities, OE (permanent)</li>
+          <li><strong>Income Statement</strong> → Revenue, Expenses (temporary)</li>
+          <li><strong>Owners' Equity</strong> → Changes in equity</li>
+          <li><strong>Cash Flows</strong> → Cash in & out</li>
+        </ul>
+      </div>
+
+      <div class="rev-card">
+        <h3>👥 Users Summary</h3>
+        <ul>
+          <li><strong>Internal:</strong> Management, Workers → detailed, financial+non-financial, historical+future</li>
+          <li><strong>External (6 groups):</strong> Investors (current+potential), Creditors/Banks, Suppliers, Customers, Manpower/Unions, Competitors + Govt, Analysts, Public</li>
+        </ul>
+      </div>
+
+      <div class="rev-card">
+        <h3>🔬 10 Fields of Accounting</h3>
+        <ul>
+          <li>Financial (external)</li>
+          <li>Managerial (internal)</li>
+          <li>Cost (internal)</li>
+          <li>Budgeting (internal)</li>
+          <li>Governmental</li>
+          <li>Tax</li>
+          <li>National</li>
+          <li>International</li>
+          <li>Auditing (external opinion)</li>
+          <li>Responsibility (centers)</li>
+        </ul>
+      </div>
+
+      <div class="rev-card">
+        <h3>🏢 Legal Forms</h3>
+        <ul>
+          <li><strong>Proprietorship:</strong> 1 owner, unlimited liability</li>
+          <li><strong>Partnership:</strong> 2–20, unlimited liability</li>
+          <li><strong>Corporation:</strong> unlimited owners, limited liability, separate entity</li>
+        </ul>
+        <p style="font-size:.82rem; margin-top:8px;"><strong>Corp. 4 chars:</strong> UFCS → Unlimited fundraising, Flexible transfer, Continuity, Separate entity</p>
+      </div>
+    </div>
+
+    <!-- NIGHT BEFORE EXAM SHEET -->
+    <div class="night-sheet">
+      <h2>🌙 Night Before Exam — Ultimate Cheat Sheet</h2>
+      <div class="ns-grid">
+        <div class="ns-box">
+          <h4>The Process (IRSR)</h4>
+          <ul>
+            <li>Identify (financial events only)</li>
+            <li>Record (journal)</li>
+            <li>Summarize (ledger + trial balance)</li>
+            <li>Report (financial statements)</li>
+          </ul>
+        </div>
+        <div class="ns-box">
+          <h4>Accounting Requirements</h4>
+          <ul>
+            <li>Must be QUANTITATIVE</li>
+            <li>Must be FINANCIAL (in money)</li>
+            <li>Must support DECISIONS</li>
+          </ul>
+        </div>
+        <div class="ns-box">
+          <h4>Internal vs External Info</h4>
+          <ul>
+            <li>Internal: detailed, financial+non-financial, historical+estimated</li>
+            <li>External: total, historical, financial only</li>
+          </ul>
+        </div>
+        <div class="ns-box">
+          <h4>Profit Formula</h4>
+          <ul>
+            <li>Profit = Rev > Exp → ↑ equity</li>
+            <li>Loss (result) = Exp > Rev → ↓ equity</li>
+            <li>Gain = non-central → ↑ equity</li>
+            <li>Loss (item) = non-central expense, no benefit</li>
+          </ul>
+        </div>
+        <div class="ns-box">
+          <h4>Cost Accounting</h4>
+          <ul>
+            <li>2 systems: Actual & Predetermined</li>
+            <li>Predetermined: compare actual vs. preset → find variance → correct</li>
+          </ul>
+        </div>
+        <div class="ns-box">
+          <h4>Auditing Key Points</h4>
+          <ul>
+            <li>External auditor — independent</li>
+            <li>Examines internal controls</li>
+            <li>Gives professional opinion on FAIRNESS</li>
+            <li>Responsible for negligence</li>
+          </ul>
+        </div>
+        <div class="ns-box">
+          <h4>Corporation Only</h4>
+          <ul>
+            <li>Separate legal entity ✓</li>
+            <li>Unlimited owners ✓</li>
+            <li>Limited liability ✓</li>
+            <li>Continuity ✓</li>
+          </ul>
+        </div>
+        <div class="ns-box">
+          <h4>Mnemonics</h4>
+          <ul>
+            <li>Process: <strong>IRSR</strong></li>
+            <li>Statements: <strong>FICC</strong></li>
+            <li>Corp chars: <strong>UFCS</strong></li>
+            <li>Users: <strong>IC SCM GFA P</strong></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FAB -->
+<button class="fab" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+/* ──────────────────────────────
+   DATA
+──────────────────────────────── */
+const mcqData = [
+  {
+    q:"Accounting is defined as a system that provides ___ information of ___ nature.",
+    opts:["qualitative / quantitative","quantitative / financial","financial / qualitative","numerical / managerial"],
+    ans:1, diff:"easy",
+    exp:"Accounting provides QUANTITATIVE information of FINANCIAL nature — the two essential restrictions on what accounting records."
+  },
+  {
+    q:"Which of the following is the FINAL objective of accounting?",
+    opts:["Recording transactions","Preparing financial statements","Economic decision making","Classifying journal entries"],
+    ans:2, diff:"easy",
+    exp:"Decision making is stated as 'the main and final objective of accounting.' Recording and reporting are steps in the process, not the final objective."
+  },
+  {
+    q:"The accounting process in the correct order is:",
+    opts:["Recording → Identifying → Summarizing → Reporting","Identifying → Recording → Summarizing → Reporting","Summarizing → Identifying → Recording → Reporting","Identifying → Summarizing → Recording → Reporting"],
+    ans:1, diff:"easy",
+    exp:"IRSR: Identify first, then Record (journal), then Summarize (ledger + trial balance), then Report (financial statements)."
+  },
+  {
+    q:"Which step of the accounting process involves the ledger and trial balance?",
+    opts:["Identifying","Recording","Summarizing","Reporting"],
+    ans:2, diff:"medium",
+    exp:"Summarizing involves transferring journal entries to the ledger (classifying) and then preparing the trial balance."
+  },
+  {
+    q:"The Statement of Financial Position contains which type of accounts?",
+    opts:["Temporary accounts","Nominal accounts","Permanent (real) accounts","Revenue and expense accounts"],
+    ans:2, diff:"medium",
+    exp:"Permanent (real) accounts — Assets, Liabilities, Owner's Equity — appear on the Statement of Financial Position. They carry their balances forward each period."
+  },
+  {
+    q:"A company earns EGP 50,000 in revenues and incurs EGP 65,000 in expenses. The result is:",
+    opts:["A gain of EGP 15,000","A profit of EGP 15,000","A loss of EGP 15,000","Revenue of EGP 15,000"],
+    ans:2, diff:"easy",
+    exp:"Profit/Loss = Revenues − Expenses = 50,000 − 65,000 = −15,000 → Loss. When expenses exceed revenues, the result is a LOSS."
+  },
+  {
+    q:"Revenue is recognized:",
+    opts:["Only when cash is collected","Only when goods are delivered and cash received","When goods/services are provided, regardless of cash collection","Only at the end of the accounting period"],
+    ans:2, diff:"medium",
+    exp:"Revenue = the price for selling goods or rendering services REGARDLESS of whether cash is collected during the period. This is the accrual concept."
+  },
+  {
+    q:"Which users need information to 'compare investment alternatives'?",
+    opts:["Current investors","Potential (future) investors","Creditors and banks","Competitors"],
+    ans:1, diff:"medium",
+    exp:"Potential investors have money to invest and need to compare alternatives. Current investors already invested and need to decide whether to continue or exit."
+  },
+  {
+    q:"What type of information do INTERNAL users need that external users do NOT?",
+    opts:["Historical financial information","Non-financial and estimated (future) information","Total aggregated data","Information about profitability"],
+    ans:1, diff:"medium",
+    exp:"Internal users need DETAILED, financial AND non-financial, historical AND estimated information. External users receive only total, historical, financial data."
+  },
+  {
+    q:"Which of the following is an INTERNAL accounting report?",
+    opts:["Income statement","Statement of cash flows","Budget","Statement of financial position"],
+    ans:2, diff:"easy",
+    exp:"Budgets are internal reports used by management. The other three are external general-purpose financial statements."
+  },
+  {
+    q:"A gain is defined as an inflow from:",
+    opts:["Central, repeatable activities","Non-central, non-repeatable activities","Revenue-generating operations only","Financing from banks"],
+    ans:1, diff:"hard",
+    exp:"A gain = inflow from NON-central, NON-repeatable activities. For example, selling old equipment (not a company's core business). Contrast with revenue which is from CENTRAL activities."
+  },
+  {
+    q:"Which field of accounting is primarily concerned with providing professional opinion on the fairness of financial statements?",
+    opts:["Financial accounting","Managerial accounting","Responsibility accounting","Auditing"],
+    ans:3, diff:"easy",
+    exp:"Auditing involves examining the company (internal controls, documents, records, statements) and giving a professional opinion on the FAIRNESS of the financial statements."
+  },
+  {
+    q:"Which field of accounting deals with harmonizing local and international accounting standards?",
+    opts:["National accounting","Governmental accounting","International accounting","Financial accounting"],
+    ans:2, diff:"medium",
+    exp:"International accounting deals with: FX issues, multinational financial statements, translation of foreign branches, and HARMONIZING local & international standards to reduce differences."
+  },
+  {
+    q:"In Responsibility Accounting, a manager is evaluated based on:",
+    opts:["All revenues and expenses of the entire company","Only revenues and expenses under their control and authority","The profit of the whole responsibility center including uncontrollable items","The national income contribution"],
+    ans:1, diff:"medium",
+    exp:"Responsibility accounting evaluates each manager ONLY on revenues and expenses that fall under their control and authority — not uncontrollable items."
+  },
+  {
+    q:"A corporation is DIFFERENT from a proprietorship mainly because:",
+    opts:["It has more capital","It has a separate legal entity from its owners","It can make more profit","It has fewer owners"],
+    ans:1, diff:"easy",
+    exp:"The KEY difference is that a corporation is legally a SEPARATE ENTITY from its owners. Owners have limited liability only up to their shares. A proprietorship has no such separation."
+  },
+  {
+    q:"The maximum number of partners in a partnership is:",
+    opts:["5","10","20","Unlimited"],
+    ans:2, diff:"easy",
+    exp:"A partnership has MORE THAN ONE owner up to a MAXIMUM of 20 partners."
+  },
+  {
+    q:"Which statement is TRUE about a corporation?",
+    opts:["Each owner has unlimited personal liability","There can be a maximum of 20 shareholders","The corporation legally is a separate entity from its owners","The corporation ends when the largest shareholder dies"],
+    ans:2, diff:"medium",
+    exp:"Corporations are SEPARATE LEGAL ENTITIES from their owners. They have unlimited owners, limited liability (per shares), and they CONTINUE regardless of ownership changes."
+  },
+  {
+    q:"Tax accounting primarily helps with:",
+    opts:["Preparing national income accounts","Determining taxable income and tax planning","Auditing the firm's financial statements","Translating foreign currency statements"],
+    ans:1, diff:"easy",
+    exp:"Tax accounting determines taxable income, taxes to be paid, and supports TAX PLANNING — trying to minimize taxes legally through exemptions and tax credits."
+  },
+  {
+    q:"The 'recording' step in the accounting process refers to:",
+    opts:["Preparing the trial balance","Journalizing financial transactions","Posting to the ledger","Preparing financial statements"],
+    ans:1, diff:"medium",
+    exp:"Recording = JOURNALIZING — entering identified transactions into the journal (the book of original entry) chronologically."
+  },
+  {
+    q:"Which type of accounting is described as: 'dividing the company into units, each with a responsible manager'?",
+    opts:["Cost accounting","Budgeting","Responsibility accounting","Managerial accounting"],
+    ans:2, diff:"medium",
+    exp:"Responsibility accounting divides the company into RESPONSIBILITY CENTERS, each with a manager responsible ONLY for items under their control."
+  },
+  {
+    q:"Governmental accounting differs from financial accounting mainly because it:",
+    opts:["Prepares income statements","Deals with governmental activities and public budgets, with financial control","Only records tax transactions","Is used for multinational companies"],
+    ans:1, diff:"medium",
+    exp:"Governmental accounting deals with GOVERNMENTAL ACTIVITIES at all levels, prepares public budgets and final accounts, and performs financial control BEFORE AND AFTER spending."
+  },
+  {
+    q:"Which of the following is NOT a characteristic of a corporation?",
+    opts:["Unlimited ability to raise funds","Continuity","Each owner personally liable for all debts","Separate legal entity"],
+    ans:2, diff:"hard",
+    exp:"In a corporation, owners have LIMITED liability (only to the extent of their shares). Unlimited personal liability applies to proprietorships and partnerships — NOT corporations."
+  },
+  {
+    q:"Which of the following BEST describes 'Owner's Equity'?",
+    opts:["Total assets of the company","Total liabilities of the company","Residual of assets after deducting all liabilities","The capital invested only, excluding profits"],
+    ans:2, diff:"medium",
+    exp:"Owner's Equity = Assets − Liabilities. It is the RESIDUAL INTEREST of owners after all liabilities are deducted. It includes capital + net profit − drawings."
+  },
+  {
+    q:"Customers seek accounting information primarily to:",
+    opts:["Evaluate the company's tax obligations","Ensure goods and services will continue to be available (including spare parts)","Check competitors' performance","Evaluate profit-sharing opportunities"],
+    ans:1, diff:"medium",
+    exp:"Customers need to confirm that goods/services they rely on will CONTINUE to be provided — including spare parts, maintenance, and replacements."
+  },
+  {
+    q:"In the predetermined cost system, after finding variances, the company should:",
+    opts:["Ignore the variances","Adjust the predetermined cost","Take corrective action based on variances","Report variances to the tax authority"],
+    ans:2, diff:"hard",
+    exp:"In the predetermined cost system: set costs → record actual → COMPARE → find variances → determine reasons → take CORRECTIVE ACTION. This is the control loop."
+  },
+  {
+    q:"National accounting provides information about:",
+    opts:["A single company's performance","All sectors of the national economy, including national income","Governmental spending only","Foreign currency translation"],
+    ans:1, diff:"medium",
+    exp:"National accounting accounts for ALL SECTORS of the national economy — measuring national income, preparing national budgets, and input/output tables."
+  },
+  {
+    q:"Which of the following users needs information to 'evaluate competitive position and growth possibilities'?",
+    opts:["Investors","Creditors","Competitors","Financial analysts"],
+    ans:2, diff:"medium",
+    exp:"COMPETITORS use accounting information to evaluate their own competitive position relative to the firm and to assess possibilities for growth and expansion."
+  },
+  {
+    q:"A 'loss as an item' on the income statement means:",
+    opts:["Total expenses exceeded total revenues","An expense from non-central activities with no benefit in return","A reduction in the company's assets","A payment to shareholders"],
+    ans:1, diff:"hard",
+    exp:"'Loss as an item' = a specific EXPENSE TYPE from non-central, non-repeatable activities WITH NO BENEFIT in return. It differs from 'loss as a result' (where total expenses > total revenues)."
+  },
+  {
+    q:"Which accounting field performs financial control BEFORE spending occurs?",
+    opts:["Financial accounting","Budgeting","Governmental accounting","Tax accounting"],
+    ans:2, diff:"hard",
+    exp:"Governmental accounting does financial control BEFORE AND AFTER spending — a pre-audit (before) ensures approval before money is spent; post-audit happens after."
+  },
+  {
+    q:"'Flexibility of capital transfer' is a characteristic of which business form?",
+    opts:["Proprietorship only","Partnership only","Corporation only","All three forms"],
+    ans:2, diff:"medium",
+    exp:"'Flexibility of capital transfer' means shareholders can freely BUY AND SELL SHARES. This is one of the 4 exclusive characteristics of CORPORATIONS (UFCS)."
+  }
+];
+
+const writtenData = [
+  {
+    type:"Short",
+    q:"Define accounting from two perspectives: as a system and as a process. List the four steps of the process.",
+    ans:`<strong>As a System:</strong> Accounting is a system to provide quantitative information of financial nature about an economic entity to help in making economic decisions.<br/><br/>
+<strong>As a Process:</strong> Accounting is a process of identifying, recording, summarizing, and reporting economic information about an economic entity to decision makers.<br/><br/>
+<strong>The Four Steps:</strong><br/>
+1. <strong>Identifying</strong> — Analyzing events to determine which are financial and which are not.<br/>
+2. <strong>Recording (Journalizing)</strong> — Entering identified financial events into the journal.<br/>
+3. <strong>Summarizing</strong> — Transferring entries to the ledger, classifying, and preparing the trial balance.<br/>
+4. <strong>Reporting</strong> — Preparing the general-purpose financial statements.`
+  },
+  {
+    type:"Short",
+    q:"What are the three essential requirements for information to be recorded in accounting?",
+    ans:`For information to be recorded in accounting, it must be:<br/>
+1. <strong>Quantitative</strong> — Expressed in numbers (non-numerical information such as employee morale or company location is excluded).<br/>
+2. <strong>Financial in nature</strong> — Must be expressible in monetary units. Only financial events that can be measured in money are recorded.<br/>
+3. <strong>Useful for decision making</strong> — The final purpose of accounting is to help users make sound economic decisions.`
+  },
+  {
+    type:"Short",
+    q:"Distinguish between permanent accounts and temporary accounts. Give two examples of each.",
+    ans:`<strong>Permanent (Real) Accounts:</strong> Accounts whose balances carry forward from one accounting period to the next. They appear on the Statement of Financial Position.<br/>
+Examples: Assets (e.g., Cash, Land), Liabilities (e.g., Accounts Payable, Loans), Owner's Equity (e.g., Capital).<br/><br/>
+<strong>Temporary (Nominal) Accounts:</strong> Accounts that are closed (reset to zero) at the end of each accounting period. They appear on the Income Statement.<br/>
+Examples: Revenue accounts (e.g., Sales Revenue, Service Revenue), Expense accounts (e.g., Salaries Expense, Rent Expense).`
+  },
+  {
+    type:"Short",
+    q:"Explain the difference between a 'loss as a result' and a 'loss as an item' on the income statement.",
+    ans:`<strong>Loss as a Result:</strong> This is the overall outcome of the income statement when total expenses exceed total revenues (Revenues − Expenses = negative figure). It represents the net performance of the company for the entire period.<br/><br/>
+<strong>Loss as an Item:</strong> This is a specific type of expense within the income statement — it represents a cost incurred from non-central, non-repeatable activities of the firm with NO benefit in return (e.g., loss from theft or a natural disaster). It decreases owner's equity and is classified as an expense.<br/><br/>
+<strong>Key difference:</strong> 'Loss as a result' is the bottom line of the income statement; 'loss as an item' is an individual line item WITHIN expenses.`
+  },
+  {
+    type:"Long",
+    q:"Compare and contrast the three legal forms of business organizations. In your answer, discuss: number of owners, liability, management, and any special characteristics.",
+    ans:`<strong>1. Proprietorship:</strong><br/>
+• <strong>Owners:</strong> Exactly one owner.<br/>
+• <strong>Liability:</strong> Unlimited — the owner is personally liable for all business debts.<br/>
+• <strong>Management:</strong> The owner is the manager of the firm.<br/>
+• <strong>Profit/Loss:</strong> The owner receives all profits and bears all losses.<br/><br/>
+<strong>2. Partnership:</strong><br/>
+• <strong>Owners:</strong> More than one, up to a maximum of 20 partners.<br/>
+• <strong>Liability:</strong> Each unlimited partner has unlimited personal liability.<br/>
+• <strong>Management:</strong> Each unlimited partner is considered a manager.<br/><br/>
+<strong>3. Corporation:</strong><br/>
+• <strong>Owners:</strong> Unlimited number of shareholders (stockholders) with potentially huge capital.<br/>
+• <strong>Liability:</strong> Limited — each shareholder's liability is limited to the number of shares they own.<br/>
+• <strong>Management:</strong> Managed separately (board of directors), legally distinct from owners.<br/>
+• <strong>Special characteristics (4):</strong><br/>
+&nbsp;&nbsp;(a) Unlimited ability to raise funds<br/>
+&nbsp;&nbsp;(b) Flexibility of capital transfer (shares bought and sold freely)<br/>
+&nbsp;&nbsp;(c) Continuity (the corporation continues regardless of ownership changes)<br/>
+&nbsp;&nbsp;(d) Separate legal entity (the corporation is a legal "person" independent of its owners)<br/><br/>
+<strong>Key Conclusion:</strong> The corporation is the most advanced form, allowing for the largest scale of business due to its unlimited ownership, limited liability protection, and legal independence.`
+  },
+  {
+    type:"Long",
+    q:"List and explain the ten fields of accounting, indicating for each whether it serves internal or external users and its main purpose.",
+    ans:`<strong>1. Financial Accounting</strong> — External users. Provides information through analyzing, recording, classifying, summarizing, and reporting financial events in general-purpose financial statements.<br/><br/>
+<strong>2. Managerial Accounting</strong> — Internal users. Provides information to help management in planning and controlling activities using tools like budgets and cost accounting.<br/><br/>
+<strong>3. Cost Accounting</strong> — Internal users. Records, measures, and reports cost information to: (a) cost products and services, (b) control costs. Uses actual or predetermined cost systems; compares actual vs. predetermined to find variances and take corrective action.<br/><br/>
+<strong>4. Budgeting</strong> — Internal users. A system of (a) Planning — translating goals into numerical plans, and (b) Controlling — comparing actual results with the plan and taking corrective action.<br/><br/>
+<strong>5. Governmental Accounting</strong> — Governmental entities. Deals with governmental activities at all levels; prepares the public budget and final accounts; performs financial control before and after spending.<br/><br/>
+<strong>6. Tax Accounting</strong> — Tax authority and companies. Determines taxable income, calculates taxes payable, and supports tax planning to minimize taxes legally.<br/><br/>
+<strong>7. National Accounting</strong> — The state/government. Accounts for all sectors of the national economy by measuring national income, preparing national budgets, and constructing input/output tables.<br/><br/>
+<strong>8. International Accounting</strong> — Multinational companies. Deals with foreign currency issues, financial statements for multinationals, translation of foreign branch statements, and harmonizing local and international standards.<br/><br/>
+<strong>9. Auditing</strong> — External auditors and users. Examines the company by evaluating internal controls, reviewing documents and statements, and collecting evidence to give a professional opinion on the fairness of financial statements. The auditor is responsible for any negligence.<br/><br/>
+<strong>10. Responsibility Accounting</strong> — Internal users (management). Divides the company into responsibility centers, each with a manager responsible only for revenues and expenses under their control. Performance is evaluated by variances resulting from their decisions.`
+  },
+  {
+    type:"Long",
+    q:"Identify the external users of accounting information and explain the specific information needs of each group.",
+    ans:`External users of accounting information can be categorized as follows:<br/><br/>
+<strong>1. Investors (Current and Potential):</strong><br/>
+• Current investors: Need information about cash flows and the level of uncertainty to decide whether to continue investing or exit.<br/>
+• Potential investors: Need the same information but to compare investment alternatives and identify the best opportunity.<br/><br/>
+<strong>2. Creditors and Banks:</strong> Need information about the firm's financial position to evaluate its ability to repay loans and debts.<br/><br/>
+<strong>3. Suppliers:</strong> Need information to ensure the company will remain active in business with the ability to pay its obligations to them.<br/><br/>
+<strong>4. Customers:</strong> Need information to confirm that goods and services will continue to be available — including spare parts, maintenance, and replacements.<br/><br/>
+<strong>5. Manpower and Workers' Unions:</strong> Need information to know their share in profits, support salary/benefit negotiations with management, and evaluate the employment situation.<br/><br/>
+<strong>6. Competitors:</strong> Need information to evaluate their competitive position relative to the firm and assess possibilities for growth and expansion.<br/><br/>
+<strong>7. Governmental Agencies and Controlling Organizations:</strong> (Tax authority, Ministry of Planning, Ministry of Industry, Stock Exchange Commission) Need information to evaluate entities' contribution to national income and added value, and to improve governmental activities.<br/><br/>
+<strong>8. Financial Analysts:</strong> Need information to evaluate organizational performance, provide investment consultation, and support academic research.<br/><br/>
+<strong>9. The Public:</strong> Needs information to know about the services and products available in their area.<br/><br/>
+<strong>General Note:</strong> External users receive total, aggregated, historical, financial information. They are primarily interested in profitability, resources, financial position, ability to grow, and ability to pay debts.`
+  },
+  {
+    type:"Short",
+    q:"Define each of the following: Asset, Liability, Owner's Equity, Revenue, Expense, Gain, Profit.",
+    ans:`<strong>Asset:</strong> Expected economic benefits controlled by the entity as a result of past transactions (e.g., cash, land, inventory).<br/><br/>
+<strong>Liability:</strong> Future economic sacrifices resulting from current obligations to transfer resources or render service to other entities as a result of past transactions (e.g., loans, accounts payable).<br/><br/>
+<strong>Owner's Equity:</strong> The remaining interest in assets after subtracting all liabilities (OE = Assets − Liabilities). Includes capital + net profit − drawings.<br/><br/>
+<strong>Revenue:</strong> The price received for selling goods/services to customers, regardless of whether cash is collected during the period.<br/><br/>
+<strong>Expense:</strong> The cost of using resources and facilities necessary to generate revenue or provide services.<br/><br/>
+<strong>Gain:</strong> An inflow generated from non-central, non-repeatable activities of the firm (increases equity). Example: selling old equipment above book value.<br/><br/>
+<strong>Profit (Net Income):</strong> The remaining revenues after subtracting all expenses, achieved when revenues exceed expenses (Profit = Revenues − Expenses > 0). Represents an increase in owner's equity.`
+  }
+];
+
+/* ──────────────────────────────
+   MCQ RENDERING
+──────────────────────────────── */
+let answered = 0, correct = 0;
+const totalQ = mcqData.length;
+
+function renderMCQ() {
+  const container = document.getElementById('mcqContainer');
+  container.innerHTML = '';
+  mcqData.forEach((item, idx) => {
+    const div = document.createElement('div');
+    div.className = 'mcq-card';
+    div.id = 'mcq-' + idx;
+    const optsHTML = item.opts.map((o,i) =>
+      `<div class="mcq-opt" onclick="selectOpt(${idx},${i})">${String.fromCharCode(65+i)}. ${o}</div>`
+    ).join('');
+    div.innerHTML = `
+      <div class="mcq-num">Q${idx+1} of ${totalQ} <span class="diff-badge ${item.diff}">${item.diff.toUpperCase()}</span></div>
+      <div class="mcq-q">${item.q}</div>
+      <div class="mcq-options" id="opts-${idx}">${optsHTML}</div>
+      <div class="mcq-explain" id="exp-${idx}">💡 <strong>Explanation:</strong> ${item.exp}</div>
+    `;
+    container.appendChild(div);
+  });
+}
+
+function selectOpt(qIdx, optIdx) {
+  const optsDiv = document.getElementById('opts-' + qIdx);
+  if (optsDiv.dataset.answered) return;
+  optsDiv.dataset.answered = '1';
+  const opts = optsDiv.querySelectorAll('.mcq-opt');
+  opts.forEach((opt, i) => {
+    opt.style.pointerEvents = 'none';
+    if (i === mcqData[qIdx].ans) opt.classList.add('correct');
+    else if (i === optIdx) opt.classList.add('wrong');
+  });
+  document.getElementById('exp-' + qIdx).classList.add('show');
+  answered++;
+  if (optIdx === mcqData[qIdx].ans) correct++;
+  updateScore();
+}
+
+function updateScore() {
+  document.getElementById('scoreDisplay').textContent = correct + ' / ' + totalQ;
+  document.getElementById('progressBar').style.width = (answered / totalQ * 100) + '%';
+}
+
+function resetMCQ() {
+  answered = 0; correct = 0;
+  updateScore();
+  renderMCQ();
+}
+
+/* ──────────────────────────────
+   WRITTEN RENDERING
+──────────────────────────────── */
+function renderWritten() {
+  const container = document.getElementById('writtenContainer');
+  container.innerHTML = '';
+  writtenData.forEach((item, idx) => {
+    const div = document.createElement('div');
+    div.className = 'written-card';
+    div.innerHTML = `
+      <div class="mcq-num">${item.type} Answer Question — Q${idx+1}</div>
+      <div class="written-q">${item.q}</div>
+      <button class="toggle-ans-btn" onclick="toggleWritten(${idx}, this)">▼ Show Model Answer</button>
+      <div class="model-ans" id="wa-${idx}">${item.ans}</div>
+    `;
+    container.appendChild(div);
+  });
+}
+
+function toggleWritten(idx, btn) {
+  const el = document.getElementById('wa-' + idx);
+  el.classList.toggle('show');
+  btn.textContent = el.classList.contains('show') ? '▲ Hide Model Answer' : '▼ Show Model Answer';
+}
+
+/* ──────────────────────────────
+   NAVIGATION
+──────────────────────────────── */
+function showSection(id, btn) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  if (btn) btn.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* ──────────────────────────────
+   COLLAPSE
+──────────────────────────────── */
+function toggleCollapse(btn) {
+  btn.classList.toggle('open');
+  const body = btn.nextElementSibling;
+  body.classList.toggle('open');
+}
+
+/* ──────────────────────────────
+   THEME
+──────────────────────────────── */
+function toggleTheme() {
+  document.body.classList.toggle('light');
+  document.getElementById('themeBtn').textContent =
+    document.body.classList.contains('light') ? '☀️' : '🌙';
+}
+
+/* ──────────────────────────────
+   INIT
+──────────────────────────────── */
+renderMCQ();
+renderWritten();
+</script>
+</body>
+</html>
