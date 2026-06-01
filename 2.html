@@ -1,0 +1,1637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Accounting Principles 1 — Chapter 2 Exam Prep</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f7f5f0;
+    --bg2: #ffffff;
+    --bg3: #edeae2;
+    --text: #1a1714;
+    --text2: #4a4540;
+    --text3: #8a837a;
+    --accent: #c8622a;
+    --accent2: #e8a87c;
+    --accent3: #fdf3ec;
+    --teal: #1a7a6e;
+    --teal-bg: #e8f5f3;
+    --blue: #1e4fa0;
+    --blue-bg: #e8eef8;
+    --green: #2a6e3a;
+    --green-bg: #e8f3eb;
+    --red: #b02a2a;
+    --red-bg: #f8eaea;
+    --amber: #b06a10;
+    --amber-bg: #fdf3e0;
+    --border: #ddd8d0;
+    --border2: #ccc6bc;
+    --radius: 10px;
+    --radius-lg: 16px;
+    --shadow: 0 2px 12px rgba(0,0,0,0.06);
+    --shadow-lg: 0 8px 32px rgba(0,0,0,0.10);
+    --font-display: 'Playfair Display', Georgia, serif;
+    --font-body: 'DM Sans', sans-serif;
+    --font-mono: 'DM Mono', monospace;
+  }
+  [data-theme="dark"] {
+    --bg: #141210;
+    --bg2: #1e1c18;
+    --bg3: #252220;
+    --text: #f0ece6;
+    --text2: #b8b0a6;
+    --text3: #6e675e;
+    --accent: #e07840;
+    --accent2: #c85a1a;
+    --accent3: #2a1e14;
+    --teal: #4ab8a8;
+    --teal-bg: #0e2522;
+    --blue: #6699dd;
+    --blue-bg: #0e1828;
+    --green: #5aaa6a;
+    --green-bg: #0e2014;
+    --red: #e06060;
+    --red-bg: #280e0e;
+    --amber: #d4904a;
+    --amber-bg: #281a08;
+    --border: #2e2a24;
+    --border2: #3a352e;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: var(--font-body);
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    transition: background 0.3s, color 0.3s;
+    line-height: 1.7;
+  }
+
+  /* HEADER */
+  header {
+    background: var(--bg2);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+  }
+  .logo {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: -0.02em;
+  }
+  .logo span { color: var(--text); font-weight: 400; }
+  nav { display: flex; gap: 4px; align-items: center; flex-wrap: wrap; }
+  nav button {
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    font-weight: 500;
+    padding: 6px 14px;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    background: transparent;
+    color: var(--text2);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  nav button:hover { background: var(--bg3); color: var(--text); }
+  nav button.active { background: var(--accent); color: white; border-color: var(--accent); }
+  .theme-btn {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    background: var(--bg3);
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem;
+    transition: all 0.2s;
+    margin-left: 8px;
+  }
+  .theme-btn:hover { background: var(--border); }
+
+  /* SECTIONS */
+  .section { display: none; }
+  .section.active { display: block; }
+  .container { max-width: 860px; margin: 0 auto; padding: 2.5rem 1.5rem; }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, var(--accent3) 0%, var(--bg2) 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 3rem 2rem;
+    text-align: center;
+  }
+  .hero .badge {
+    display: inline-block;
+    background: var(--accent);
+    color: white;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 4px 14px;
+    border-radius: 20px;
+    margin-bottom: 1rem;
+  }
+  .hero h1 {
+    font-family: var(--font-display);
+    font-size: 2.2rem;
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+  }
+  .hero p { color: var(--text2); font-size: 1rem; max-width: 520px; margin: 0 auto 1.5rem; }
+  .hero-stats { display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; }
+  .hero-stat { text-align: center; }
+  .hero-stat .num { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; color: var(--accent); }
+  .hero-stat .label { font-size: 0.75rem; color: var(--text3); text-transform: uppercase; letter-spacing: 0.08em; }
+
+  /* CARDS */
+  .card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    margin-bottom: 1.25rem;
+    box-shadow: var(--shadow);
+  }
+  .card-title {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .card-title .icon { font-size: 1.2rem; }
+
+  /* SECTION HEADERS */
+  .section-header {
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--accent);
+    display: inline-block;
+  }
+  .section-header h2 {
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--text);
+  }
+  .section-header p { color: var(--text2); font-size: 0.9rem; margin-top: 0.25rem; }
+
+  /* CALLOUTS */
+  .callout {
+    border-radius: var(--radius);
+    padding: 1rem 1.25rem;
+    margin: 1rem 0;
+    border-left: 4px solid;
+    font-size: 0.92rem;
+  }
+  .callout.key { background: var(--amber-bg); border-color: var(--amber); color: var(--text); }
+  .callout.tip { background: var(--teal-bg); border-color: var(--teal); color: var(--text); }
+  .callout.warning { background: var(--red-bg); border-color: var(--red); color: var(--text); }
+  .callout.exam { background: var(--blue-bg); border-color: var(--blue); color: var(--text); }
+  .callout .callout-title { font-weight: 600; margin-bottom: 0.25rem; font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.08em; }
+
+  /* EQUATION BOX */
+  .equation-box {
+    background: var(--accent3);
+    border: 2px solid var(--accent);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    text-align: center;
+    margin: 1.5rem 0;
+    font-family: var(--font-mono);
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--accent);
+    letter-spacing: 0.03em;
+  }
+
+  /* TABLE */
+  .tbl-wrap { overflow-x: auto; margin: 1rem 0; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+  th {
+    background: var(--bg3);
+    color: var(--text);
+    font-weight: 600;
+    padding: 8px 12px;
+    text-align: left;
+    border: 1px solid var(--border);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  td { padding: 8px 12px; border: 1px solid var(--border); color: var(--text2); vertical-align: top; }
+  tr:hover td { background: var(--bg3); }
+  .up { color: var(--green); font-weight: 600; }
+  .dn { color: var(--red); font-weight: 600; }
+
+  /* MCQ */
+  .mcq-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    margin-bottom: 1.25rem;
+    transition: border-color 0.2s;
+  }
+  .mcq-card:hover { border-color: var(--accent); }
+  .mcq-num {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text3);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .difficulty {
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 0.68rem;
+    font-weight: 600;
+  }
+  .diff-easy { background: var(--green-bg); color: var(--green); }
+  .diff-med { background: var(--amber-bg); color: var(--amber); }
+  .diff-hard { background: var(--red-bg); color: var(--red); }
+  .mcq-q { font-size: 0.97rem; font-weight: 500; color: var(--text); margin-bottom: 1rem; line-height: 1.6; }
+  .mcq-options { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+  .mcq-options li {
+    padding: 9px 14px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    cursor: pointer;
+    font-size: 0.88rem;
+    color: var(--text2);
+    transition: all 0.15s;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  .mcq-options li:hover { background: var(--bg3); color: var(--text); border-color: var(--accent2); }
+  .mcq-options li.correct { background: var(--green-bg); border-color: var(--green); color: var(--green); font-weight: 500; }
+  .mcq-options li.wrong { background: var(--red-bg); border-color: var(--red); color: var(--red); }
+  .mcq-options li .opt-lbl { font-weight: 700; min-width: 18px; }
+  .mcq-explanation {
+    display: none;
+    margin-top: 1rem;
+    padding: 1rem;
+    background: var(--blue-bg);
+    border-radius: var(--radius);
+    font-size: 0.87rem;
+    color: var(--text);
+    border-left: 3px solid var(--blue);
+    line-height: 1.6;
+  }
+  .mcq-explanation.show { display: block; }
+  .mcq-score { display: flex; gap: 1rem; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; }
+  .score-box {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 0.75rem 1.25rem;
+    text-align: center;
+  }
+  .score-box .s-num { font-family: var(--font-display); font-size: 1.6rem; font-weight: 700; color: var(--accent); }
+  .score-box .s-lbl { font-size: 0.72rem; color: var(--text3); text-transform: uppercase; }
+  .filter-btns { display: flex; gap: 6px; flex-wrap: wrap; }
+  .filter-btn {
+    font-size: 0.78rem;
+    padding: 5px 12px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text2);
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: var(--font-body);
+  }
+  .filter-btn:hover, .filter-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
+  .reset-btn {
+    font-family: var(--font-body);
+    font-size: 0.82rem;
+    padding: 6px 16px;
+    border-radius: 20px;
+    border: 1px solid var(--border2);
+    background: var(--bg3);
+    color: var(--text2);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .reset-btn:hover { background: var(--border); color: var(--text); }
+
+  /* WRITTEN */
+  .wq-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    margin-bottom: 1.25rem;
+    overflow: hidden;
+  }
+  .wq-header {
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    cursor: pointer;
+  }
+  .wq-header:hover { background: var(--bg3); }
+  .wq-title { font-size: 0.97rem; font-weight: 500; color: var(--text); line-height: 1.5; flex: 1; }
+  .wq-badge { font-size: 0.7rem; font-weight: 600; padding: 3px 10px; border-radius: 10px; white-space: nowrap; }
+  .wq-badge.short { background: var(--teal-bg); color: var(--teal); }
+  .wq-badge.long { background: var(--blue-bg); color: var(--blue); }
+  .wq-toggle { color: var(--text3); font-size: 1.2rem; transition: transform 0.2s; }
+  .wq-toggle.open { transform: rotate(180deg); }
+  .wq-answer {
+    display: none;
+    padding: 0 1.5rem 1.5rem;
+    border-top: 1px solid var(--border);
+  }
+  .wq-answer.show { display: block; }
+  .model-ans-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .model-ans-label::before { content: '✦'; font-size: 0.7rem; }
+  .ans-text { font-size: 0.9rem; color: var(--text2); line-height: 1.75; }
+  .ans-text p { margin-bottom: 0.6rem; }
+  .ans-text ul, .ans-text ol { margin: 0.5rem 0 0.5rem 1.2rem; }
+  .ans-text li { margin-bottom: 0.3rem; }
+  .ans-text strong { color: var(--text); font-weight: 600; }
+
+  /* REVISION */
+  .rev-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; margin: 1.5rem 0; }
+  .rev-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1.25rem;
+  }
+  .rev-card h3 {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .rev-list { list-style: none; }
+  .rev-list li { font-size: 0.84rem; color: var(--text2); padding: 4px 0; display: flex; gap: 0.5rem; line-height: 1.5; }
+  .rev-list li::before { content: '▸'; color: var(--accent); font-size: 0.7rem; margin-top: 4px; flex-shrink: 0; }
+  .dr-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; margin: 0.75rem 0; }
+  .dr-table th { background: var(--accent3); color: var(--accent); font-weight: 700; padding: 6px 10px; border: 1px solid var(--accent2); text-align: center; font-size: 0.75rem; text-transform: uppercase; }
+  .dr-table td { padding: 6px 10px; border: 1px solid var(--border); color: var(--text2); text-align: center; }
+
+  /* MEMORY */
+  .mnemonic {
+    background: var(--amber-bg);
+    border: 2px dashed var(--amber);
+    border-radius: var(--radius);
+    padding: 1rem 1.25rem;
+    margin: 1rem 0;
+    font-size: 0.9rem;
+  }
+  .mnemonic .label { font-weight: 700; color: var(--amber); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.4rem; }
+  .compare-table th { font-size: 0.75rem; background: var(--bg3); }
+  .compare-table td { font-size: 0.85rem; }
+  .tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: 600; margin-right: 4px; }
+  .tag-debit { background: var(--teal-bg); color: var(--teal); }
+  .tag-credit { background: var(--red-bg); color: var(--red); }
+
+  /* PROGRESS */
+  .progress-bar {
+    width: 100%;
+    height: 6px;
+    background: var(--bg3);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-top: 0.75rem;
+  }
+  .progress-fill {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 3px;
+    transition: width 0.4s ease;
+  }
+  .progress-label { font-size: 0.78rem; color: var(--text3); margin-top: 0.3rem; }
+
+  /* STEP LIST */
+  .step-list { list-style: none; margin: 1rem 0; }
+  .step-list li { display: flex; gap: 1rem; margin-bottom: 1rem; align-items: flex-start; }
+  .step-num {
+    width: 28px; height: 28px;
+    background: var(--accent);
+    color: white;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.78rem;
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .step-content { flex: 1; }
+  .step-content strong { display: block; font-weight: 600; color: var(--text); margin-bottom: 0.2rem; }
+  .step-content span { font-size: 0.9rem; color: var(--text2); }
+
+  /* ACCORDION */
+  .accordion { border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; margin-bottom: 1rem; }
+  .accordion-header {
+    padding: 1rem 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 0.95rem;
+    color: var(--text);
+    background: var(--bg2);
+    transition: background 0.2s;
+  }
+  .accordion-header:hover { background: var(--bg3); }
+  .accordion-body { display: none; padding: 1rem 1.25rem; background: var(--bg2); border-top: 1px solid var(--border); font-size: 0.9rem; color: var(--text2); line-height: 1.7; }
+  .accordion-body.open { display: block; }
+  .accordion-arrow { transition: transform 0.2s; color: var(--text3); }
+  .accordion-arrow.open { transform: rotate(180deg); }
+
+  /* FLOAT NAV */
+  .float-tip {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 48px; height: 48px;
+    font-size: 1.4rem;
+    cursor: pointer;
+    box-shadow: var(--shadow-lg);
+    display: flex; align-items: center; justify-content: center;
+    transition: transform 0.2s;
+    z-index: 50;
+  }
+  .float-tip:hover { transform: scale(1.1); }
+
+  kbd {
+    font-family: var(--font-mono);
+    font-size: 0.8em;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1px 5px;
+    color: var(--text2);
+  }
+  .pill {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 20px;
+    font-size: 0.78rem;
+    font-weight: 600;
+  }
+  .pill-acc { background: var(--accent3); color: var(--accent); }
+  .pill-g { background: var(--green-bg); color: var(--green); }
+
+  hr { border: none; border-top: 1px solid var(--border); margin: 1.5rem 0; }
+
+  @media (max-width: 640px) {
+    header { padding: 0 1rem; height: auto; flex-wrap: wrap; padding: 0.75rem 1rem; gap: 0.5rem; }
+    nav { gap: 3px; }
+    nav button { padding: 4px 10px; font-size: 0.72rem; }
+    .hero h1 { font-size: 1.5rem; }
+    .container { padding: 1.5rem 1rem; }
+    .rev-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ANIMATIONS */
+  .section.active { animation: fadeIn 0.3s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+  .mcq-card { animation: slideIn 0.25s ease both; }
+  @keyframes slideIn { from { opacity: 0; transform: translateX(-8px); } to { opacity: 1; transform: translateX(0); } }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">Accounting <span>Principles I · Ch. 2</span></div>
+  <nav>
+    <button class="active" onclick="showSection('explain', this)">📖 Concepts</button>
+    <button onclick="showSection('summary', this)">📋 Summary</button>
+    <button onclick="showSection('memory', this)">🧠 Memory</button>
+    <button onclick="showSection('mcq', this)">❓ MCQs</button>
+    <button onclick="showSection('written', this)">✍️ Written</button>
+    <button onclick="showSection('revision', this)">⚡ Revision</button>
+  </nav>
+  <button class="theme-btn" onclick="toggleTheme()" title="Toggle dark/light mode">🌙</button>
+</header>
+
+<!-- ===== SECTION 1: EXPLANATION ===== -->
+<div id="explain" class="section active">
+  <div style="background: var(--accent3); border-bottom: 1px solid var(--border); padding: 2.5rem 2rem; text-align:center;">
+    <div style="display:inline-block; background:var(--accent); color:white; font-size:0.7rem; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; padding:4px 14px; border-radius:20px; margin-bottom:1rem;">Chapter 2 Deep Dive</div>
+    <h1 style="font-family:var(--font-display); font-size:2rem; font-weight:700; line-height:1.2; margin-bottom:0.5rem;">Accounting Equation & Debit/Credit Rules</h1>
+    <p style="color:var(--text2); max-width:520px; margin:0 auto 1.5rem;">Dr. Hamdy Habl · Helwan University · Accounting Department</p>
+    <div style="display:flex; gap:2rem; justify-content:center; flex-wrap:wrap;">
+      <div><div style="font-family:var(--font-display); font-size:1.6rem; font-weight:700; color:var(--accent);">4</div><div style="font-size:0.72rem; color:var(--text3); text-transform:uppercase; letter-spacing:0.08em;">Core Topics</div></div>
+      <div><div style="font-family:var(--font-display); font-size:1.6rem; font-weight:700; color:var(--accent);">8</div><div style="font-size:0.72rem; color:var(--text3); text-transform:uppercase; letter-spacing:0.08em;">Principles</div></div>
+      <div><div style="font-family:var(--font-display); font-size:1.6rem; font-weight:700; color:var(--accent);">17+</div><div style="font-size:0.72rem; color:var(--text3); text-transform:uppercase; letter-spacing:0.08em;">Transactions</div></div>
+    </div>
+  </div>
+
+  <div class="container">
+    <!-- Topic 1: B/S Assumptions -->
+    <div class="section-header">
+      <h2>1 — Balance Sheet Assumptions &amp; Principles</h2>
+      <p>4 fundamental assumptions that govern how B/S is prepared</p>
+    </div>
+
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggleAcc(this)">
+        <span>🏢 Accounting Entity Assumption</span>
+        <span class="accordion-arrow">▼</span>
+      </div>
+      <div class="accordion-body">
+        <p><strong>Definition:</strong> The business is treated as a <em>separate legal person</em> from its owner(s).</p>
+        <ul style="margin:0.7rem 0 0.7rem 1.2rem;">
+          <li>The entity owns assets and owes liabilities independently of the owner.</li>
+          <li>Owner's personal transactions are NEVER mixed with business transactions.</li>
+          <li>Think of it like this: if Ahmed owns a shop, the shop has its own wallet — Ahmed cannot dip into it for personal groceries without recording it.</li>
+        </ul>
+        <div class="callout exam"><div class="callout-title">🎯 Exam Tip</div>Any transaction between the owner and the business must be recorded. Withdrawals (Drawings) reduce owner's equity.</div>
+      </div>
+    </div>
+
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggleAcc(this)">
+        <span>♾️ Going Concern Assumption</span>
+        <span class="accordion-arrow">▼</span>
+      </div>
+      <div class="accordion-body">
+        <p><strong>Definition:</strong> The entity is assumed to be established to <em>continue indefinitely</em> — it will not be liquidated in the near future.</p>
+        <ul style="margin:0.7rem 0 0.7rem 1.2rem;">
+          <li>Justifies recording assets at historical cost (not liquidation value).</li>
+          <li>Allows for depreciation spread over an asset's useful life.</li>
+          <li>Analogy: It's like building a house assuming you'll live in it for years, not that you'll sell it tomorrow.</li>
+        </ul>
+        <div class="callout key"><div class="callout-title">💡 Key Link</div>This assumption is WHY we use the cost principle — if the business were ending, we'd use market values instead.</div>
+      </div>
+    </div>
+
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggleAcc(this)">
+        <span>💰 The Cost Principle (Historical Cost)</span>
+        <span class="accordion-arrow">▼</span>
+      </div>
+      <div class="accordion-body">
+        <p><strong>Definition:</strong> Assets and liabilities are recorded and reported at their <em>original purchase price (historical cost)</em>, NOT their current market value.</p>
+        <ul style="margin:0.7rem 0 0.7rem 1.2rem;">
+          <li>If a building was bought for $30,000 in 2020 but is now worth $60,000 — it still shows as $30,000 (minus depreciation).</li>
+          <li>This provides <em>objectivity</em> and <em>verifiability</em> — cost is a fact; market value is an opinion.</li>
+          <li>B/S amounts ≠ market values.</li>
+        </ul>
+        <div class="callout warning"><div class="callout-title">⚠️ Common Trap</div>Students confuse historical cost with current/fair value. In this course, ALWAYS use historical cost for B/S items.</div>
+      </div>
+    </div>
+
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggleAcc(this)">
+        <span>💵 Stable Monetary Unit Assumption</span>
+        <span class="accordion-arrow">▼</span>
+      </div>
+      <div class="accordion-body">
+        <p><strong>Definition:</strong> Assumes the monetary unit (dollar, EGP, etc.) has <em>stable purchasing power</em> over time.</p>
+        <ul style="margin:0.7rem 0 0.7rem 1.2rem;">
+          <li>In reality, this is NOT perfectly true — inflation erodes purchasing power.</li>
+          <li><strong>Inflation</strong> → purchasing power DECREASES (money buys less).</li>
+          <li><strong>Deflation</strong> → purchasing power INCREASES (money buys more).</li>
+          <li>But accounting ignores these changes and treats $1 from 1990 = $1 today.</li>
+        </ul>
+        <div class="callout tip"><div class="callout-title">📝 Real World</div>This assumption simplifies accounting but is one reason financial statements can be misleading during high inflation periods (like in Egypt).</div>
+      </div>
+    </div>
+
+    <hr>
+    <!-- Topic 2: I/S Assumptions -->
+    <div class="section-header" style="margin-top:1.5rem;">
+      <h2>2 — Income Statement Assumptions &amp; Principles</h2>
+      <p>How revenues and expenses are measured and matched</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="icon">📅</span> Periodicity (Time Period) Assumption</div>
+      <p style="color:var(--text2); font-size:0.92rem;">Business life is divided into <strong>equal time periods</strong> (usually 1 year) to measure performance, rather than waiting until the business ends.</p>
+      <ul style="margin:0.75rem 0 0 1.2rem; font-size:0.9rem; color:var(--text2);">
+        <li>Periods can be: Monthly | Quarterly | Semi-annually | <strong>Annually (mandatory)</strong></li>
+        <li>Enables timely decision-making for managers, investors, and creditors.</li>
+        <li>Analogy: Like a student who checks grades every semester, not just at graduation.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="icon">💹</span> Revenue Recognition Principle</div>
+      <p style="color:var(--text2); font-size:0.92rem;"><strong>Revenue is recorded WHEN EARNED, not when cash is received.</strong></p>
+      <ul style="margin:0.75rem 0 0 1.2rem; font-size:0.9rem; color:var(--text2);">
+        <li>Revenue is <em>realized/earned</em> when: goods are delivered OR services are rendered.</li>
+        <li>Cash collection is IRRELEVANT to when revenue is recognized.</li>
+        <li>Example: If you perform a service in December but get paid in January → record revenue in December.</li>
+      </ul>
+      <div class="callout exam"><div class="callout-title">🎯 Exam Hotspot</div>Service on credit = Revenue recognized now (A/R is created). Cash collected later = No new revenue, just exchange assets.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="icon">⚖️</span> The Matching Principle</div>
+      <p style="color:var(--text2); font-size:0.92rem;"><strong>Expenses must be matched with the revenues they helped generate in the same period.</strong></p>
+      <ul style="margin:0.75rem 0 0 1.2rem; font-size:0.9rem; color:var(--text2);">
+        <li>Net Income = Revenues − Expenses (for the same period).</li>
+        <li>If salaries were paid to generate December revenue, record the salaries in December even if paid in January.</li>
+        <li>This is why we have "Expenses Payable" (accrued expenses) on the B/S.</li>
+      </ul>
+    </div>
+
+    <hr>
+    <!-- Topic 3: Accounting Equation -->
+    <div class="section-header" style="margin-top:1.5rem;">
+      <h2>3 — The Accounting Equation</h2>
+      <p>The backbone of double-entry bookkeeping</p>
+    </div>
+
+    <div class="equation-box">
+      ASSETS = LIABILITIES + OWNER'S EQUITY
+    </div>
+
+    <div class="card">
+      <div class="card-title">Understanding the Equation</div>
+      <div class="tbl-wrap">
+        <table>
+          <tr>
+            <th>Component</th>
+            <th>What It Means</th>
+            <th>Examples</th>
+          </tr>
+          <tr>
+            <td><strong>Assets</strong></td>
+            <td>Everything the business OWNS (economic resources)</td>
+            <td>Cash, Building, Equipment, Inventory, A/R, Prepaid Expenses</td>
+          </tr>
+          <tr>
+            <td><strong>Liabilities</strong></td>
+            <td>Everything the business OWES to outsiders (creditors)</td>
+            <td>Loans Payable, A/P, N/P, Unearned Revenue, Expenses Payable</td>
+          </tr>
+          <tr>
+            <td><strong>Owner's Equity</strong></td>
+            <td>Owner's share = Capital + Income − Expenses − Drawings</td>
+            <td>Capital, Net Income/Loss, Drawings</td>
+          </tr>
+        </table>
+      </div>
+      <div class="callout key" style="margin-top:1rem;"><div class="callout-title">💡 The Golden Rule</div>Every business transaction affects the equation but ALWAYS leaves it balanced. If Assets increase, either Liabilities increase OR Owner's Equity increases (or both, in proportion).</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Owner's Equity Formula</div>
+      <div style="font-family:var(--font-mono); font-size:0.88rem; background:var(--bg3); padding:1rem; border-radius:var(--radius); color:var(--text2); line-height:2;">
+        Owner's Equity = Capital<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ Net Income (Revenue − Expenses)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ Additional Investments<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;− Drawings (withdrawals)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;− Net Loss
+      </div>
+    </div>
+
+    <div class="section-header" style="margin-top:2rem;">
+      <h2>17 Transaction Types — Detailed Analysis</h2>
+      <p>Every standard transaction and its effect on the accounting equation</p>
+    </div>
+
+    <div style="display:grid; gap:0.75rem;">
+      <!-- Each transaction type -->
+      <div class="card" style="padding:1.25rem;">
+        <strong style="color:var(--accent);">T1 — Owner Deposits Capital</strong>
+        <p style="color:var(--text2); font-size:0.88rem; margin-top:0.4rem;">Cash ↑ (Asset ↑) | Capital ↑ (OE ↑) — Equation balanced</p>
+        <div style="font-family:var(--font-mono); font-size:0.8rem; color:var(--text3); margin-top:0.4rem;">Example: Ahmed deposits $50,000 → Cash +50,000 | Capital +50,000</div>
+      </div>
+      <div class="card" style="padding:1.25rem;">
+        <strong style="color:var(--accent);">T2 — Bank Loan</strong>
+        <p style="color:var(--text2); font-size:0.88rem; margin-top:0.4rem;">Cash ↑ (Asset ↑) | Loan Payable ↑ (Liability ↑) — both sides increase equally</p>
+        <div style="font-family:var(--font-mono); font-size:0.8rem; color:var(--text3); margin-top:0.4rem;">Example: $25,000 loan → Cash +25,000 | Loans Payable +25,000</div>
+      </div>
+      <div class="card" style="padding:1.25rem;">
+        <strong style="color:var(--accent);">T3 — Purchase Asset for Cash</strong>
+        <p style="color:var(--text2); font-size:0.88rem; margin-top:0.4rem;">Cash ↓ (Asset ↓) | New Asset ↑ (Asset ↑) — Assets stay same; just swap form</p>
+        <div style="font-family:var(--font-mono); font-size:0.8rem; color:var(--text3); margin-top:0.4rem;">Example: Building $30,000 cash → Cash -30,000 | Building +30,000</div>
+      </div>
+      <div class="card" style="padding:1.25rem;">
+        <strong style="color:var(--accent);">T4 — Purchase Asset on Credit (A/P)</strong>
+        <p style="color:var(--text2); font-size:0.88rem; margin-top:0.4rem;">New Asset ↑ (Asset ↑) | A/P ↑ (Liability ↑) — both sides increase</p>
+        <div style="font-family:var(--font-mono); font-size:0.8rem; color:var(--text3); margin-top:0.4rem;">Example: Computer $5,000 on credit → Computer +5,000 | A/P +5,000</div>
+      </div>
+      <div class="card" style="padding:1.25rem;">
+        <strong style="color:var(--accent);">T5 — Partial Cash + Note Payable</strong>
+        <p style="color:var(--text2); font-size:0.88rem; margin-top:0.4rem;">Asset ↑ full price | Cash ↓ partial | N/P ↑ remainder</p>
+        <div style="font-family:var(--font-mono); font-size:0.8rem; color:var(--text3); margin-top:0.4rem;">Example: Supplies $3,000: Cash -1,000, Supplies +3,000, N/P +2,000</div>
+      </div>
+      <div class="card" style="padding:1.25rem;">
+        <strong style="color:var(--accent);">T6 — Sell Asset at Cost for Cash</strong>
+        <p style="color:var(--text2); font-size:0.88rem; margin-top:0.4rem;">Cash ↑ | Old Asset ↓ — No gain/loss; just swap assets</p>
+        <div style="font-family:var(--font-mono); font-size:0.8rem; color:var(--text3); margin-top:0.4rem;">Example: Sell half building $15,000 → Cash +15,000 | Building -15,000</div>
+      </div>
+      <div class="card" style="padding:1.25rem;">
+        <strong style="color:var(--accent);">T7 — Sell Asset on Credit (A/R)</strong>
+        <p style="color:var(--text2); font-size:0.88rem; margin-top:0.4rem;">A/R ↑ (new asset) | Old Asset ↓ — No cash involved yet</p>
+        <div style="font-family:var(--font-mono); font-size:0.8rem; color:var(--text3); margin-top:0.4rem;">Example: Sell computer on credit $5,000 → A/R +5,000 | Computer -5,000</div>
+      </div>
+      <div class="card" style="padding:1.25rem;">
+        <strong style="color:var(--accent);">T8 — Repay Part of Loan</strong>
+        <p style="color:var(--text2); font-size:0.88rem; margin-top:0.4rem;">Cash ↓ (Asset ↓) | Loan Payable ↓ (Liability ↓) — both sides decrease</p>
+        <div style="font-family:var(--font-mono); font-size:0.8rem; color:var(--text3); margin-top:0.4rem;">Example: Repay $10,000 → Cash -10,000 | L/P -10,000</div>
+      </div>
+      <div class="card" style="padding:1.25rem;">
+        <strong style="color:var(--accent);">T9 — Collect Accounts Receivable</strong>
+        <p style="color:var(--text2); font-size:0.88rem; margin-top:0.4rem;">Cash ↑ | A/R ↓ — Asset swap; no new revenue!</p>
+        <div style="font-family:var(--font-mono); font-size:0.8rem; color:var(--text3); margin-top:0.4rem;">Example: Collect $5,000 → Cash +5,000 | A/R -5,000</div>
+      </div>
+      <div class="card" style="padding:1.25rem;">
+        <strong style="color:var(--accent);">T10 — Additional Owner Investment</strong>
+        <p style="color:var(--text2); font-size:0.88rem; margin-top:0.4rem;">Cash ↑ | Capital ↑ (OE ↑) — owner adds more money</p>
+      </div>
+      <div class="card" style="padding:1.25rem;">
+        <strong style="color:var(--accent);">T11 — Reduce Capital (Withdrawal to reduce investment)</strong>
+        <p style="color:var(--text2); font-size:0.88rem; margin-top:0.4rem;">Cash ↓ | Capital ↓ — permanent reduction in investment</p>
+      </div>
+      <div class="card" style="padding:1.25rem;">
+        <strong style="color:var(--accent);">T12 — Drawings (Personal Use)</strong>
+        <p style="color:var(--text2); font-size:0.88rem; margin-top:0.4rem;">Cash ↓ | Drawings ↑ (which reduces Capital/OE) — anticipation of profit</p>
+        <div class="callout warning" style="margin-top:0.75rem; padding:0.6rem 0.8rem;"><div class="callout-title">Distinction!</div>Drawings = temporary withdrawal expecting profit. Reducing Capital = permanent reduction of investment.</div>
+      </div>
+      <div class="card" style="padding:1.25rem;">
+        <strong style="color:var(--accent);">T13 — Service Revenue (Cash)</strong>
+        <p style="color:var(--text2); font-size:0.88rem; margin-top:0.4rem;">Cash ↑ | Revenue ↑ (OE ↑) — income earned and collected</p>
+        <div style="font-family:var(--font-mono); font-size:0.8rem; color:var(--text3); margin-top:0.4rem;">Example: Trip arranged for $7,000 cash → Cash +7,000 | Revenue +7,000</div>
+      </div>
+      <div class="card" style="padding:1.25rem;">
+        <strong style="color:var(--accent);">T14 — Service Revenue (Credit)</strong>
+        <p style="color:var(--text2); font-size:0.88rem; margin-top:0.4rem;">A/R ↑ | Revenue ↑ (OE ↑) — income earned but not yet collected</p>
+        <div style="font-family:var(--font-mono); font-size:0.8rem; color:var(--text3); margin-top:0.4rem;">Example: Trip to Luxor $5,000 on credit → A/R +5,000 | Revenue +5,000</div>
+      </div>
+      <div class="card" style="padding:1.25rem;">
+        <strong style="color:var(--accent);">T15 — Collect Revenue Previously on Credit</strong>
+        <p style="color:var(--text2); font-size:0.88rem; margin-top:0.4rem;">Cash ↑ | A/R ↓ — No new revenue! Just asset conversion</p>
+      </div>
+      <div class="card" style="padding:1.25rem;">
+        <strong style="color:var(--accent);">T16 — Pay Expense in Cash</strong>
+        <p style="color:var(--text2); font-size:0.88rem; margin-top:0.4rem;">Cash ↓ | Expense ↑ (reduces OE) — decreases owner's equity</p>
+        <div style="font-family:var(--font-mono); font-size:0.8rem; color:var(--text3); margin-top:0.4rem;">Example: Salaries $8,000 → Cash -8,000 | Expenses -8,000 (OE)</div>
+      </div>
+      <div class="card" style="padding:1.25rem;">
+        <strong style="color:var(--accent);">T17 — Expense Not Yet Paid (Accrued)</strong>
+        <p style="color:var(--text2); font-size:0.88rem; margin-top:0.4rem;">Expenses Payable ↑ (Liability ↑) | Expense ↑ (reduces OE) — liability created</p>
+        <div style="font-family:var(--font-mono); font-size:0.8rem; color:var(--text3); margin-top:0.4rem;">Example: Rent $2,000 unpaid → Exp. Payable +2,000 | Expenses -2,000 (OE)</div>
+      </div>
+    </div>
+
+    <hr>
+    <!-- Topic 4: Debit/Credit Rule -->
+    <div class="section-header" style="margin-top:1.5rem;">
+      <h2>4 — The Debit &amp; Credit Rule</h2>
+      <p>The universal rule for recording transactions</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title">The T-Account Framework</div>
+      <div style="display:grid; grid-template-columns: 1fr 1fr; gap:1rem; margin:1rem 0;">
+        <div style="background:var(--teal-bg); border:1px solid var(--teal); border-radius:var(--radius); padding:1.25rem; text-align:center;">
+          <div style="font-size:0.72rem; text-transform:uppercase; letter-spacing:0.1em; font-weight:700; color:var(--teal); margin-bottom:0.5rem;">ASSETS</div>
+          <div style="font-size:0.85rem; color:var(--text2); margin-bottom:0.5rem;">Normal Balance: <strong style="color:var(--teal);">DEBIT</strong></div>
+          <div style="font-size:0.82rem; color:var(--text2);">↑ Increase → Debit</div>
+          <div style="font-size:0.82rem; color:var(--text2);">↓ Decrease → Credit</div>
+        </div>
+        <div style="background:var(--red-bg); border:1px solid var(--red); border-radius:var(--radius); padding:1.25rem; text-align:center;">
+          <div style="font-size:0.72rem; text-transform:uppercase; letter-spacing:0.1em; font-weight:700; color:var(--red); margin-bottom:0.5rem;">LIABILITIES &amp; OWNER'S EQUITY</div>
+          <div style="font-size:0.85rem; color:var(--text2); margin-bottom:0.5rem;">Normal Balance: <strong style="color:var(--red);">CREDIT</strong></div>
+          <div style="font-size:0.82rem; color:var(--text2);">↑ Increase → Credit</div>
+          <div style="font-size:0.82rem; color:var(--text2);">↓ Decrease → Debit</div>
+        </div>
+      </div>
+      <div class="callout key"><div class="callout-title">💡 The Core Insight</div>Debit = Left side of T-account. Credit = Right side. For EVERY entry: Total Debits MUST EQUAL Total Credits.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Sub-rules for Owner's Equity Components</div>
+      <div class="tbl-wrap">
+        <table>
+          <tr><th>Account</th><th>Increases with</th><th>Decreases with</th><th>Normal Balance</th></tr>
+          <tr><td>Revenue</td><td class="up">Credit</td><td class="dn">Debit</td><td>Credit</td></tr>
+          <tr><td>Expenses</td><td class="dn">Debit</td><td class="up">Credit</td><td>Debit</td></tr>
+          <tr><td>Drawings</td><td class="dn">Debit</td><td class="up">Credit</td><td>Debit</td></tr>
+          <tr><td>Capital</td><td class="up">Credit</td><td class="dn">Debit</td><td>Credit</td></tr>
+        </table>
+      </div>
+      <div class="callout tip" style="margin-top:1rem;"><div class="callout-title">📝 Why expenses debit?</div>Expenses REDUCE owner's equity. OE has a credit normal balance, so to reduce it you DEBIT it. Expenses, drawings = debit because they fight against OE.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SECTION 2: SUMMARY ===== -->
+<div id="summary" class="section">
+  <div class="container">
+    <div class="section-header">
+      <h2>Smart Summary — High-Yield Points</h2>
+      <p>Everything you need, nothing you don't</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🏗️ B/S Assumptions (4)</div>
+      <ul style="list-style:none; margin:0;">
+        <li style="padding:6px 0; border-bottom:1px solid var(--border); font-size:0.9rem; color:var(--text2);"><strong style="color:var(--text);">1. Entity Assumption</strong> — Business is a separate legal person from owner. Personal ≠ Business.</li>
+        <li style="padding:6px 0; border-bottom:1px solid var(--border); font-size:0.9rem; color:var(--text2);"><strong style="color:var(--text);">2. Going Concern</strong> — Business is assumed to continue indefinitely. Life is continuous, not temporary.</li>
+        <li style="padding:6px 0; border-bottom:1px solid var(--border); font-size:0.9rem; color:var(--text2);"><strong style="color:var(--text);">3. Cost Principle</strong> — Record at historical/original cost, NOT market value. B/S ≠ current market values.</li>
+        <li style="padding:6px 0; font-size:0.9rem; color:var(--text2);"><strong style="color:var(--text);">4. Stable Monetary Unit</strong> — Assume purchasing power of currency is fixed. (Not perfectly true in reality.)</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title">📊 I/S Assumptions (3)</div>
+      <ul style="list-style:none; margin:0;">
+        <li style="padding:6px 0; border-bottom:1px solid var(--border); font-size:0.9rem; color:var(--text2);"><strong style="color:var(--text);">1. Periodicity</strong> — Business life divided into equal periods (usually 1 year). Enables periodic reporting.</li>
+        <li style="padding:6px 0; border-bottom:1px solid var(--border); font-size:0.9rem; color:var(--text2);"><strong style="color:var(--text);">2. Revenue Recognition</strong> — Record revenue when EARNED (service rendered/goods delivered), not when cash received.</li>
+        <li style="padding:6px 0; font-size:0.9rem; color:var(--text2);"><strong style="color:var(--text);">3. Matching Principle</strong> — Match expenses to the revenues they generated in the SAME period.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title">⚖️ The Accounting Equation</div>
+      <div class="equation-box" style="font-size:1.1rem; padding:1rem;">Assets = Liabilities + Owner's Equity</div>
+      <ul style="list-style:none; margin:0; font-size:0.88rem; color:var(--text2);">
+        <li style="padding:4px 0;">• Always balanced after EVERY transaction</li>
+        <li style="padding:4px 0;">• Assets: Cash, Building, Equipment, Supplies, A/R, Inventory, Prepaid Exp.</li>
+        <li style="padding:4px 0;">• Liabilities: L/P, A/P, N/P, Unearned Revenue, Expenses Payable, Bonds Payable</li>
+        <li style="padding:4px 0;">• OE = Capital + Revenue − Expenses − Drawings + Additional Investment − Net Loss</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title">📏 Debit/Credit Quick Reference</div>
+      <div class="tbl-wrap">
+        <table>
+          <tr><th>Account Type</th><th>Normal Balance</th><th>Increase by</th><th>Decrease by</th></tr>
+          <tr><td>Assets</td><td class="up">Debit</td><td class="up">Debit</td><td class="dn">Credit</td></tr>
+          <tr><td>Liabilities</td><td class="dn">Credit</td><td class="dn">Credit</td><td class="up">Debit</td></tr>
+          <tr><td>Owner's Capital</td><td class="dn">Credit</td><td class="dn">Credit</td><td class="up">Debit</td></tr>
+          <tr><td>Revenue</td><td class="dn">Credit</td><td class="dn">Credit</td><td class="up">Debit</td></tr>
+          <tr><td>Expenses</td><td class="up">Debit</td><td class="up">Debit</td><td class="dn">Credit</td></tr>
+          <tr><td>Drawings</td><td class="up">Debit</td><td class="up">Debit</td><td class="dn">Credit</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🔄 Key Transaction Patterns</div>
+      <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:0.75rem; font-size:0.84rem;">
+        <div style="padding:0.75rem; background:var(--teal-bg); border-radius:var(--radius); color:var(--text2);"><strong style="color:var(--teal);">Asset ↔ Asset Swap</strong><br>Cash → Building<br>A/R → Cash<br>Computer → A/R</div>
+        <div style="padding:0.75rem; background:var(--blue-bg); border-radius:var(--radius); color:var(--text2);"><strong style="color:var(--blue);">Asset + Liability ↑</strong><br>Buy on credit<br>Bank loan<br>Accrue expenses</div>
+        <div style="padding:0.75rem; background:var(--green-bg); border-radius:var(--radius); color:var(--text2);"><strong style="color:var(--green);">Asset + OE ↑</strong><br>Revenue (cash)<br>Additional capital<br>Service rendered</div>
+        <div style="padding:0.75rem; background:var(--red-bg); border-radius:var(--radius); color:var(--text2);"><strong style="color:var(--red);">Asset + OE ↓</strong><br>Pay expenses<br>Drawings<br>Reduce capital</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SECTION 3: MEMORY ===== -->
+<div id="memory" class="section">
+  <div class="container">
+    <div class="section-header">
+      <h2>Memory Optimization Techniques</h2>
+      <p>Mnemonics, patterns, and traps to master this chapter</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🎯 Mnemonic: "EALCS" — B/S Assumptions</div>
+      <div class="mnemonic">
+        <div class="label">Memory Trick</div>
+        <p style="font-size:0.95rem; color:var(--text2);"><strong style="color:var(--amber);">E</strong>very <strong style="color:var(--amber);">A</strong>ccounting <strong style="color:var(--amber);">L</strong>ecture <strong style="color:var(--amber);">C</strong>an <strong style="color:var(--amber);">S</strong>tabilize</p>
+        <ul style="margin:0.5rem 0 0 1rem; font-size:0.88rem; color:var(--text2);">
+          <li><strong>E</strong>ntity Assumption</li>
+          <li><strong>A</strong>ccounting Period (Periodicity)</li>
+          <li><strong>L</strong>ast Cost (Historical Cost/Cost Principle)</li>
+          <li><strong>C</strong>ontinuing (Going Concern)</li>
+          <li><strong>S</strong>table Monetary Unit</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🎯 Mnemonic: Debit vs Credit — "DEAD CLIC"</div>
+      <div class="mnemonic">
+        <div class="label">The Ultimate Debit/Credit Memory Tool</div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-top:0.5rem;">
+          <div>
+            <div style="font-size:0.85rem; font-weight:700; color:var(--teal); margin-bottom:0.3rem;">DEBIT increases:</div>
+            <p style="font-size:0.88rem; color:var(--text2);"><strong style="color:var(--teal);">D</strong>rawings<br><strong style="color:var(--teal);">E</strong>xpenses<br><strong style="color:var(--teal);">A</strong>ssets<br><strong style="color:var(--teal);">D</strong>ivisions (all)</p>
+          </div>
+          <div>
+            <div style="font-size:0.85rem; font-weight:700; color:var(--red); margin-bottom:0.3rem;">CREDIT increases:</div>
+            <p style="font-size:0.88rem; color:var(--text2);"><strong style="color:var(--red);">C</strong>apital<br><strong style="color:var(--red);">L</strong>iabilities<br><strong style="color:var(--red);">I</strong>ncome (Revenue)<br><strong style="color:var(--red);">C</strong>reditors</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🔴 Common Exam Mistakes &amp; Traps</div>
+      <div style="display:flex; flex-direction:column; gap:0.75rem;">
+        <div style="padding:0.875rem; background:var(--red-bg); border:1px solid var(--red); border-radius:var(--radius);">
+          <strong style="color:var(--red); font-size:0.85rem;">TRAP 1:</strong>
+          <p style="font-size:0.87rem; color:var(--text2); margin-top:0.3rem;">Collecting A/R creates NEW revenue. ❌ WRONG! Revenue was already recorded when earned. Collecting A/R just converts one asset to another (A/R → Cash).</p>
+        </div>
+        <div style="padding:0.875rem; background:var(--red-bg); border:1px solid var(--red); border-radius:var(--radius);">
+          <strong style="color:var(--red); font-size:0.85rem;">TRAP 2:</strong>
+          <p style="font-size:0.87rem; color:var(--text2); margin-top:0.3rem;">B/S shows current market value of assets. ❌ WRONG! B/S shows historical cost (cost principle). Market values are NOT used.</p>
+        </div>
+        <div style="padding:0.875rem; background:var(--red-bg); border:1px solid var(--red); border-radius:var(--radius);">
+          <strong style="color:var(--red); font-size:0.85rem;">TRAP 3:</strong>
+          <p style="font-size:0.87rem; color:var(--text2); margin-top:0.3rem;">Revenue = when cash is received. ❌ WRONG! Revenue recognition = when service is rendered or goods delivered, regardless of payment.</p>
+        </div>
+        <div style="padding:0.875rem; background:var(--red-bg); border:1px solid var(--red); border-radius:var(--radius);">
+          <strong style="color:var(--red); font-size:0.85rem;">TRAP 4:</strong>
+          <p style="font-size:0.87rem; color:var(--text2); margin-top:0.3rem;">Drawings = Expense. ❌ WRONG! Drawings are NOT an expense. They are a direct reduction of owner's equity/capital.</p>
+        </div>
+        <div style="padding:0.875rem; background:var(--red-bg); border:1px solid var(--red); border-radius:var(--radius);">
+          <strong style="color:var(--red); font-size:0.85rem;">TRAP 5:</strong>
+          <p style="font-size:0.87rem; color:var(--text2); margin-top:0.3rem;">Buying asset for cash increases total assets. ❌ WRONG! Cash decreases (one asset), new asset increases → net change = ZERO. Total assets unchanged.</p>
+        </div>
+        <div style="padding:0.875rem; background:var(--red-bg); border:1px solid var(--red); border-radius:var(--radius);">
+          <strong style="color:var(--red); font-size:0.85rem;">TRAP 6:</strong>
+          <p style="font-size:0.87rem; color:var(--text2); margin-top:0.3rem;">Loans payable is part of owner's equity. ❌ WRONG! Loans payable is a LIABILITY — money owed to creditors, not the owner.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">📊 Chunking: 3 Groups of Transactions</div>
+      <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:0.75rem; font-size:0.85rem;">
+        <div style="border:1px solid var(--border); border-radius:var(--radius); padding:1rem; background:var(--bg3);">
+          <div style="font-weight:700; color:var(--accent); margin-bottom:0.5rem;">Group A: Asset Swaps</div>
+          <div style="color:var(--text2); font-size:0.82rem; line-height:1.8;">Buy asset for cash<br>Sell asset at cost<br>Collect A/R<br>No OE change</div>
+        </div>
+        <div style="border:1px solid var(--border); border-radius:var(--radius); padding:1rem; background:var(--bg3);">
+          <div style="font-weight:700; color:var(--teal); margin-bottom:0.5rem;">Group B: Financing</div>
+          <div style="color:var(--text2); font-size:0.82rem; line-height:1.8;">Take loan<br>Repay loan<br>Owner invest<br>Owner withdraw</div>
+        </div>
+        <div style="border:1px solid var(--border); border-radius:var(--radius); padding:1rem; background:var(--bg3);">
+          <div style="font-weight:700; color:var(--blue); margin-bottom:0.5rem;">Group C: Operations</div>
+          <div style="color:var(--text2); font-size:0.82rem; line-height:1.8;">Revenue (cash/credit)<br>Expenses (cash/accrued)<br>Affect OE directly</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🔁 Spaced Repetition Schedule</div>
+      <ul class="step-list">
+        <li><div class="step-num">1</div><div class="step-content"><strong>Today</strong><span>Study the 4 B/S assumptions + 3 I/S principles. Write definitions in your own words.</span></div></li>
+        <li><div class="step-num">2</div><div class="step-content"><strong>Tomorrow</strong><span>Practice the 17 transaction types without looking. Check which ones confused you.</span></div></li>
+        <li><div class="step-num">3</div><div class="step-content"><strong>Day 3</strong><span>Do 10 MCQs. Review wrong answers. Focus on debit/credit rule.</span></div></li>
+        <li><div class="step-num">4</div><div class="step-content"><strong>Day 7</strong><span>Full MCQ set (30 questions). Write model answer for one written question.</span></div></li>
+        <li><div class="step-num">5</div><div class="step-content"><strong>Night before exam</strong><span>Only use the Revision Sheet. Don't re-read everything.</span></div></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SECTION 4: MCQs ===== -->
+<div id="mcq" class="section">
+  <div class="container">
+    <div class="section-header">
+      <h2>MCQ Bank — 30 Questions</h2>
+      <p>Click an option to see if you're right. Explanations appear automatically.</p>
+    </div>
+
+    <div class="mcq-score">
+      <div class="score-box"><div class="s-num" id="score-correct">0</div><div class="s-lbl">Correct</div></div>
+      <div class="score-box"><div class="s-num" id="score-wrong">0</div><div class="s-lbl">Wrong</div></div>
+      <div class="score-box"><div class="s-num" id="score-total">0</div><div class="s-lbl">Answered</div></div>
+      <div style="flex:1;">
+        <div class="progress-bar"><div class="progress-fill" id="prog-fill" style="width:0%"></div></div>
+        <div class="progress-label" id="prog-label">0 / 30 answered</div>
+      </div>
+    </div>
+
+    <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-bottom:1.5rem; align-items:center;">
+      <span style="font-size:0.82rem; color:var(--text3);">Filter:</span>
+      <div class="filter-btns">
+        <button class="filter-btn active" onclick="filterMCQ('all', this)">All (30)</button>
+        <button class="filter-btn" onclick="filterMCQ('easy', this)">Easy</button>
+        <button class="filter-btn" onclick="filterMCQ('medium', this)">Medium</button>
+        <button class="filter-btn" onclick="filterMCQ('hard', this)">Hard</button>
+      </div>
+      <button class="reset-btn" onclick="resetMCQ()">↺ Reset All</button>
+    </div>
+
+    <div id="mcq-container"></div>
+  </div>
+</div>
+
+<!-- ===== SECTION 5: WRITTEN ===== -->
+<div id="written" class="section">
+  <div class="container">
+    <div class="section-header">
+      <h2>Written Exam Questions</h2>
+      <p>Click any question to reveal the model answer</p>
+    </div>
+
+    <div id="written-container"></div>
+  </div>
+</div>
+
+<!-- ===== SECTION 6: REVISION ===== -->
+<div id="revision" class="section">
+  <div class="container">
+    <div style="background:var(--accent3); border:2px solid var(--accent); border-radius:var(--radius-lg); padding:1.25rem; margin-bottom:2rem; text-align:center;">
+      <div style="font-size:0.75rem; text-transform:uppercase; letter-spacing:0.1em; font-weight:700; color:var(--accent); margin-bottom:0.5rem;">⚡ Night Before Exam Cheat Sheet</div>
+      <p style="font-size:0.9rem; color:var(--text2);">Everything on one page. Read this the night before. Don't cram new material.</p>
+    </div>
+
+    <div class="rev-grid">
+      <div class="rev-card">
+        <h3>B/S Assumptions</h3>
+        <ul class="rev-list">
+          <li><strong>Entity</strong> — Business ≠ Owner</li>
+          <li><strong>Going Concern</strong> — Continuous life</li>
+          <li><strong>Cost Principle</strong> — Historical cost, NOT market</li>
+          <li><strong>Stable Monetary</strong> — Fixed purchasing power (assumed)</li>
+        </ul>
+      </div>
+      <div class="rev-card">
+        <h3>I/S Assumptions</h3>
+        <ul class="rev-list">
+          <li><strong>Periodicity</strong> — Equal periods (annual mandatory)</li>
+          <li><strong>Revenue Recognition</strong> — Earned, not collected</li>
+          <li><strong>Matching</strong> — Expenses match revenues</li>
+        </ul>
+      </div>
+      <div class="rev-card">
+        <h3>Accounting Equation</h3>
+        <ul class="rev-list">
+          <li>Assets = Liabilities + OE</li>
+          <li>Always balanced after every transaction</li>
+          <li>OE = Capital + Revenue − Expenses − Drawings</li>
+          <li>Revenue ↑ OE ↑ | Expenses ↓ OE</li>
+        </ul>
+      </div>
+      <div class="rev-card">
+        <h3>Debit/Credit Rule</h3>
+        <table class="dr-table">
+          <tr><th>Account</th><th>↑ by</th><th>Normal</th></tr>
+          <tr><td>Assets</td><td class="up">Dr</td><td class="up">Dr</td></tr>
+          <tr><td>Liabilities</td><td class="dn">Cr</td><td class="dn">Cr</td></tr>
+          <tr><td>Capital</td><td class="dn">Cr</td><td class="dn">Cr</td></tr>
+          <tr><td>Revenue</td><td class="dn">Cr</td><td class="dn">Cr</td></tr>
+          <tr><td>Expenses</td><td class="up">Dr</td><td class="up">Dr</td></tr>
+          <tr><td>Drawings</td><td class="up">Dr</td><td class="up">Dr</td></tr>
+        </table>
+      </div>
+      <div class="rev-card">
+        <h3>Key Transaction Rules</h3>
+        <ul class="rev-list">
+          <li>Buy asset cash → Asset swap, OE unchanged</li>
+          <li>Buy on credit → Asset↑ + Liability↑</li>
+          <li>Revenue cash → Cash↑ + OE↑</li>
+          <li>Revenue credit → A/R↑ + OE↑</li>
+          <li>Collect A/R → Cash↑ + A/R↓ (no new revenue!)</li>
+          <li>Pay expense → Cash↓ + OE↓</li>
+          <li>Accrue expense → Exp.Pay↑ + OE↓</li>
+          <li>Drawings → Cash↓ + Capital↓</li>
+        </ul>
+      </div>
+      <div class="rev-card">
+        <h3>Watch Out For</h3>
+        <ul class="rev-list">
+          <li>A/R collection ≠ new revenue</li>
+          <li>B/S ≠ market values</li>
+          <li>Revenue when earned, not paid</li>
+          <li>Drawings ≠ Expense</li>
+          <li>Loans = Liability (not OE)</li>
+          <li>Buy asset cash = no OE change</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:0.5rem;">
+      <div class="card-title">🔑 Key Formulas</div>
+      <div style="display:flex; flex-direction:column; gap:0.6rem; font-family:var(--font-mono); font-size:0.85rem; color:var(--text2);">
+        <div>Assets = Liabilities + Owner's Equity</div>
+        <div>Owner's Equity = Capital + Net Income − Drawings + Additional Inv.</div>
+        <div>Net Income = Total Revenues − Total Expenses</div>
+        <div>Total Debits = Total Credits (always!)</div>
+        <div>Assets (Normal) = Debit | Liab. &amp; OE (Normal) = Credit</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<button class="float-tip" onclick="scrollToTop()" title="Scroll to top">↑</button>
+
+<script>
+const mcqData = [
+  {
+    q: "Which accounting assumption treats the business as a separate legal entity from its owner?",
+    opts: ["Going Concern", "Entity Assumption", "Cost Principle", "Stable Monetary Unit"],
+    ans: 1,
+    diff: "easy",
+    exp: "The Accounting Entity Assumption states that the business has a separate legal personality from its owner. The business owns its own assets and owes its own liabilities, independent of the owner's personal finances."
+  },
+  {
+    q: "According to the Cost Principle, how should assets be reported on the Balance Sheet?",
+    opts: ["At current market value", "At replacement cost", "At historical (original purchase) cost", "At net realizable value"],
+    ans: 2,
+    diff: "easy",
+    exp: "The Cost Principle (Historical Cost) requires assets to be recorded and reported at their original purchase price, not current market value. This provides objectivity and verifiability."
+  },
+  {
+    q: "The Going Concern Assumption implies which of the following?",
+    opts: ["The business will be sold soon", "The business has unlimited capital", "The business will continue operating indefinitely", "The monetary unit is stable"],
+    ans: 2,
+    diff: "easy",
+    exp: "Going Concern means the entity is established to continue operating and making profit, not to be terminated in the near future. This justifies recording long-term assets and spreading costs over time."
+  },
+  {
+    q: "Under the Revenue Recognition Principle, revenue should be recorded:",
+    opts: ["When cash is collected from customers", "When the service is rendered or goods are delivered", "At the end of the accounting period", "When the invoice is sent"],
+    ans: 1,
+    diff: "easy",
+    exp: "Revenue is recognized when EARNED — when the service has been performed or goods delivered — regardless of when payment is received. This is the accrual basis of accounting."
+  },
+  {
+    q: "The Matching Principle requires that:",
+    opts: ["Cash inflows match cash outflows", "Expenses are recorded in the same period as the revenues they helped generate", "Assets equal liabilities plus owner's equity", "All revenues are reported annually"],
+    ans: 1,
+    diff: "easy",
+    exp: "The Matching Principle requires that expenses be recorded in the same period as the revenues they generated. This gives an accurate picture of profitability for each period."
+  },
+  {
+    q: "Ahmed deposits $50,000 cash in a bank account to start his business. What is the effect on the accounting equation?",
+    opts: ["Assets decrease, Liabilities increase", "Assets increase, Owner's Equity increases", "Only Assets increase", "Owner's Equity decreases"],
+    ans: 1,
+    diff: "easy",
+    exp: "Cash (Asset) increases by $50,000 and Ahmed's Capital (Owner's Equity) increases by $50,000. Both sides of the equation increase equally, keeping it balanced."
+  },
+  {
+    q: "A company purchased a computer on credit for $5,000. What is the journal entry effect?",
+    opts: ["Assets increase, Owner's Equity increases", "Liabilities decrease, Assets decrease", "Assets increase, Liabilities increase", "No effect on the equation"],
+    ans: 2,
+    diff: "easy",
+    exp: "The computer (Asset) increases by $5,000 AND Accounts Payable (Liability) increases by $5,000. Both sides of the equation increase equally."
+  },
+  {
+    q: "Which of the following is the correct accounting equation?",
+    opts: ["Assets = Revenue − Expenses", "Assets = Liabilities − Owner's Equity", "Assets = Liabilities + Owner's Equity", "Liabilities = Assets + Owner's Equity"],
+    ans: 2,
+    diff: "easy",
+    exp: "The fundamental accounting equation is: Assets = Liabilities + Owner's Equity. This represents that assets are financed by either creditors (liabilities) or the owner (equity)."
+  },
+  {
+    q: "A company collected $5,000 from accounts receivable. What is the effect?",
+    opts: ["Revenue increases by $5,000", "Assets increase and Owner's Equity increases", "Cash increases and Accounts Receivable decreases — no change in total assets", "Liabilities decrease"],
+    ans: 2,
+    diff: "medium",
+    exp: "Collecting A/R is an asset swap: Cash (Asset) increases $5,000 and A/R (Asset) decreases $5,000. Total assets remain the same. NO new revenue is recognized — revenue was already recorded when the service was rendered."
+  },
+  {
+    q: "When a company purchases office supplies for $3,000 paying $1,000 cash and signing a $2,000 note payable, what happens?",
+    opts: ["Assets increase by $3,000, Liabilities increase by $2,000, Cash decreases by $1,000", "Only assets change by net $2,000", "Owner's equity decreases by $3,000", "Assets increase by $2,000 only"],
+    ans: 0,
+    diff: "medium",
+    exp: "Supplies (Asset) +$3,000; Cash (Asset) −$1,000; Notes Payable (Liability) +$2,000. Net asset change = +$2,000. Liability +$2,000. Equation: Assets increase net $2,000, Liabilities increase $2,000. Balanced!"
+  },
+  {
+    q: "What is the normal balance of an Asset account?",
+    opts: ["Credit", "Debit", "It depends on the transaction", "Zero"],
+    ans: 1,
+    diff: "easy",
+    exp: "Assets have a DEBIT normal balance. This means asset accounts are increased by debits and decreased by credits. Since the equation starts: Assets = L + OE, Assets sit on the left (debit) side."
+  },
+  {
+    q: "What is the normal balance of a Liability account?",
+    opts: ["Debit", "Credit", "Debit or Credit depending on type", "Neither"],
+    ans: 1,
+    diff: "easy",
+    exp: "Liabilities have a CREDIT normal balance. They sit on the right side of the accounting equation and are increased by credits, decreased by debits."
+  },
+  {
+    q: "Drawings made by the owner REDUCE which of the following?",
+    opts: ["Only Cash", "Liabilities", "Owner's Equity (Capital)", "Revenue"],
+    ans: 2,
+    diff: "medium",
+    exp: "Owner's Drawings reduce Owner's Equity (Capital). Drawings are NOT an expense — they are personal withdrawals anticipating profit. They debit the Drawings account and credit Cash."
+  },
+  {
+    q: "A company performs a service for a client and collects $7,000 cash. What is the effect on the accounting equation?",
+    opts: ["Assets +$7,000; Liabilities +$7,000", "Assets +$7,000; Owner's Equity +$7,000 (Revenue)", "Assets unchanged; Revenue increases", "Owner's Equity decreases"],
+    ans: 1,
+    diff: "medium",
+    exp: "Cash (Asset) increases by $7,000. Revenue increases Owner's Equity by $7,000. Both sides increase equally — equation remains balanced."
+  },
+  {
+    q: "The company did NOT pay $2,000 rent for the month. How does this affect the equation?",
+    opts: ["Cash decreases $2,000; OE decreases $2,000", "Expenses Payable (L) increases $2,000; OE decreases $2,000", "No effect until paid", "Only Assets change"],
+    ans: 1,
+    diff: "medium",
+    exp: "Even though not paid, the expense was incurred (Matching Principle). Expenses Payable (Liability) increases $2,000, and Owner's Equity decreases $2,000 (expense). Equation stays balanced."
+  },
+  {
+    q: "Ahmed repaid $10,000 of a bank loan. What is the effect?",
+    opts: ["Cash increases, Loan Payable decreases", "Cash decreases, Loan Payable decreases", "Only Liabilities change", "Owner's Equity increases"],
+    ans: 1,
+    diff: "medium",
+    exp: "Cash (Asset) decreases $10,000 and Loan Payable (Liability) decreases $10,000. Both sides of the equation decrease equally. Owner's Equity is unaffected."
+  },
+  {
+    q: "Which assumption divides the life of a business into equal time periods?",
+    opts: ["Going Concern", "Entity Assumption", "Matching Principle", "Periodicity (Time Period) Assumption"],
+    ans: 3,
+    diff: "easy",
+    exp: "The Periodicity Assumption divides business life into equal accounting periods (usually 1 year) to allow periodic measurement of net income, rather than waiting until the business ends."
+  },
+  {
+    q: "Which of the following is TRUE about the Stable Monetary Unit Assumption?",
+    opts: ["It perfectly reflects purchasing power changes", "It assumes inflation always exists", "It assumes the monetary unit has fixed purchasing power, which may not be true in reality", "It only applies to foreign currencies"],
+    ans: 2,
+    diff: "medium",
+    exp: "The Stable Monetary Unit Assumption assumes fixed purchasing power for simplicity. In reality, this is imperfect: inflation decreases purchasing power, deflation increases it. But accounting ignores these changes."
+  },
+  {
+    q: "A company sold a computer that cost $5,000 on credit. The buyer will pay next month. The effect is:",
+    opts: ["Revenue $5,000, Cash $5,000", "A/R +$5,000, Computer −$5,000, no effect on OE", "A/R +$5,000, Revenue +$5,000 (OE)", "Computer increases"],
+    ans: 1,
+    diff: "hard",
+    exp: "This is a sale of an ASSET at cost (no profit). A/R (Asset) increases $5,000, Computer (Asset) decreases $5,000. This is an asset swap — no revenue, no OE change, because it was sold at cost. If it were sold for profit, revenue would be recognized."
+  },
+  {
+    q: "Which principle requires assets to be recorded at acquisition cost, not fair value?",
+    opts: ["Matching Principle", "Revenue Recognition", "Cost Principle", "Entity Assumption"],
+    ans: 2,
+    diff: "easy",
+    exp: "The Cost Principle (Historical Cost Principle) requires assets to be recorded and maintained at their original acquisition cost, not their current market/fair value."
+  },
+  {
+    q: "If the owner deposits an additional $20,000 into the business bank account, this is called:",
+    opts: ["Revenue", "Drawings", "Additional Investment (increases Capital)", "Loan from owner"],
+    ans: 2,
+    diff: "medium",
+    exp: "When the owner adds more money to the business, it's an Additional Investment, which increases the owner's Capital (OE). This is different from revenue — it doesn't come from business operations."
+  },
+  {
+    q: "Which of the following accounts has a DEBIT normal balance?",
+    opts: ["Loans Payable", "Service Revenue", "Owner's Capital", "Salaries Expense"],
+    ans: 3,
+    diff: "medium",
+    exp: "Salaries Expense has a debit normal balance because it's an expense. Expenses, assets, and drawings all have debit normal balances. Liabilities, OE, and revenues have credit normal balances."
+  },
+  {
+    q: "A company performed services worth $5,000 on credit in December but will collect in January. Under which principle should revenue be recorded in December?",
+    opts: ["Matching Principle", "Cost Principle", "Revenue Recognition Principle", "Going Concern"],
+    ans: 2,
+    diff: "medium",
+    exp: "The Revenue Recognition Principle requires revenue to be recorded when earned (service performed), not when collected. Since the service was performed in December, revenue is December revenue regardless of January collection."
+  },
+  {
+    q: "What does 'Unearned Revenue' represent on the Balance Sheet?",
+    opts: ["Revenue already earned but not received", "Cash received for services not yet performed — a Liability", "A type of Owner's Equity", "Accounts Receivable"],
+    ans: 1,
+    diff: "hard",
+    exp: "Unearned Revenue is a LIABILITY — the company received cash but hasn't yet earned it by performing the service. It represents an obligation to provide a service or refund. Once earned, it becomes Revenue (OE)."
+  },
+  {
+    q: "Which of the following transactions does NOT affect Owner's Equity?",
+    opts: ["Recording service revenue", "Paying salaries", "Purchasing equipment for cash", "Owner's drawings"],
+    ans: 2,
+    diff: "hard",
+    exp: "Purchasing equipment for cash is an asset swap (Cash ↓, Equipment ↑). Total assets unchanged, and Owner's Equity is unaffected. Revenue, expenses, and drawings all affect OE."
+  },
+  {
+    q: "Ahmed Travel Agency arranged a trip for $5,000 on credit, then the customer paid. The total revenue recorded should be:",
+    opts: ["$10,000 ($5,000 on credit + $5,000 when paid)", "$5,000 only (when credit sale occurred)", "$5,000 only (when cash is collected)", "Zero, until fully paid"],
+    ans: 1,
+    diff: "hard",
+    exp: "Revenue is $5,000 total, recognized ONCE when service was rendered (credit sale). When cash is later collected, it's just A/R → Cash conversion, NOT new revenue. Recording it twice would be double-counting."
+  },
+  {
+    q: "If a company has total assets of $100,000 and total liabilities of $40,000, what is Owner's Equity?",
+    opts: ["$140,000", "$40,000", "$60,000", "Cannot be determined"],
+    ans: 2,
+    diff: "easy",
+    exp: "Using the accounting equation: OE = Assets − Liabilities = $100,000 − $40,000 = $60,000. The equation: Assets = Liabilities + OE, so OE = Assets − Liabilities."
+  },
+  {
+    q: "When an owner withdraws cash for personal use (drawings), which of the following correctly describes the transaction?",
+    opts: ["Cash decreases; Expense increases (debit)", "Cash decreases; Drawings increases (debit), which reduces Capital", "Cash increases; Capital increases", "Liabilities decrease; OE increases"],
+    ans: 1,
+    diff: "hard",
+    exp: "Drawings: Cash (Asset) decreases (Credit to Cash), and Drawings account increases (Debit to Drawings). Since Drawings reduce Owner's Equity, this effectively decreases Capital. Drawings ≠ Expenses."
+  },
+  {
+    q: "Which of the following best explains why the accounting equation always balances?",
+    opts: ["Assets are always greater than liabilities", "Every transaction has a dual effect that keeps both sides equal", "The government requires it", "Revenue always equals expenses"],
+    ans: 1,
+    diff: "hard",
+    exp: "The accounting equation always balances because of double-entry bookkeeping — every transaction has two equal and opposite effects. For every debit, there's an equal credit, so both sides always remain equal."
+  },
+  {
+    q: "Under the Matching Principle, if December salaries of $8,000 are paid in January, when should the expense be recorded?",
+    opts: ["January, when paid", "December, when incurred (earned by employees)", "Split: half in December, half in January", "When the fiscal year ends"],
+    ans: 1,
+    diff: "hard",
+    exp: "The Matching Principle requires expenses to be recorded in the period they were incurred (when the benefit was received), not when paid. Since employees worked in December, the expense belongs in December — creating a 'Salaries Payable' (liability)."
+  }
+];
+
+const writtenData = [
+  {
+    type: "short",
+    q: "Define the Accounting Entity Assumption and explain why it is important.",
+    ans: `<p><strong>Definition:</strong> The Accounting Entity Assumption states that the business is treated as a separate legal person from its owners. The entity has its own assets, liabilities, and equity, completely independent of the owner's personal finances.</p>
+<p><strong>Importance:</strong></p>
+<ul><li>Ensures that only business transactions are recorded in the business's books.</li>
+<li>Allows users of financial statements to accurately assess the financial position of the business alone.</li>
+<li>Prevents mixing of personal and business finances, which would distort the financial picture.</li>
+<li>Example: If Ahmed owns a store and buys personal groceries, that purchase is NOT a business expense.</li></ul>`
+  },
+  {
+    type: "short",
+    q: "Explain the Revenue Recognition Principle with an example.",
+    ans: `<p><strong>Definition:</strong> Revenue should be recognized (recorded) when it is EARNED — that is, when goods are delivered or services are rendered — regardless of when cash is collected.</p>
+<p><strong>Example:</strong> Ahmed Travel Agency arranged a trip to Luxor for a client on December 28th, worth $5,000. The client will pay in January. Under the Revenue Recognition Principle, the $5,000 revenue is recorded in December (when the service was rendered), not January (when cash is received).</p>
+<p><strong>Journal Effect:</strong> A/R +$5,000 (Asset ↑) | Revenue +$5,000 (OE ↑)</p>
+<p>When cash is received in January: Cash +$5,000 | A/R −$5,000 — NO additional revenue.</p>`
+  },
+  {
+    type: "short",
+    q: "State the Debit and Credit Rule for Assets, Liabilities, and Owner's Equity.",
+    ans: `<p>The Debit and Credit rule governs how transactions are recorded:</p>
+<ul>
+<li><strong>Assets:</strong> Normal balance = DEBIT. Increases are recorded as Debits; Decreases as Credits.</li>
+<li><strong>Liabilities:</strong> Normal balance = CREDIT. Increases are recorded as Credits; Decreases as Debits.</li>
+<li><strong>Owner's Equity (Capital):</strong> Normal balance = CREDIT. Increases (Revenue, Additional Investment) by Credits; Decreases (Expenses, Drawings) by Debits.</li>
+<li><strong>Revenue:</strong> Increases OE → recorded as Credit</li>
+<li><strong>Expenses/Drawings:</strong> Decrease OE → recorded as Debit</li>
+</ul>
+<p><strong>Golden Rule:</strong> Total Debits must always equal Total Credits in every transaction.</p>`
+  },
+  {
+    type: "long",
+    q: "Explain the four accounting assumptions related to the Balance Sheet, giving a brief example for each.",
+    ans: `<p><strong>1. Accounting Entity Assumption</strong><br>
+The business is a separate legal entity from its owner. The entity's assets and liabilities are distinct from the owner's personal assets.<br>
+<em>Example:</em> Ahmed's personal car is NOT recorded in Ahmed's company books.</p>
+
+<p><strong>2. Going Concern Assumption</strong><br>
+The business is established to continue indefinitely — it is not expected to liquidate or close in the near future.<br>
+<em>Implication:</em> Assets are recorded at historical cost, not liquidation value, because the business will use them over time.<br>
+<em>Example:</em> A building bought for $30,000 is not revalued to $50,000 market value; it remains at $30,000 (minus depreciation).</p>
+
+<p><strong>3. Cost Principle (Historical Cost)</strong><br>
+All assets and liabilities must be recorded at their original acquisition cost, not current market value.<br>
+<em>Example:</em> Equipment purchased in 2020 for $10,000 is shown at $10,000 (or less after depreciation), even if its current market value is $15,000.</p>
+
+<p><strong>4. Stable Monetary Unit Assumption</strong><br>
+The monetary unit (e.g., Dollar, EGP) is assumed to have stable purchasing power over time, so amounts from different years can be compared without adjustment.<br>
+<em>Limitation:</em> In reality, inflation erodes purchasing power, and deflation increases it — but accounting ignores these changes for simplicity.<br>
+<em>Example:</em> $1 received in 2010 is treated as equal to $1 today in the accounts.</p>`
+  },
+  {
+    type: "long",
+    q: "Describe the effect of the following 6 transactions on the accounting equation for Ahmed Company. Show the equation after each transaction:\n(1) Ahmed deposits $80,000 cash as capital\n(2) Purchased truck for $35,000 cash\n(3) Purchased furniture $5,000 on credit\n(4) Performed services for $6,000 cash\n(5) Paid rent expense $2,000 cash\n(6) Owner withdraws $3,000 cash",
+    ans: `<p><strong>(1) Ahmed deposits $80,000 cash as capital:</strong><br>
+Cash +$80,000 (Asset ↑) | Capital +$80,000 (OE ↑)<br>
+Equation: Assets $80,000 = Liabilities $0 + OE $80,000 ✓</p>
+
+<p><strong>(2) Purchased truck for $35,000 cash:</strong><br>
+Cash −$35,000 (Asset ↓) | Truck +$35,000 (Asset ↑) — Asset swap<br>
+Equation: Cash $45,000 + Truck $35,000 = $80,000 | OE $80,000 ✓</p>
+
+<p><strong>(3) Purchased furniture $5,000 on credit (A/P):</strong><br>
+Furniture +$5,000 (Asset ↑) | A/P +$5,000 (Liability ↑)<br>
+Equation: Assets $85,000 = L $5,000 + OE $80,000 ✓</p>
+
+<p><strong>(4) Performed services for $6,000 cash:</strong><br>
+Cash +$6,000 (Asset ↑) | Revenue +$6,000 (OE ↑)<br>
+Equation: Assets $91,000 = L $5,000 + OE $86,000 ✓</p>
+
+<p><strong>(5) Paid rent expense $2,000 cash:</strong><br>
+Cash −$2,000 (Asset ↓) | Expenses −$2,000 (OE ↓)<br>
+Equation: Assets $89,000 = L $5,000 + OE $84,000 ✓</p>
+
+<p><strong>(6) Owner withdraws $3,000 cash (Drawings):</strong><br>
+Cash −$3,000 (Asset ↓) | Drawings/Capital −$3,000 (OE ↓)<br>
+Equation: Assets $86,000 = L $5,000 + OE $81,000 ✓</p>
+
+<p><strong>Final Check:</strong> Net Income = Revenue $6,000 − Expenses $2,000 = $4,000<br>
+Final OE = Starting Capital $80,000 + Net Income $4,000 − Drawings $3,000 = $81,000 ✓</p>`
+  },
+  {
+    type: "long",
+    q: "Explain the difference between the three Income Statement assumptions: Periodicity, Revenue Recognition, and Matching Principle. How do they work together?",
+    ans: `<p><strong>1. Periodicity (Time Period) Assumption:</strong><br>
+Business life is divided into equal time periods (usually 1 year, but can be monthly, quarterly, semi-annually) to allow measurement of financial performance at regular intervals. Mandatory: annual financial statements must be prepared.</p>
+
+<p><strong>2. Revenue Recognition Principle:</strong><br>
+Within each period, revenue is recorded when EARNED — when goods are delivered or services rendered — not when cash is received. This ensures revenue is attributed to the correct period.</p>
+
+<p><strong>3. Matching Principle:</strong><br>
+Within each period, expenses are matched with the revenues they helped generate. An expense incurred to produce December revenue is recorded in December, even if paid in January.</p>
+
+<p><strong>How They Work Together:</strong><br>
+These three principles are interconnected and form the foundation of accrual accounting:</p>
+<ul>
+<li>Periodicity creates the TIME FRAME for measurement.</li>
+<li>Revenue Recognition determines WHEN revenue enters that time frame.</li>
+<li>Matching ensures the correct EXPENSES are paired with that revenue.</li>
+<li>Result: Net Income = Revenues earned − Expenses incurred (for the same period), giving an accurate picture of performance.</li>
+</ul>
+<p><em>Example:</em> For December 2023: Ahmed renders services worth $10,000 (revenue recognized Dec). He pays salaries $6,000 for December work (expense matched to Dec). Net Income = $10,000 − $6,000 = $4,000. Even if salaries are paid January 1, they are December's expense under the Matching Principle.</p>`
+  },
+  {
+    type: "short",
+    q: "Distinguish between 'Drawings' and 'Expenses'. Why is this distinction important?",
+    ans: `<p><strong>Drawings:</strong> Cash (or other assets) withdrawn by the owner for PERSONAL USE — in anticipation of profits at year-end. Drawings directly reduce Owner's Capital and are NOT an operating expense of the business.</p>
+
+<p><strong>Expenses:</strong> Costs incurred by the business in the process of generating revenue (e.g., salaries, rent, supplies). Expenses reduce Owner's Equity through the Income Statement.</p>
+
+<p><strong>Key Differences:</strong></p>
+<ul>
+<li><strong>Purpose:</strong> Drawings = personal; Expenses = business operations</li>
+<li><strong>Reporting:</strong> Drawings appear in OE section of B/S; Expenses appear on Income Statement</li>
+<li><strong>Tax/Accounting:</strong> Expenses reduce taxable profit; Drawings do not</li>
+</ul>
+
+<p><strong>Importance:</strong> If drawings were classified as expenses, net income would be understated and taxes understated — distorting the financial picture and potentially violating accounting standards.</p>`
+  }
+];
+
+let scores = { correct: 0, wrong: 0, total: 0 };
+let currentFilter = 'all';
+
+function buildMCQ() {
+  const container = document.getElementById('mcq-container');
+  container.innerHTML = '';
+  mcqData.forEach((item, i) => {
+    const div = document.createElement('div');
+    div.className = 'mcq-card';
+    div.dataset.diff = item.diff;
+    div.dataset.index = i;
+    div.innerHTML = `
+      <div class="mcq-num">
+        Q${i + 1}
+        <span class="difficulty diff-${item.diff === 'easy' ? 'easy' : item.diff === 'medium' ? 'med' : 'hard'}">${item.diff.charAt(0).toUpperCase() + item.diff.slice(1)}</span>
+      </div>
+      <div class="mcq-q">${item.q}</div>
+      <ul class="mcq-options" id="opts-${i}">
+        ${item.opts.map((opt, j) => `<li onclick="selectOpt(${i}, ${j})" id="opt-${i}-${j}"><span class="opt-lbl">${String.fromCharCode(65+j)}.</span>${opt}</li>`).join('')}
+      </ul>
+      <div class="mcq-explanation" id="exp-${i}"><strong>💡 Explanation:</strong> ${item.exp}</div>
+    `;
+    container.appendChild(div);
+  });
+}
+
+function selectOpt(qIdx, optIdx) {
+  const item = mcqData[qIdx];
+  const opts = document.querySelectorAll(`#opts-${qIdx} li`);
+  const exp = document.getElementById(`exp-${qIdx}`);
+  const wasAnswered = opts[0].classList.contains('correct') || opts[0].classList.contains('wrong') || [...opts].some(o => o.classList.contains('correct') || o.classList.contains('wrong'));
+  if (wasAnswered) return;
+  opts.forEach((opt, j) => { opt.style.pointerEvents = 'none'; });
+  if (optIdx === item.ans) {
+    opts[optIdx].classList.add('correct');
+    scores.correct++;
+    scores.total++;
+  } else {
+    opts[optIdx].classList.add('wrong');
+    opts[item.ans].classList.add('correct');
+    scores.wrong++;
+    scores.total++;
+  }
+  exp.classList.add('show');
+  updateScore();
+}
+
+function updateScore() {
+  document.getElementById('score-correct').textContent = scores.correct;
+  document.getElementById('score-wrong').textContent = scores.wrong;
+  document.getElementById('score-total').textContent = scores.total;
+  const pct = Math.round((scores.total / 30) * 100);
+  document.getElementById('prog-fill').style.width = pct + '%';
+  document.getElementById('prog-label').textContent = `${scores.total} / 30 answered`;
+}
+
+function resetMCQ() {
+  scores = { correct: 0, wrong: 0, total: 0 };
+  updateScore();
+  buildMCQ();
+  filterMCQ(currentFilter, document.querySelector('.filter-btn.active'));
+}
+
+function filterMCQ(type, btn) {
+  currentFilter = type;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.mcq-card').forEach(card => {
+    if (type === 'all' || card.dataset.diff === type) {
+      card.style.display = '';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+
+function buildWritten() {
+  const container = document.getElementById('written-container');
+  writtenData.forEach((item, i) => {
+    const div = document.createElement('div');
+    div.className = 'wq-card';
+    div.innerHTML = `
+      <div class="wq-header" onclick="toggleWQ(${i})">
+        <div class="wq-title"><strong>Q${i+1}.</strong> ${item.q.replace(/\n/g, '<br>')}</div>
+        <div style="display:flex; align-items:center; gap:0.5rem;">
+          <span class="wq-badge ${item.type}">${item.type === 'short' ? 'Short Answer' : 'Long Answer'}</span>
+          <span class="wq-toggle" id="wq-arrow-${i}">▼</span>
+        </div>
+      </div>
+      <div class="wq-answer" id="wq-ans-${i}">
+        <div class="model-ans-label">Model Answer</div>
+        <div class="ans-text">${item.ans}</div>
+      </div>
+    `;
+    container.appendChild(div);
+  });
+}
+
+function toggleWQ(i) {
+  const ans = document.getElementById(`wq-ans-${i}`);
+  const arr = document.getElementById(`wq-arrow-${i}`);
+  ans.classList.toggle('show');
+  arr.classList.toggle('open');
+}
+
+function toggleAcc(header) {
+  const body = header.nextElementSibling;
+  const arrow = header.querySelector('.accordion-arrow');
+  body.classList.toggle('open');
+  arrow.classList.toggle('open');
+}
+
+function showSection(id, btn) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function toggleTheme() {
+  const html = document.documentElement;
+  const current = html.getAttribute('data-theme');
+  const btn = document.querySelector('.theme-btn');
+  if (current === 'dark') {
+    html.removeAttribute('data-theme');
+    btn.textContent = '🌙';
+  } else {
+    html.setAttribute('data-theme', 'dark');
+    btn.textContent = '☀️';
+  }
+}
+
+function scrollToTop() {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+buildMCQ();
+buildWritten();
+</script>
+</body>
+</html>
